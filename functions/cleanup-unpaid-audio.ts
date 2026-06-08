@@ -94,7 +94,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const auth = request.headers.get('Authorization') ?? '';
   const b64  = auth.replace(/^Basic\s+/i, '');
   let authed = false;
-  try { const [, pass] = atob(b64).split(':'); authed = pass === (env.ADMIN_PASSWORD || 'sonara2024'); } catch { /* */ }
+  try { const [, pass] = atob(b64).split(':'); authed = !!env.ADMIN_PASSWORD && pass === env.ADMIN_PASSWORD; } catch { /* */ }
   if (!authed) {
     return new Response(JSON.stringify({ ok: false, error: 'unauthorized' }), {
       status: 401,

@@ -83,7 +83,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   if (isPaid) {
     const origin = new URL(request.url).origin;
-    const auth   = 'Basic ' + btoa(':' + (env.ADMIN_PASSWORD || 'sonara2024'));
+    const auth   = 'Basic ' + btoa(':' + (env.ADMIN_PASSWORD || ''));
 
     // 0. Push notification de nova venda
     if (env.VAPID_PUBLIC_KEY && env.VAPID_PRIVATE_KEY) {

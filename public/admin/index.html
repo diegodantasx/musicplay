@@ -663,7 +663,7 @@ function openOrder(idx) {
   document.getElementById('btn-edit-letra').textContent = '✏ Editar';
 
   // Tab 5 - Producao
-  var deliveryUrl = o.paymentId ? ('https://SEU_DOMINIO.com/m/' + o.paymentId) : '';
+  var deliveryUrl = o.paymentId ? ('https://musicplay-83l.pages.dev/m/' + o.paymentId) : '';
   document.getElementById('f-delivery-url').textContent = deliveryUrl || '(sem ID de pedido)';
   var openLink = document.getElementById('f-delivery-open');
   if (deliveryUrl) { openLink.href = deliveryUrl; openLink.style.opacity = '1'; openLink.style.pointerEvents = ''; }
@@ -846,7 +846,7 @@ function copyDeliveryLink() {
 function sendDeliveryWhatsApp() {
   if (!currentOrder) return;
   var pid = currentOrder.paymentId || '';
-  var deliveryUrl = pid ? ('https://SEU_DOMINIO.com/m/' + pid) : '';
+  var deliveryUrl = pid ? ('https://musicplay-83l.pages.dev/m/' + pid) : '';
   if (!deliveryUrl) { toast('Sem ID de pedido', 'err'); return; }
   var b = parseBrief(currentOrder.brief || '');
   var nome = (currentOrder.name || '').split(' ')[0];
@@ -1007,7 +1007,7 @@ function buildQrCard(para, de, tema, qrDataUrl) {
     // Divisor
     + '<div style="height:1px;background:rgba(255,255,255,.12);margin-bottom:14px"></div>'
     // Footer
-    + '<div style="font-size:10px;color:rgba(255,255,255,.35);letter-spacing:2px;text-transform:uppercase">SEU_DOMINIO.com</div>'
+    + '<div style="font-size:10px;color:rgba(255,255,255,.35);letter-spacing:2px;text-transform:uppercase">musicplay-83l.pages.dev</div>'
     + '</div>';
 }
 
@@ -1018,7 +1018,7 @@ function abrirQrCard() {
   var para = b['Para quem'] || '-';
   var de = (currentOrder && currentOrder.name) ? currentOrder.name.split(' ')[0] : '-';
   var pid = currentOrder ? currentOrder.paymentId : '';
-  var playerUrl = pid ? ('https://SEU_DOMINIO.com/m/' + pid) : link;
+  var playerUrl = pid ? ('https://musicplay-83l.pages.dev/m/' + pid) : link;
   var tema = detectarTema(b);
 
   document.getElementById('qrc-link-txt').textContent = playerUrl;
@@ -1093,7 +1093,7 @@ function compartilharQrCard() {
   var phone = currentOrder ? (currentOrder.phone||'').replace(/\D/g,'') : '';
   if (phone && !phone.startsWith('55')) phone = '55' + phone;
   var pid = currentOrder ? currentOrder.paymentId : '';
-  var playerUrl = pid ? ('https://SEU_DOMINIO.com/m/' + pid) : document.getElementById('f-link').value.trim();
+  var playerUrl = pid ? ('https://musicplay-83l.pages.dev/m/' + pid) : document.getElementById('f-link').value.trim();
   var msg = 'Olá ' + nome + '! 🎵 Sua música personalizada está pronta!\n\nAbra o link abaixo para ouvir:\n\n' + playerUrl + '\n\nFoi criada com muito carinho para ' + para + ' 💜\n\n— Sonara Music';
   var wa = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
   window.open(wa, '_blank');

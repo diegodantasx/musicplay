@@ -18,7 +18,7 @@ function checkAuth(request: Request, env: Env): boolean {
   if (!b64) return false;
   try {
     const [, pass] = atob(b64).split(':');
-    return pass === (env.ADMIN_PASSWORD || 'sonara2024');
+    return !!env.ADMIN_PASSWORD && pass === env.ADMIN_PASSWORD;
   } catch { return false; }
 }
 
@@ -43,7 +43,7 @@ async function makeVapidJWT(privateKeyB64u: string, publicKeyB64u: string, endpo
 
   const origin    = new URL(endpoint).origin;
   const header    = btoa(JSON.stringify({ typ: 'JWT', alg: 'ES256' })).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
-  const payload   = btoa(JSON.stringify({ aud: origin, exp: Math.floor(Date.now()/1000) + 43200, sub: 'mailto:contato@SEU_DOMINIO.com' })).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  const payload   = btoa(JSON.stringify({ aud: origin, exp: Math.floor(Date.now()/1000) + 43200, sub: 'mailto:contato@musicplay-83l.pages.dev' })).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
   const input     = `${header}.${payload}`;
   const sig       = await crypto.subtle.sign({ name: 'ECDSA', hash: 'SHA-256' }, key, new TextEncoder().encode(input));
 

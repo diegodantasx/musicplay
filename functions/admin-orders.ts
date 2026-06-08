@@ -27,8 +27,7 @@ function checkAuth(request: Request, env: Env): boolean {
   try {
     const decoded = atob(b64);
     const [, pass] = decoded.split(':');
-    const expected = env.ADMIN_PASSWORD || 'sonara2024';
-    return pass === expected;
+    return !!env.ADMIN_PASSWORD && pass === env.ADMIN_PASSWORD;
   } catch {
     return false;
   }

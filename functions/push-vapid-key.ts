@@ -9,7 +9,7 @@ function checkAuth(request: Request, env: Env): boolean {
   if (!b64) return false;
   try {
     const [, pass] = atob(b64).split(':');
-    return pass === (env.ADMIN_PASSWORD || 'sonara2024');
+    return !!env.ADMIN_PASSWORD && pass === env.ADMIN_PASSWORD;
   } catch { return false; }
 }
 

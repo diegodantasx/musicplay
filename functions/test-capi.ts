@@ -18,7 +18,7 @@ function checkAuth(request: Request, env: Env): boolean {
   const auth = request.headers.get('Authorization') ?? '';
   const b64 = auth.replace(/^Basic\s+/i, '');
   if (!b64) return false;
-  try { const [, pass] = atob(b64).split(':'); return pass === (env.ADMIN_PASSWORD || 'sonara2024'); }
+  try { const [, pass] = atob(b64).split(':'); return !!env.ADMIN_PASSWORD && pass === env.ADMIN_PASSWORD; }
   catch { return false; }
 }
 
@@ -34,14 +34,14 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const sent = await sendMetaCapiPurchase(pixelId, token, {
     paymentId: testPaymentId,
     name: 'Teste Sonara',
-    email: 'teste@SEU_DOMINIO.com',
+    email: 'teste@musicplay-83l.pages.dev',
     phone: '5511999999999',
     value: 29.90,
     fbp: '',
     fbc: '',
     clientIp: request.headers.get('CF-Connecting-IP') || '',
     userAgent: request.headers.get('User-Agent') || '',
-    pageUrl: 'https://SEU_DOMINIO.com/',
+    pageUrl: 'https://musicplay-83l.pages.dev/',
     brief: 'Estilo: Sertanejo Romântico',
   });
 
