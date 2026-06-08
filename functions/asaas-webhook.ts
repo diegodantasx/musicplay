@@ -10,6 +10,7 @@ interface Env {
   CALLMEBOT_API_KEY: string;
   VAPID_PUBLIC_KEY: string;
   VAPID_PRIVATE_KEY: string;
+  ASAAS_WEBHOOK_TOKEN: string;
 }
 
 function json(data: unknown, status = 200): Response {
@@ -24,6 +25,13 @@ const PAID_STATUSES = ['RECEIVED', 'CONFIRMED', 'RECEIVED_IN_CASH'];
 
 export const onRequestPost: PagesFunction<Env> = async (context) => {
   const { request, env } = context;
+
+  if (env.ASAAS_WEBHOOK_TOKEN) {
+    const token = request.headers.get('asaas-access-token') || '';
+    if (token !== env.ASAAS_WEBHOOK_TOKEN) {
+      return json({ ok: false, error: 'invalid_webhook_token' }, 401);
+    }
+  }
 
   let payload: Record<string, unknown>;
   try { payload = await request.json() as Record<string, unknown>; }
