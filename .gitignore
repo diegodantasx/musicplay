@@ -1,0 +1,23 @@
+node_modules/
+.wrangler/
+dist/
+*.env
+.env
+.env.local
+.dev.vars
+
+# Keys - NUNCA commitar
+*-kiwify-key
+*-kiwify-key.pub
+*-kiwify-key.pem
+extract-key.js
+
+# Backups PHP antigos
+*.bak-*
+*.php
+sync-asaas-payments.php
+asaas-webhook.php
+create-payment.php
+payment-status.php
+generate-lyrics.php
+meta-capi.php
