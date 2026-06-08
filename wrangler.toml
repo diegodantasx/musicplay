@@ -1,3 +1,7 @@
 name = "musicplay"
 compatibility_date = "2024-09-23"
 pages_build_output_dir = "public"
+
+[[kv_namespaces]]
+binding = "ORDERS_KV"
+id = "a1aa6a07076d449687c07c0f006550c9"
