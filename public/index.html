@@ -545,7 +545,11 @@
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'G-XLLSQGPFP6');
+  gtag('config', 'G-XLLSQGPFP6', {
+    send_page_view: true,
+    page_title: document.title,
+    page_location: window.location.href
+  });
 </script>
 </head>
 <body>
@@ -1360,10 +1364,20 @@
         nextButton.classList.add("green");
         nextButton.style.display = '';
         if (window.fbq) fbq('track', 'Lead', {content_name: 'Briefing concluído', currency: 'BRL', value: 29.90});
+        gaEvent('generate_lead', { event_category: 'funnel', event_label: 'letra_pronta' });
       }
-      if (step === 2) { nextButton.textContent = "Pagar com PIX — " + formatBRL(currentTotal()); nextButton.classList.add("green"); nextButton.style.display = ''; if (window.fbq) fbq('track', 'InitiateCheckout', {currency: 'BRL', value: currentTotal(), content_name: 'MusicLove Studio', content_ids: ['musiclove_studio'], num_items: 1}); }
+      if (step === 2) { nextButton.textContent = "Pagar com PIX — " + formatBRL(currentTotal()); nextButton.classList.add("green"); nextButton.style.display = ''; if (window.fbq) fbq('track', 'InitiateCheckout', {currency: 'BRL', value: currentTotal(), content_name: 'MusicLove Studio', content_ids: ['musiclove_studio'], num_items: 1}); gaEvent('begin_checkout', { value: currentTotal(), event_category: 'checkout' }); }
       errorBox.classList.remove("show");
       updateFunnelShell();
+    }
+
+    function gaEvent(name, params) {
+      if (!window.gtag) return;
+      gtag('event', name, Object.assign({
+        currency: 'BRL',
+        value: typeof currentTotal === 'function' ? currentTotal() : 29.90,
+        items: [{ item_id: 'musiclove_studio', item_name: 'MusicLove Studio', price: 29.90, quantity: 1 }]
+      }, params || {}));
     }
 
     function track(event) { fetch('/track', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ event }) }).catch(() => {}); }
@@ -1372,6 +1386,7 @@
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
       if (window.fbq) fbq('track', 'ViewContent', {content_name: 'MusicLove Studio – Checkout Aberto', content_type: 'product', content_ids: ['musiclove_studio'], currency: 'BRL', value: 29.90});
+      gaEvent('view_item', { event_category: 'funnel', event_label: 'checkout_aberto' });
       track('funnel_open');
       updateFunnelShell();
     }
@@ -1636,6 +1651,7 @@ a melodia fala por mim baixinho.`;
         currentWhatsappMessage = whatsappMessage;
         updateFunnelShell();
         if (window.fbq) fbq('track', 'AddPaymentInfo', {currency: 'BRL', value: currentTotal(), content_name: 'Pix gerado MusicLove Studio'});
+        gaEvent('add_payment_info', { value: currentPaymentValue, payment_type: 'Pix', event_category: 'checkout' });
         startPaymentPolling(data.paymentId, whatsappMessage);
         pixGenerated = true;
         if (data.payload) {
@@ -1689,6 +1705,7 @@ a melodia fala por mim baixinho.`;
         trackKwaiPurchaseAfterPayment(paymentId, currentPaymentValue);
         const cleanPid = (paymentId || '').replace(/[^a-zA-Z0-9_.-]/g, '');
         if (window.fbq && cleanPid) fbq('track', 'Purchase', {currency: 'BRL', value: currentPaymentValue, content_name: 'MusicLove Studio', content_ids: ['musiclove_studio'], content_type: 'product'}, {eventID: 'purchase_' + cleanPid});
+        gaEvent('purchase', { transaction_id: cleanPid, value: currentPaymentValue, event_category: 'checkout' });
         if (window.gtag && cleanPid) gtag('event', 'conversion', {'send_to': 'AW-17868003171/DfnPCJD62bUcEOOukMhC', 'value': currentPaymentValue, 'currency': 'BRL', 'transaction_id': cleanPid});
         // Ocultar PIX e mostrar thank you com WhatsApp
         document.getElementById("pixResult").style.display = "none";

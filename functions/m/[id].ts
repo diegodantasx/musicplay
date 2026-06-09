@@ -51,6 +51,8 @@ function esc(s: string): string {
 
 function notFoundPage(): Response {
   return html(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MusicLove Studio</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XLLSQGPFP6"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XLLSQGPFP6',{send_page_view:true,page_title:document.title,page_location:window.location.href});</script>
 <style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0f0f13;color:#888;font-family:-apple-system,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:24px}</style>
 </head><body><div><div style="font-size:52px;margin-bottom:16px">🎵</div><p style="font-size:18px;color:#ccc;margin-bottom:8px">Música ainda em produção</p><p style="font-size:14px">Nossa equipe está finalizando com carinho. Tente novamente em breve.</p><p style="margin-top:20px;font-size:13px"><a href="/" style="color:#a07ce8">Criar minha música</a></p></div></body></html>`);
 }
@@ -122,6 +124,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 <meta property="og:title" content="🎵 Uma música criada para ${esc(para)}">
 <meta property="og:description" content="Presente musical de ${esc(buyerName)} — MusicLove Studio">
 <title>${esc(songTitle)} — MusicLove Studio</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XLLSQGPFP6"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XLLSQGPFP6',{send_page_view:true,page_title:document.title,page_location:window.location.href});</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased}
