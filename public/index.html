@@ -1426,7 +1426,7 @@
     function validCurrentStep() {
       if (step === 0) return value("destinatario") && value("relacao") && value("ocasiao") && value("estilo") && value("historia").length >= 8;
       if (step === 1) return value("generatedLyrics").length >= 20;
-      if (step === 2) return value("email") && value("nome") && value("whatsapp");
+      if (step === 2) return value("email") && value("nome") && value("cpf") && value("whatsapp");
       return true;
     }
 
