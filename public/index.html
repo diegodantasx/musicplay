@@ -1646,7 +1646,7 @@ a melodia fala por mim baixinho.`;
         nextButton.style.boxShadow = "none";
         nextButton.style.cursor = "default";
         const whatsappMessage = [
-          "Olá! Acabei de pagar minha música personalizada na MusicLove Studio. 🎵",
+          "Olá! Acabei de pagar minha música personalizada na MusicLove Studio.",
           "",
           "Nome: " + value("nome"),
           "Pedido: " + (data.externalReference || ""),
@@ -1720,7 +1720,7 @@ a melodia fala por mim baixinho.`;
         document.getElementById("thankYouScreen").style.display = "block";
         // Montar link WhatsApp com dados do pedido
         const waMsg = encodeURIComponent(
-          "Olá! Acabei de pagar minha música personalizada na MusicLove Studio. 🎵\n\n" +
+          "Olá! Acabei de pagar minha música personalizada na MusicLove Studio.\n\n" +
           "Nome: " + (value("nome") || "") + "\n" +
           "Pedido: " + (currentExternalReference || cleanPid || "") + "\n\n" +
           "Pode confirmar o recebimento?"
