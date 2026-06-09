@@ -75,7 +75,7 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
     billingType: 'CREDIT_CARD',
     value: 49.90,
     dueDate,
-    description: 'Dantas Music – Oferta Especial',
+    description: 'MusicLove Studio – Oferta Especial',
     externalReference: externalRef,
     creditCard: {
       holderName: cardName,

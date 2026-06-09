@@ -52,7 +52,7 @@ export async function sendMetaCapiPurchase(
     return m ? m[1].trim().slice(0, 60) : '';
   }
   const estilo = extractEstilo(order.brief || '');
-  const contentName = estilo ? `Dantas Music – ${estilo}` : 'Dantas Music';
+  const contentName = estilo ? `MusicLove Studio – ${estilo}` : 'MusicLove Studio';
 
   const userData: Record<string, unknown> = {
     em: em ? [em] : undefined,
@@ -81,7 +81,7 @@ export async function sendMetaCapiPurchase(
         currency: 'BRL',
         value: Number(order.value || 29.9),
         content_name: contentName,
-        content_ids: ['dantas_music'],
+        content_ids: ['musiclove_studio'],
         content_type: 'product',
         order_id: order.externalReference || order.paymentId || '',
       },

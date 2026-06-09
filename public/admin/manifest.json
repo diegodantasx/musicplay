@@ -1,7 +1,7 @@
 {
-  "name": "Dantas Admin",
-  "short_name": "Dantas",
-  "description": "Painel administrativo Dantas Music",
+  "name": "MusicLove Admin",
+  "short_name": "MusicLove",
+  "description": "Painel administrativo MusicLove Studio",
   "start_url": "/admin/",
   "scope": "/admin/",
   "display": "standalone",

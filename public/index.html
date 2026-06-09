@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dantas Music</title>
+  <title>MusicLove Studio</title>
   <meta name="description" content="Transforme sua historia em uma musica personalizada para presentear alguem especial.">
   <!-- Fontes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -548,7 +548,7 @@
 <body>
   <header class="topbar">
     <div class="wrap">
-      <a class="brand" href="#">♫ Dantas <span>Music</span></a>
+      <a class="brand" href="#">♫ MusicLove <span>Studio</span></a>
       <nav class="nav">
         <a href="#como">Como funciona</a>
         <a href="#ocasioes">Ocasiões</a>
@@ -647,7 +647,7 @@
   <div class="modal" id="funnelModal" aria-hidden="true">
     <div class="funnel" role="dialog" aria-modal="true" aria-labelledby="funnelTitle">
       <div class="funnel-head">
-        <h2 id="funnelTitle">Dantas Music personalizada</h2>
+        <h2 id="funnelTitle">MusicLove Studio personalizada</h2>
         <button class="close" type="button" id="closeFunnel" aria-label="Fechar">&times;</button>
       </div>
       <div class="funnel-scroll">
@@ -938,11 +938,11 @@
 
   <footer class="footer">
     <div class="wrap footer-grid">
-      <div><a class="brand" href="#">♫ Dantas <span>Music</span></a><p>Transformando suas histórias e sentimentos em belas músicas personalizadas.</p></div>
+      <div><a class="brand" href="#">♫ MusicLove <span>Studio</span></a><p>Transformando suas histórias e sentimentos em belas músicas personalizadas.</p></div>
       <div><strong>Empresa</strong><p><a href="/sobre">Sobre nós</a><br><a href="/como-funciona">Como funciona</a><br><a href="/contato">Contato</a><br><a href="/depoimentos">Depoimentos</a></p></div>
       <div><strong>Suporte</strong><p><a href="/faq">FAQ</a><br><a href="/contato">Contato</a><br><a href="/privacidade">Política de privacidade</a><br><a href="/termos">Termos de serviço</a></p></div>
     </div>
-    <small>© 2026 Dantas Music. Todos os direitos reservados.</small>
+    <small>© 2026 MusicLove Studio. Todos os direitos reservados.</small>
   </footer>
 
   <script>
@@ -998,7 +998,7 @@
       if (sessionStorage.getItem(eventKey) === "1") return;
       sessionStorage.setItem(eventKey, "1");
       try {
-        if (window.kwaiq) kwaiq.track("purchase", {currency: "BRL", value: Number(value || currentPaymentValue || currentTotal()), content_name: "Dantas Music"});
+        if (window.kwaiq) kwaiq.track("purchase", {currency: "BRL", value: Number(value || currentPaymentValue || currentTotal()), content_name: "MusicLove Studio"});
       } catch (error) {
         console.warn("Kwai purchase tracking failed", error);
       }
@@ -1358,7 +1358,7 @@
         nextButton.style.display = '';
         if (window.fbq) fbq('track', 'Lead', {content_name: 'Briefing concluído', currency: 'BRL', value: 29.90});
       }
-      if (step === 2) { nextButton.textContent = "Pagar com PIX — " + formatBRL(currentTotal()); nextButton.classList.add("green"); nextButton.style.display = ''; if (window.fbq) fbq('track', 'InitiateCheckout', {currency: 'BRL', value: currentTotal(), content_name: 'Dantas Music', content_ids: ['dantas_music'], num_items: 1}); }
+      if (step === 2) { nextButton.textContent = "Pagar com PIX — " + formatBRL(currentTotal()); nextButton.classList.add("green"); nextButton.style.display = ''; if (window.fbq) fbq('track', 'InitiateCheckout', {currency: 'BRL', value: currentTotal(), content_name: 'MusicLove Studio', content_ids: ['musiclove_studio'], num_items: 1}); }
       errorBox.classList.remove("show");
       updateFunnelShell();
     }
@@ -1368,7 +1368,7 @@
     function openFunnel() {
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
-      if (window.fbq) fbq('track', 'ViewContent', {content_name: 'Dantas Music – Checkout Aberto', content_type: 'product', content_ids: ['dantas_music'], currency: 'BRL', value: 29.90});
+      if (window.fbq) fbq('track', 'ViewContent', {content_name: 'MusicLove Studio – Checkout Aberto', content_type: 'product', content_ids: ['musiclove_studio'], currency: 'BRL', value: 29.90});
       track('funnel_open');
       updateFunnelShell();
     }
@@ -1587,7 +1587,7 @@ a melodia fala por mim baixinho.`;
         nextButton.style.boxShadow = "none";
         nextButton.style.cursor = "default";
         const whatsappMessage = [
-          "Olá! Acabei de pagar minha música personalizada na Dantas Music. 🎵",
+          "Olá! Acabei de pagar minha música personalizada na MusicLove Studio. 🎵",
           "",
           "Nome: " + value("nome"),
           "Pedido: " + (data.externalReference || ""),
@@ -1599,7 +1599,7 @@ a melodia fala por mim baixinho.`;
         currentPaymentValue = Number(data.value || currentTotal());
         currentWhatsappMessage = whatsappMessage;
         updateFunnelShell();
-        if (window.fbq) fbq('track', 'AddPaymentInfo', {currency: 'BRL', value: currentTotal(), content_name: 'Pix gerado Dantas Music'});
+        if (window.fbq) fbq('track', 'AddPaymentInfo', {currency: 'BRL', value: currentTotal(), content_name: 'Pix gerado MusicLove Studio'});
         startPaymentPolling(data.paymentId, whatsappMessage);
         pixGenerated = true;
         if (data.payload) {
@@ -1652,14 +1652,14 @@ a melodia fala por mim baixinho.`;
       if (data.ok && data.paid) {
         trackKwaiPurchaseAfterPayment(paymentId, currentPaymentValue);
         const cleanPid = (paymentId || '').replace(/[^a-zA-Z0-9_.-]/g, '');
-        if (window.fbq && cleanPid) fbq('track', 'Purchase', {currency: 'BRL', value: currentPaymentValue, content_name: 'Dantas Music', content_ids: ['dantas_music'], content_type: 'product'}, {eventID: 'purchase_' + cleanPid});
+        if (window.fbq && cleanPid) fbq('track', 'Purchase', {currency: 'BRL', value: currentPaymentValue, content_name: 'MusicLove Studio', content_ids: ['musiclove_studio'], content_type: 'product'}, {eventID: 'purchase_' + cleanPid});
         if (window.gtag && cleanPid) gtag('event', 'conversion', {'send_to': 'AW-17868003171/DfnPCJD62bUcEOOukMhC', 'value': currentPaymentValue, 'currency': 'BRL', 'transaction_id': cleanPid});
         // Ocultar PIX e mostrar thank you com WhatsApp
         document.getElementById("pixResult").style.display = "none";
         document.getElementById("thankYouScreen").style.display = "block";
         // Montar link WhatsApp com dados do pedido
         const waMsg = encodeURIComponent(
-          "Olá! Acabei de pagar minha música personalizada na Dantas Music. 🎵\n\n" +
+          "Olá! Acabei de pagar minha música personalizada na MusicLove Studio. 🎵\n\n" +
           "Nome: " + (value("nome") || "") + "\n" +
           "Pedido: " + (currentExternalReference || cleanPid || "") + "\n\n" +
           "Pode confirmar o recebimento?"

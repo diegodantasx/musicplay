@@ -50,7 +50,7 @@ function esc(s: string): string {
 }
 
 function notFoundPage(): Response {
-  return html(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dantas Music</title>
+  return html(`<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MusicLove Studio</title>
 <style>*{margin:0;padding:0;box-sizing:border-box}body{background:#0f0f13;color:#888;font-family:-apple-system,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:24px}</style>
 </head><body><div><div style="font-size:52px;margin-bottom:16px">🎵</div><p style="font-size:18px;color:#ccc;margin-bottom:8px">Música ainda em produção</p><p style="font-size:14px">Nossa equipe está finalizando com carinho. Tente novamente em breve.</p><p style="margin-top:20px;font-size:13px"><a href="/" style="color:#a07ce8">Criar minha música</a></p></div></body></html>`);
 }
@@ -107,8 +107,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
   // Letra limpa (sem linha de título)
   const letraLimpa = savedLetra.replace(/^T[íi]tulo:.*\n?/im,'').trim();
 
-  const downloadName  = `Dantas-${esc(para).toLowerCase().replace(/\s+/g,'-')}.mp3`;
-  const downloadName2 = `Dantas-${esc(para).toLowerCase().replace(/\s+/g,'-')}-v2.mp3`;
+  const downloadName  = `musiclove-${esc(para).toLowerCase().replace(/\s+/g,'-')}.mp3`;
+  const downloadName2 = `musiclove-${esc(para).toLowerCase().replace(/\s+/g,'-')}-v2.mp3`;
 
   // QR Code URL (api pública, sem key)
   const deliveryUrl  = `https://musicplay-83l.pages.dev/m/${id}`;
@@ -120,8 +120,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
 <meta property="og:title" content="🎵 Uma música criada para ${esc(para)}">
-<meta property="og:description" content="Presente musical de ${esc(buyerName)} — Dantas Music">
-<title>${esc(songTitle)} — Dantas Music</title>
+<meta property="og:description" content="Presente musical de ${esc(buyerName)} — MusicLove Studio">
+<title>${esc(songTitle)} — MusicLove Studio</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{min-height:100vh;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;-webkit-font-smoothing:antialiased}
@@ -305,7 +305,7 @@ ${audioUrl2 && bumpVersion ? `<audio id="audio2" preload="metadata"><source src=
       <div class="qr-wrap">
         <img class="qr-img" src="${qrCodeUrl}" alt="QR Code" loading="lazy">
         <div class="qr-url">${deliveryUrl}</div>
-        <a class="dl-btn" href="${qrCodeUrl}" download="qrcode-${esc(para).toLowerCase().replace(/\s+/g,'-')}-Dantas.png" style="font-size:15px;padding:14px">⬇ Baixar QR Code</a>
+        <a class="dl-btn" href="${qrCodeUrl}" download="qrcode-${esc(para).toLowerCase().replace(/\s+/g,'-')}-musiclove.png" style="font-size:15px;padding:14px">⬇ Baixar QR Code</a>
       </div>
     </div>
   </div>` : ''}
@@ -370,7 +370,7 @@ ${audioUrl2 && bumpVersion ? `<audio id="audio2" preload="metadata"><source src=
     Precisa de ajuda? Fale pelo WhatsApp
   </a>
 
-  <div class="footer">Criado com ❤️ por <a href="/">Dantas Music</a></div>
+  <div class="footer">Criado com ❤️ por <a href="/">MusicLove Studio</a></div>
 </div>
 
 <script>
@@ -608,13 +608,13 @@ function downloadArt(){
       }
     }
 
-    // 8. Rodapé Dantas
+    // 8. Rodapé MusicLove
     ctx.font='bold 24px -apple-system,sans-serif';ctx.fillStyle='rgba(255,255,255,0.35)';
-    ctx.textAlign='center';ctx.fillText('Criado com ♥ por Dantas Music — musicplay-83l.pages.dev',canvas.width/2,canvas.height-60);
+    ctx.textAlign='center';ctx.fillText('Criado com ♥ por MusicLove Studio — musicplay-83l.pages.dev',canvas.width/2,canvas.height-60);
 
     if(dlBtn){dlBtn.disabled=false;dlBtn.textContent='⬇ Baixar arte da letra';}
     var a=document.createElement('a');
-    a.download='arte-letra-${esc(para).toLowerCase().replace(/\s+/g,'-')}-Dantas.png';
+    a.download='arte-letra-${esc(para).toLowerCase().replace(/\s+/g,'-')}-musiclove.png';
     a.href=canvas.toDataURL('image/png',0.92);a.click();
   };
   img.onerror=function(){
@@ -648,9 +648,9 @@ function downloadArtFallback(){
   var y=130;
   lines.forEach(function(l){if(y>920)return;ctx.fillText(l.slice(0,54),50,y);y+=32;});
   ctx.fillStyle='rgba(255,255,255,0.15)';ctx.font='16px serif';ctx.textAlign='center';
-  ctx.fillText('Dantas Music — musicplay-83l.pages.dev',400,970);
+  ctx.fillText('MusicLove Studio — musicplay-83l.pages.dev',400,970);
   var a=document.createElement('a');
-  a.download='arte-letra-${esc(para).toLowerCase().replace(/\s+/g,'-')}-Dantas.png';
+  a.download='arte-letra-${esc(para).toLowerCase().replace(/\s+/g,'-')}-musiclove.png';
   a.href=canvas.toDataURL('image/png');a.click();
 }
 </script>

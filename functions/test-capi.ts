@@ -33,7 +33,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
 
   const sent = await sendMetaCapiPurchase(pixelId, token, {
     paymentId: testPaymentId,
-    name: 'Teste Dantas',
+    name: 'Teste MusicLove',
     email: 'teste@musicplay-83l.pages.dev',
     phone: '5511999999999',
     value: 29.90,
