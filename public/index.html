@@ -1065,14 +1065,18 @@
     function getAttribution() {
       const params = new URLSearchParams(window.location.search);
       const fbclid = params.get("fbclid") || "";
+      const gclid = params.get("gclid") || sessionStorage.getItem("gclid") || "";
+      const wbraid = params.get("wbraid") || sessionStorage.getItem("wbraid") || "";
+      const gbraid = params.get("gbraid") || sessionStorage.getItem("gbraid") || "";
+      const dclid = params.get("dclid") || sessionStorage.getItem("dclid") || "";
       const fbp = getCookie("_fbp");
       let fbc = getCookie("_fbc");
       if (!fbc && fbclid) {
         fbc = "fb.1." + Date.now() + "." + fbclid;
       }
-      // Persistir UTMs na sessão (não perder ao navegar)
-      const UTM_KEYS = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term"];
-      UTM_KEYS.forEach(k => { const v = params.get(k); if (v) sessionStorage.setItem(k, v); });
+      // Persistir UTMs e ids de midia paga na sessao (nao perder ao navegar)
+      const ATTR_KEYS = ["utm_source","utm_medium","utm_campaign","utm_content","utm_term","gclid","wbraid","gbraid","dclid"];
+      ATTR_KEYS.forEach(k => { const v = params.get(k); if (v) sessionStorage.setItem(k, v); });
       const utmSource   = sessionStorage.getItem("utm_source")   || params.get("utm_source")   || "";
       const utmMedium   = sessionStorage.getItem("utm_medium")   || params.get("utm_medium")   || "";
       const utmCampaign = sessionStorage.getItem("utm_campaign") || params.get("utm_campaign") || "";
@@ -1080,6 +1084,10 @@
       const utmTerm     = sessionStorage.getItem("utm_term")     || params.get("utm_term")     || "";
       return {
         fbclid,
+        gclid,
+        wbraid,
+        gbraid,
+        dclid,
         fbp,
         fbc,
         utmSource,

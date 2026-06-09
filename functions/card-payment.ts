@@ -34,6 +34,8 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   const cardExpiry = clean(input['cardExpiry'], 7); // MM/AAAA
   const cardCvv    = clean(input['cardCvv'], 4);
   const clientIp   = request.headers.get('CF-Connecting-IP') || '127.0.0.1';
+  const attr = (input['attribution'] && typeof input['attribution'] === 'object')
+    ? input['attribution'] as Record<string, string> : {};
 
   if (!name || !email || !phone || !cpf || !cep || !numero) {
     return json({ ok: false, error: 'missing_fields' }, 422);
@@ -113,6 +115,19 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
     billingType: 'CREDIT_CARD',
     orderBumpBackOffer: true,
     orderBumpVideo: true,
+    fbp: clean(attr, 'fbp', 180),
+    fbc: clean(attr, 'fbc', 260),
+    fbclid: clean(attr, 'fbclid', 260),
+    gclid: clean(attr, 'gclid', 260),
+    wbraid: clean(attr, 'wbraid', 260),
+    gbraid: clean(attr, 'gbraid', 260),
+    dclid: clean(attr, 'dclid', 260),
+    pageUrl: clean(attr, 'pageUrl', 900),
+    utmSource:   clean(attr, 'utmSource',   120),
+    utmMedium:   clean(attr, 'utmMedium',   120),
+    utmCampaign: clean(attr, 'utmCampaign', 200),
+    utmContent:  clean(attr, 'utmContent',  200),
+    utmTerm:     clean(attr, 'utmTerm',     200),
     paid,
     status: String(payRes.data['status'] || 'PENDING'),
     clientIp,
