@@ -54,8 +54,6 @@ function buildPrompt(
   destinatario: string, relacao: string, ocasiao: string, estilo: string,
   voz: string, historia: string, correcoes: string, currentLyrics: string,
 ): string {
-  const styleCtx = getStyleContext(estilo);
-
   return `Voce e compositor profissional da Music Love.
 
 Crie uma letra COMPLETA de musica personalizada em portugues do Brasil, emocional, comercial, cantavel e pronta para ser transformada em musica.
@@ -66,7 +64,6 @@ Dados do pedido:
 - Relacao: ${relacao}
 - Ocasiao: ${ocasiao}
 - Estilo musical desejado: ${estilo}
-- Contexto do estilo musical: ${styleCtx}
 - Voz desejada: ${voz}
 - Historia/mensagem do cliente: ${historia}
 - Letra atual, se houver: ${currentLyrics || 'nao informada'}
