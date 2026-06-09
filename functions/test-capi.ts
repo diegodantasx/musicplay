@@ -34,14 +34,14 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   const sent = await sendMetaCapiPurchase(pixelId, token, {
     paymentId: testPaymentId,
     name: 'Teste MusicLove',
-    email: 'teste@musicplay-83l.pages.dev',
+    email: 'teste@musiclovestudio.online',
     phone: '5511999999999',
     value: 29.90,
     fbp: '',
     fbc: '',
     clientIp: request.headers.get('CF-Connecting-IP') || '',
     userAgent: request.headers.get('User-Agent') || '',
-    pageUrl: 'https://musicplay-83l.pages.dev/',
+    pageUrl: 'https://musiclovestudio.online/',
     brief: 'Estilo: Sertanejo Romântico',
   });
 

@@ -113,7 +113,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
   const downloadName2 = `musiclove-${esc(para).toLowerCase().replace(/\s+/g,'-')}-v2.mp3`;
 
   // QR Code URL (api pública, sem key)
-  const deliveryUrl  = `https://musicplay-83l.pages.dev/m/${id}`;
+  const deliveryUrl  = `https://musiclovestudio.online/m/${id}`;
   const qrCodeUrl    = `https://api.qrserver.com/v1/create-qr-code/?size=280x280&color=ffffff&bgcolor=${theme.accent.replace('#','')}&data=${encodeURIComponent(deliveryUrl)}`;
 
   const page = `<!DOCTYPE html>
@@ -614,7 +614,7 @@ function downloadArt(){
 
     // 8. Rodapé MusicLove
     ctx.font='bold 24px -apple-system,sans-serif';ctx.fillStyle='rgba(255,255,255,0.35)';
-    ctx.textAlign='center';ctx.fillText('Criado com ♥ por MusicLove Studio — musicplay-83l.pages.dev',canvas.width/2,canvas.height-60);
+    ctx.textAlign='center';ctx.fillText('Criado com ♥ por MusicLove Studio — musiclovestudio.online',canvas.width/2,canvas.height-60);
 
     if(dlBtn){dlBtn.disabled=false;dlBtn.textContent='⬇ Baixar arte da letra';}
     var a=document.createElement('a');
@@ -652,7 +652,7 @@ function downloadArtFallback(){
   var y=130;
   lines.forEach(function(l){if(y>920)return;ctx.fillText(l.slice(0,54),50,y);y+=32;});
   ctx.fillStyle='rgba(255,255,255,0.15)';ctx.font='16px serif';ctx.textAlign='center';
-  ctx.fillText('MusicLove Studio — musicplay-83l.pages.dev',400,970);
+  ctx.fillText('MusicLove Studio — musiclovestudio.online',400,970);
   var a=document.createElement('a');
   a.download='arte-letra-${esc(para).toLowerCase().replace(/\s+/g,'-')}-musiclove.png';
   a.href=canvas.toDataURL('image/png');a.click();

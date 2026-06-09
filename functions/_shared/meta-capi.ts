@@ -75,7 +75,7 @@ export async function sendMetaCapiPurchase(
       event_time: Math.floor(Date.now() / 1000),
       event_id: eventId,
       action_source: 'website',
-      event_source_url: order.pageUrl || 'https://musicplay-83l.pages.dev/',
+      event_source_url: order.pageUrl || 'https://musiclovestudio.online/',
       user_data: userData,
       custom_data: {
         currency: 'BRL',
