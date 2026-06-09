@@ -73,21 +73,24 @@ OCASIÃO: ${ocasiao}
 HISTÓRIA DO CLIENTE:
 ${historia}${ajustes}${reescrita}
 
-REGRAS OBRIGATÓRIAS:
-- Transformar TODA a história em música — não inventar fatos, usar apenas o que foi contado
-- Narrativa musical: início (como tudo começou) → desenvolvimento (desafios/superações de forma sutil) → clímax emocional → final (amor, esperança ou declaração)
-- Linguagem simples, humana, emocional e cantável — como uma conversa cantada
+REGRAS OBRIGATORIAS:
+- Transformar TODA a historia em musica, nao inventar fatos e usar apenas o que foi contado
+- Narrativa musical: inicio, desenvolvimento, climax emocional e final com amor, esperanca ou declaracao
+- Linguagem simples, humana, emocional e cantavel, como uma conversa cantada
 - Sempre incluir o nome ${destinatario} na letra
-- Rimas apenas quando forem NATURAIS — zero rimas forçadas
-- Dores, perdas e temas sensíveis: tratar de forma sutil e implícita, priorizando superação
+- Rimas apenas quando forem naturais, sem forcar
+- Dores, perdas e temas sensiveis: tratar de forma sutil, priorizando superacao
 - Datas devem ser escritas por extenso
-- Duração máxima: letra equivalente a 3 minutos de música
-- NUNCA usar marcadores como "Verso 1", "Refrão", "Ponte", "Pré-refrão"
-- Entregar letra corrida, sem títulos técnicos, sem emojis, sem explicações
-- Fiel ao estilo musical indicado — ritmo, vocabulário e clima do estilo devem estar presentes
+- Duracao maxima: letra equivalente a 3 minutos de musica
+- Usar obrigatoriamente secoes musicais com estes cabecalhos, nessa ordem: VERSO 1, PRE-REFRAO, REFRAO, VERSO 2, PONTE, REFRAO FINAL
+- Cada cabecalho deve ficar sozinho em uma linha, sem parenteses, sem dois-pontos e sem emojis
+- Escrever versos curtos, cantaveis e separados por quebras de linha, como letra de musica profissional
+- Nao repetir o titulo nem o nome do destinatario como linha solta dentro de lyrics
+- Sem explicacoes fora do JSON
+- Fiel ao estilo musical indicado: ritmo, vocabulario e clima do estilo devem estar presentes
 
-FORMATO DE RESPOSTA — JSON válido:
-{"title":"Título da música","lyrics":"letra completa corrida aqui"}`;
+FORMATO DE RESPOSTA - JSON valido:
+{"title":"Titulo da musica","lyrics":"VERSO 1\nprimeira linha\nsegunda linha\n\nPRE-REFRAO\nprimeira linha\nsegunda linha\n\nREFRAO\nprimeira linha\nsegunda linha"}`;
 }
 
 // ─── Agente de pronúncia de nomes ─────────────────────────────────────────────
@@ -228,7 +231,40 @@ function fallbackLyrics(destinatario: string, ocasiao: string, historia: string)
   const nome = destinatario || 'meu amor';
   return {
     title: `Para ${nome}`,
-    lyrics: `Tem momentos que a gente não esquece,\nque ficam guardados dentro do peito.\nE quando a saudade aparece,\ntudo volta, tão bonito, tão perfeito.\n\nVocê chegou e mudou tudo,\ntrouxe luz pra cada dia meu.\nSem precisar de muito,\nvocê me fez acreditar de novo.\n\n${nome}, essa música é sua,\nfeita da nossa história, feita de verdade.\nQue onde eu for, onde eu esteja,\nvocê vai ser sempre minha metade.\n\nO tempo passa, a vida muda,\nmas o que sinto por você fica igual.\nMeu coração quando te escuta\nsabe que você é meu bem, meu lar.`,
+    lyrics: `VERSO 1
+Tem momentos que a gente nao esquece
+Ficam guardados dentro do peito
+E quando a saudade aparece
+Tudo volta bonito e perfeito
+
+PRE-REFRAO
+Voce chegou e mudou tudo
+Trouxe luz pra cada dia meu
+Sem precisar dizer muito
+Meu coracao entendeu
+
+REFRAO
+${nome}, essa musica e sua
+Feita da nossa historia de verdade
+Que onde eu for, onde eu esteja
+Voce vai ser sempre minha metade
+
+VERSO 2
+O tempo passa, a vida muda
+Mas o que sinto por voce fica igual
+Cada detalhe dessa jornada
+Virou nosso presente especial
+
+PONTE
+${historia}
+E se as palavras faltarem no caminho
+A melodia fala por mim baixinho
+
+REFRAO FINAL
+${nome}, essa musica e sua
+Pra celebrar nosso ${ocasiao}
+Com carinho em cada nota
+E amor dentro da cancao`,
   };
 }
 

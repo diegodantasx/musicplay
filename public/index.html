@@ -371,13 +371,16 @@
     /* Lyric card novo */
     .lyric-card { background: linear-gradient(145deg,#f9f3ff,#fdf0fb); border:1px solid #e5d0f5; border-radius:18px; padding:22px 18px 18px; margin-bottom:14px; position:relative; overflow:hidden }
     .lyric-card::before { content:''; position:absolute; top:-30px; right:-30px; width:120px; height:120px; border-radius:50%; background:radial-gradient(circle,#e0c8ff44,transparent); }
-    .lyric-card-icon { font-size:28px; text-align:center; margin-bottom:6px }
-    .lyric-card-title { font-size:14px; font-weight:600; color:var(--violet); text-align:center; margin-bottom:6px; letter-spacing:.3px; font-family:'Inter',sans-serif }
-    .lyric-card-recipient { font-size:26px; font-weight:800; color:var(--ink); text-align:center; margin-bottom:16px; line-height:1.2; font-family:'Playfair Display',Georgia,serif }
-    .lyric-card-body { text-align:left; max-height:320px; overflow-y:auto; padding-right:4px }
+    .lyric-card-icon { font-size:30px; text-align:center; margin-bottom:8px; color:var(--violet) }
+    .lyric-card-title { font-size:14px; font-weight:900; color:var(--violet); text-align:center; margin-bottom:8px; letter-spacing:0; font-family:'Inter',sans-serif }
+    .lyric-card-recipient { font-size:30px; font-weight:900; color:var(--ink); text-align:center; margin-bottom:18px; line-height:1.1; font-family:'Playfair Display',Georgia,serif; text-transform:uppercase }
+    .lyric-card-body { text-align:left; max-height:320px; overflow-y:auto; padding-right:10px; position:relative; z-index:1 }
     .lyric-card-body::-webkit-scrollbar { width:4px } .lyric-card-body::-webkit-scrollbar-thumb { background:#d0b0ef; border-radius:2px }
     .lyric-stanza { margin-bottom:16px; line-height:1.75; font-size:14px; color:#333 }
     .lyric-stanza-label { font-size:10px; letter-spacing:1.5px; text-transform:uppercase; color:var(--violet); margin-bottom:4px; font-weight:700; display:block }
+    .lyric-section { margin:16px 0 7px; font-size:10px; letter-spacing:1.4px; text-transform:uppercase; color:var(--violet); font-weight:900 }
+    .lyric-section:first-child { margin-top:0 }
+    .lyric-line { font-size:14px; line-height:1.75; color:#344054; margin:0 0 1px }
     /* Aviso sucesso */
     .notice-success { display:flex; align-items:flex-start; gap:10px; background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:12px 14px; font-size:13px; color:#15803d; margin-bottom:14px; line-height:1.5 }
     /* Correções colapsável */
@@ -1447,24 +1450,57 @@ a melodia fala por mim baixinho.`;
     }
 
     function renderLyricCard(lyrics, title, recipient) {
-      // Atualizar título
-      if (title) document.getElementById('songTitle').textContent = title;
-      // Destinatário
+      var cleanTitle = String(title || 'Sua musica personalizada').replace(/^T(?:itulo|\u00edtulo):\s*/i, '').trim();
+      var rec = String(recipient || '').trim();
+      var titleEl = document.getElementById('songTitle');
+      if (titleEl) titleEl.textContent = 'T\u00edtulo: ' + cleanTitle;
+
       var recEl = document.getElementById('lyricRecipient');
-      if (recEl) recEl.textContent = recipient || '';
-      // Formatar estrofes
+      if (recEl) recEl.textContent = rec || 'MUSICA PERSONALIZADA';
+
       var display = document.getElementById('lyricDisplay');
       if (!display || !lyrics) return;
-      var stanzas = lyrics.split(/\n\s*\n/);
-      display.innerHTML = stanzas.map(function(s) {
-        s = s.trim();
-        if (!s) return '';
-        // Detectar label tipo (Verso 1), (Refrão), etc.
-        var labelMatch = s.match(/^\(([^)]+)\)\s*\n?/);
-        var label = labelMatch ? '<span class="lyric-stanza-label">' + labelMatch[1] + '</span>' : '';
-        var text = labelMatch ? s.slice(labelMatch[0].length) : s;
-        return '<div class="lyric-stanza">' + label + text.replace(/\n/g, '<br>') + '</div>';
-      }).join('');
+
+      var esc = function(text) {
+        return String(text).replace(/[&<>"']/g, function(ch) {
+          return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch];
+        });
+      };
+      var normalizeHeader = function(line) {
+        var cleaned = line
+          .replace(/^[([{\s]+|[\])}\s:]+$/g, '')
+          .replace(/^\s*[-\u2013\u2014\u2022]+\s*/, '')
+          .replace(/\s*:\s*$/, '')
+          .trim();
+        var plain = cleaned.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        if (/^verso\s*\d*$/.test(plain)) return cleaned.toUpperCase();
+        if (/^pre\s*-?\s*refrao$/.test(plain)) return 'PR\u00c9-REFR\u00c3O';
+        if (/^refrao$/.test(plain)) return 'REFR\u00c3O';
+        if (/^ponte$/.test(plain)) return 'PONTE';
+        if (/^intro(ducao)?$/.test(plain)) return 'INTRO';
+        if (/^final$/.test(plain)) return 'FINAL';
+        return '';
+      };
+
+      var recipientPlain = rec.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      var titlePlain = cleanTitle.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      var html = [];
+
+      String(lyrics).replace(/\r/g, '').split('\n').forEach(function(raw) {
+        var line = raw.trim();
+        if (!line) return;
+        var plain = line.replace(/^T(?:itulo|\u00edtulo):\s*/i, '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        if (plain === titlePlain || plain === recipientPlain || /^titulo\s*:/.test(plain)) return;
+        var header = normalizeHeader(line);
+        if (header) {
+          html.push('<div class="lyric-section">' + esc(header) + '</div>');
+        } else {
+          html.push('<p class="lyric-line">' + esc(line) + '</p>');
+        }
+      });
+
+      display.innerHTML = html.join('') || '<p style="color:#bbb;text-align:center;font-size:13px">Aguardando gera\u00e7\u00e3o da letra...</p>';
+      display.scrollTop = 0;
     }
 
     async function generateLyrics() {
