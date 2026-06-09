@@ -55,45 +55,42 @@ function buildPrompt(
   voz: string, historia: string, correcoes: string, currentLyrics: string,
 ): string {
   const styleCtx = getStyleContext(estilo);
-  const perspectiva = voz === 'Masculina'
-    ? 'ele cantando pra ela — primeira pessoa masculina'
-    : 'ela cantando pra ele — primeira pessoa feminina';
 
-  const reescrita = currentLyrics
-    ? `\n\nRESCREVER E MELHORAR ESTA LETRA (mantenha a essência, melhore a qualidade):\n${currentLyrics}`
-    : '';
-  const ajustes = correcoes ? `\n\nAJUSTES OBRIGATÓRIOS: ${correcoes}` : '';
+  return `Voce e compositor profissional da Music Love.
 
-  return `Você é um compositor profissional especializado em transformar histórias reais em músicas completas, emocionantes e prontas para gravação.
+Crie uma letra COMPLETA de musica personalizada em portugues do Brasil, emocional, comercial, cantavel e pronta para ser transformada em musica.
+Nao escreva uma previa curta. A entrega deve parecer uma cancao completa, com comeco, desenvolvimento, refrao forte e fechamento emocionante.
 
-ESTILO: ${styleCtx}
-VOZ/PERSPECTIVA: ${perspectiva}
-PARA: ${destinatario} (${relacao})
-OCASIÃO: ${ocasiao}
-HISTÓRIA DO CLIENTE:
-${historia}${ajustes}${reescrita}
+Dados do pedido:
+- Nome de quem vai ganhar: ${destinatario}
+- Relacao: ${relacao}
+- Ocasiao: ${ocasiao}
+- Estilo musical desejado: ${estilo}
+- Contexto do estilo musical: ${styleCtx}
+- Voz desejada: ${voz}
+- Historia/mensagem do cliente: ${historia}
+- Letra atual, se houver: ${currentLyrics || 'nao informada'}
+- Ajustes/correcoes pedidos pelo cliente, se houver: ${correcoes || 'nao informado'}
 
-REGRAS OBRIGATORIAS:
-- Transformar TODA a historia em musica, nao inventar fatos e usar apenas o que foi contado
-- Narrativa musical: inicio, desenvolvimento, climax emocional e final com amor, esperanca ou declaracao
-- Linguagem simples, humana, emocional e cantavel, como uma conversa cantada
-- Sempre incluir o nome ${destinatario} na letra
-- Rimas apenas quando forem naturais, sem forcar
-- Dores, perdas e temas sensiveis: tratar de forma sutil, priorizando superacao
-- Datas devem ser escritas por extenso
-- Duracao maxima: letra equivalente a 3 minutos de musica
-- Usar obrigatoriamente secoes musicais com estes cabecalhos, nessa ordem: VERSO 1, PRE-REFRAO, REFRAO, VERSO 2, PONTE, REFRAO FINAL
-- Cada cabecalho deve ficar sozinho em uma linha, sem parenteses, sem dois-pontos e sem emojis
-- Escrever versos curtos, cantaveis e separados por quebras de linha, como letra de musica profissional
-- Nao repetir o titulo nem o nome do destinatario como linha solta dentro de lyrics
-- Sem explicacoes fora do JSON
-- Fiel ao estilo musical indicado: ritmo, vocabulario e clima do estilo devem estar presentes
-
-FORMATO DE RESPOSTA - JSON valido:
-{"title":"Titulo da musica","lyrics":"VERSO 1\nprimeira linha\nsegunda linha\n\nPRE-REFRAO\nprimeira linha\nsegunda linha\n\nREFRAO\nprimeira linha\nsegunda linha"}`;
+Regras obrigatorias:
+- Responda somente em JSON valido, sem markdown, sem comentarios e sem texto fora do JSON.
+- Formato exato: {\"title\":\"Titulo: ...\",\"lyrics\":\"(Verso 1)\\n...\"}
+- A letra precisa ser completa, com no minimo: Verso 1, Pre-refrao, Refrao, Verso 2, Ponte e Refrao Final.
+- Quando a historia tiver muitos detalhes, inclua tambem um Verso 3 ou uma segunda ponte curta.
+- Tamanho da letra: 42 a 70 linhas, contando titulos de secoes e versos. Nao faca menos que isso.
+- Use detalhes reais da historia do cliente: nomes, datas, lugares, apelidos, momentos, dificuldades, promessas, filhos, familia, distancia, profissao ou qualquer detalhe citado.
+- Nao invente fatos especificos que o cliente nao contou. Se faltar detalhe, escreva de forma emocional sem criar mentira.
+- A letra deve ter cara de musica, nao de texto narrativo. Use frases cantaveis, ritmo natural, rimas quando combinarem e repeticoes bonitas no refrao.
+- O refrao deve ser memoravel, simples de cantar e emocionalmente forte.
+- Adapte a linguagem ao estilo musical desejado. Exemplo: sertanejo mais direto e romantico; gospel mais espiritual; funk/pop mais moderno; rock mais intenso; pagode mais leve e sentimental.
+- Evite cliches genericos em excesso como \"meu porto seguro\", \"minha luz\", \"meu coracao\" e \"pra sempre\" se nao estiverem conectados a historia. Prefira imagens pessoais e especificas.
+- Se houver ajustes/correcoes pedidos, eles sao prioridade absoluta. Reescreva a letra completa respeitando esse pedido.
+- Se houver letra atual, melhore ou refaca em cima dela quando fizer sentido, mantendo as melhores partes e corrigindo o que estiver fraco.
+- Mantenha tom bonito, sentimental, humano, profissional e comercial.
+- Nao cite IA, robo, sistema, prompt ou tecnologia.
+- Nao prometa gravacao pronta, entrega imediata ou qualquer coisa fora da letra.
+- Nao use palavroes, conteudo sexual explicito, ofensas ou termos agressivos.`;
 }
-
-// ─── Agente de pronúncia de nomes ─────────────────────────────────────────────
 // Aplica acentuação fonética em nomes próprios não-padrão para o Kie.ai pronunciar corretamente
 const PRONUNCIATION_MAP: Record<string, string> = {
   // Nomes estrangeiros / grafias incomuns
@@ -184,7 +181,7 @@ async function tryAnthropic(apiKey: string, prompt: string): Promise<{ title: st
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 1200,
+        max_tokens: 2200,
         messages: [{ role: 'user', content: prompt }],
       }),
     });
@@ -211,7 +208,7 @@ async function tryOpenAI(apiKey: string, prompt: string): Promise<{ title: strin
         model: 'gpt-4o-mini',
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.88,
-        max_tokens: 1200,
+        max_tokens: 2200,
         response_format: { type: 'json_object' },
       }),
     });
