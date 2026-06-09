@@ -76,7 +76,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     billingType: 'PIX',
     value: total,
     dueDate: new Date().toISOString().slice(0, 10),
-    description: 'Sonara Music - Música personalizada',
+    description: 'Dantas Music - Música personalizada',
     externalReference: externalRef,
   });
 

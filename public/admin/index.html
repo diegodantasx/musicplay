@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin – Sonara Music</title>
+<title>Admin – Dantas Music</title>
 <link rel="manifest" href="/admin/manifest.json">
 <meta name="theme-color" content="#7c5cbf">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Sonara Admin">
+<meta name="apple-mobile-web-app-title" content="Dantas Admin">
 <link rel="apple-touch-icon" href="/admin/icon-192.png">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -114,7 +114,7 @@ tr:hover td{background:#1a1a24}
 
 <div id="login-screen">
   <div class="login-box">
-    <h1>Sonara <span>Admin</span></h1>
+    <h1>Dantas <span>Admin</span></h1>
     <p>Painel administrativo</p>
     <input class="inp" type="text" id="lu" placeholder="Usuário" value="admin">
     <input class="inp" type="password" id="lp" placeholder="Senha">
@@ -125,7 +125,7 @@ tr:hover td{background:#1a1a24}
 
 <div id="app">
   <header>
-    <h1>Sonara <span>Admin</span></h1>
+    <h1>Dantas <span>Admin</span></h1>
     <div class="hdr-right">
       <button class="abtn" id="push-btn" onclick="togglePush()" title="Notificações" style="display:none">🔔</button>
       <button class="abtn" onclick="loadOrders()">&#8635; Atualizar</button>
@@ -853,7 +853,7 @@ function sendDeliveryWhatsApp() {
   var para = b['Para quem'] || '';
   var phone = (currentOrder.phone || '').replace(/\D/g, '');
   if (phone && !phone.startsWith('55')) phone = '55' + phone;
-  var msg = 'Olá ' + nome + '! 🎵 Sua música personalizada está pronta!\n\nAcesse o link abaixo para ouvir e baixar:\n\n' + deliveryUrl + (para ? '\n\nCriada com muito carinho para ' + para + ' 💜' : '') + '\n\n— Sonara Music';
+  var msg = 'Olá ' + nome + '! 🎵 Sua música personalizada está pronta!\n\nAcesse o link abaixo para ouvir e baixar:\n\n' + deliveryUrl + (para ? '\n\nCriada com muito carinho para ' + para + ' 💜' : '') + '\n\n— Dantas Music';
   var wa = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
   window.open(wa, '_blank');
 }
@@ -885,7 +885,7 @@ function recoverPix(pid, name, phone) {
       document.getElementById('rc-value').textContent = 'R$ ' + Number(d.value||0).toFixed(2).replace('.',',');
       document.getElementById('rc-payload').value = d.payload || '';
       document.getElementById('rc-reused').style.display = d.reused ? 'block' : 'none';
-      var msg = 'Olá ' + (d.name||'').split(' ')[0] + '! Aqui está seu PIX da Sonara Music 🎵\n\nCopie o código abaixo e cole no seu banco:\n\n' + d.payload;
+      var msg = 'Olá ' + (d.name||'').split(' ')[0] + '! Aqui está seu PIX da Dantas Music 🎵\n\nCopie o código abaixo e cole no seu banco:\n\n' + d.payload;
       var waPhone = (d.phone||phone||'').replace(/\D/g,'');
       if (waPhone && !waPhone.startsWith('55')) waPhone = '55' + waPhone;
       document.getElementById('rc-whatsapp').href = 'https://wa.me/' + waPhone + '?text=' + encodeURIComponent(msg);
@@ -991,7 +991,7 @@ function buildQrCard(para, de, tema, qrDataUrl) {
     // Decoração topo
     + '<div style="font-size:22px;letter-spacing:6px;margin-bottom:16px;opacity:.7">' + t.emojiDec + '</div>'
     // Branding
-    + '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:' + t.accent + ';margin-bottom:14px;opacity:.9">🎵 SONARA MUSIC</div>'
+    + '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:' + t.accent + ';margin-bottom:14px;opacity:.9">🎵 Dantas Music</div>'
     // Para quem
     + '<div style="font-size:26px;font-weight:800;color:#fff;margin-bottom:4px;text-shadow:0 2px 12px rgba(0,0,0,.4)">Para ' + para + '</div>'
     // De quem
@@ -1063,7 +1063,7 @@ function salvarPng() {
     logging: false,
   }).then(function(canvas) {
     var link = document.createElement('a');
-    link.download = 'sonara-qrcode-' + para + '.png';
+    link.download = 'dantas-qrcode-' + para + '.png';
     link.href = canvas.toDataURL('image/png');
     link.click();
     btn.textContent = '🖼️ Salvar como imagem PNG';
@@ -1080,7 +1080,7 @@ function salvarPng() {
 function imprimirQrCard() {
   var card = document.getElementById('qr-card-print').outerHTML;
   var w = window.open('', '_blank');
-  w.document.write('<html><head><title>QR Code – Sonara Music</title><style>body{margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#fff}</style></head><body>' + card + '</body></html>');
+  w.document.write('<html><head><title>QR Code – Dantas Music</title><style>body{margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#fff}</style></head><body>' + card + '</body></html>');
   w.document.close();
   w.focus();
   setTimeout(function(){ w.print(); }, 600);
@@ -1094,7 +1094,7 @@ function compartilharQrCard() {
   if (phone && !phone.startsWith('55')) phone = '55' + phone;
   var pid = currentOrder ? currentOrder.paymentId : '';
   var playerUrl = pid ? ('https://musicplay-83l.pages.dev/m/' + pid) : document.getElementById('f-link').value.trim();
-  var msg = 'Olá ' + nome + '! 🎵 Sua música personalizada está pronta!\n\nAbra o link abaixo para ouvir:\n\n' + playerUrl + '\n\nFoi criada com muito carinho para ' + para + ' 💜\n\n— Sonara Music';
+  var msg = 'Olá ' + nome + '! 🎵 Sua música personalizada está pronta!\n\nAbra o link abaixo para ouvir:\n\n' + playerUrl + '\n\nFoi criada com muito carinho para ' + para + ' 💜\n\n— Dantas Music';
   var wa = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
   window.open(wa, '_blank');
 }

@@ -1,7 +1,7 @@
 {
-  "name": "Sonara Admin",
-  "short_name": "Sonara",
-  "description": "Painel administrativo Sonara Music",
+  "name": "Dantas Admin",
+  "short_name": "Dantas",
+  "description": "Painel administrativo Dantas Music",
   "start_url": "/admin/",
   "scope": "/admin/",
   "display": "standalone",

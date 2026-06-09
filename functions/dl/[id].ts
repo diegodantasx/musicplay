@@ -24,7 +24,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     const m = brief.match(/Para quem:\s*([^\n]+)/i);
     if (m) para = m[1].trim().split(' ')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
   } catch {}
-  const filename = `sonara-${para}${v ? '-v2' : ''}.mp3`;
+  const filename = `Dantas-${para}${v ? '-v2' : ''}.mp3`;
 
   // Proxy do áudio com headers corretos para download
   let upstream: Response;

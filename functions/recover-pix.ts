@@ -65,7 +65,7 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
     billingType: 'PIX',
     value: Number(order['value'] ?? 29.9),
     dueDate: dueDateStr,
-    description: 'Sonara Music – recuperação de pedido',
+    description: 'Dantas Music – recuperação de pedido',
     externalReference: String(order['externalReference'] ?? paymentId),
   });
 

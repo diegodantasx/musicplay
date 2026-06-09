@@ -1,4 +1,4 @@
-const CACHE = 'sonara-admin-v1';
+const CACHE = 'Dantas-admin-v1';
 const OFFLINE_URLS = ['/admin/', '/admin/index.html'];
 
 // Instalar — cacheia o shell
@@ -45,7 +45,7 @@ self.addEventListener('push', e => {
       icon: '/admin/icon-192.png',
       badge: '/admin/icon-192.png',
       vibrate: [300, 100, 300, 100, 300],
-      tag: 'sonara-venda',
+      tag: 'Dantas-venda',
       renotify: true,
       requireInteraction: true,
       data: { url: '/admin/' }

@@ -61,7 +61,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   try { body = await request.json() as Record<string, unknown>; } catch {}
 
   const title   = String(body['title']   ?? '🎵 Nova venda!');
-  const message = String(body['message'] ?? 'Sonara Music — toque para ver o pedido');
+  const message = String(body['message'] ?? 'Dantas Music — toque para ver o pedido');
 
   // Buscar todas as subscriptions
   const list = await env.ORDERS_KV.list({ prefix: 'push_sub:', limit: 100 });
