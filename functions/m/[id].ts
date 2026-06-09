@@ -323,7 +323,7 @@ ${audioUrl2 && bumpVersion ? `<audio id="audio2" preload="metadata"><source src=
     </div>
     <div class="bump-body">
       <p style="font-size:14px;color:rgba(255,255,255,.7);line-height:1.6;margin-bottom:14px">Para gerar suas 2 músicas extras, envie os briefings pelo WhatsApp. Nossa equipe irá criar cada música com carinho.</p>
-      <a class="dl-btn" href="https://wa.me/554188869695?text=${encodeURIComponent('Olá! Comprei o pacote com 2 músicas extras. Pedido: ' + id + '. Quero enviar os detalhes das músicas.')}" target="_blank" rel="noopener" style="font-size:15px;padding:14px;background:linear-gradient(135deg,#16a34a,#22c55e)">📲 Solicitar músicas extras</a>
+      <a class="dl-btn" href="https://wa.me/554797476509?text=${encodeURIComponent('Olá! Comprei o pacote com 2 músicas extras. Pedido: ' + id + '. Quero enviar os detalhes das músicas.')}" target="_blank" rel="noopener" style="font-size:15px;padding:14px;background:linear-gradient(135deg,#16a34a,#22c55e)">📲 Solicitar músicas extras</a>
     </div>
   </div>` : ''}
 
@@ -346,7 +346,7 @@ ${audioUrl2 && bumpVersion ? `<audio id="audio2" preload="metadata"><source src=
           <div style="font-size:13px;color:rgba(255,255,255,.5);">Nossa equipe está montando o vídeo com sua música e imagens temáticas.</div>
         </div>
       </div>
-      <a class="dl-btn" href="https://wa.me/554188869695?text=${encodeURIComponent('Olá! Quero verificar o status do meu vídeo. Pedido: ' + id)}" target="_blank" rel="noopener" style="font-size:15px;padding:14px;background:linear-gradient(135deg,#16a34a,#22c55e)">📲 Verificar status do vídeo</a>
+      <a class="dl-btn" href="https://wa.me/554797476509?text=${encodeURIComponent('Olá! Quero verificar o status do meu vídeo. Pedido: ' + id)}" target="_blank" rel="noopener" style="font-size:15px;padding:14px;background:linear-gradient(135deg,#16a34a,#22c55e)">📲 Verificar status do vídeo</a>
     </div>
   </div>` : ''}
 
@@ -365,7 +365,7 @@ ${audioUrl2 && bumpVersion ? `<audio id="audio2" preload="metadata"><source src=
   </div>
 
   <!-- SUPORTE -->
-  <a class="wa-link" href="https://wa.me/554188869695?text=${encodeURIComponent('Olá! Preciso de ajuda com minha música. Pedido: ' + id)}" target="_blank" rel="noopener">
+  <a class="wa-link" href="https://wa.me/554797476509?text=${encodeURIComponent('Olá! Preciso de ajuda com minha música. Pedido: ' + id)}" target="_blank" rel="noopener">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.138.564 4.139 1.544 5.871L0 24l6.335-1.52A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.908 0-3.703-.498-5.258-1.373l-.375-.22-3.766.904.952-3.68-.244-.386A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
     Precisa de ajuda? Fale pelo WhatsApp
   </a>
