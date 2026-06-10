@@ -4,6 +4,8 @@ interface Env {
   ORDERS_KV: KVNamespace;
   META_PIXEL_ID: string;
   META_CAPI_TOKEN: string;
+  META_PIXEL_ID_2: string;
+  META_CAPI_TOKEN_2: string;
   KIE_API_KEY: string;
   ADMIN_PASSWORD: string;
   OWNER_WHATSAPP: string;
@@ -62,23 +64,25 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
 
   await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 30 });
 
+  const capiOrder = {
+    paymentId,
+    customerId: String(order['customerId'] ?? ''),
+    externalReference: String(order['externalReference'] ?? ''),
+    name: String(order['name'] ?? ''),
+    email: String(order['email'] ?? ''),
+    phone: String(order['phone'] ?? ''),
+    value: Number(order['value'] ?? 29.9),
+    fbp: String(order['fbp'] ?? ''),
+    fbc: String(order['fbc'] ?? ''),
+    clientIp: String(order['clientIp'] ?? ''),
+    userAgent: String(order['userAgent'] ?? ''),
+    pageUrl: String(order['pageUrl'] ?? ''),
+    brief: String(order['brief'] ?? ''),
+  };
+
   if (isPaid && !order['metaCapiSent']) {
     console.log('[capi] attempting Purchase — pixelId:', env.META_PIXEL_ID ? 'SET' : 'MISSING', 'token:', env.META_CAPI_TOKEN ? 'SET' : 'MISSING');
-    const sent = await sendMetaCapiPurchase(env.META_PIXEL_ID, env.META_CAPI_TOKEN, {
-      paymentId,
-      customerId: String(order['customerId'] ?? ''),
-      externalReference: String(order['externalReference'] ?? ''),
-      name: String(order['name'] ?? ''),
-      email: String(order['email'] ?? ''),
-      phone: String(order['phone'] ?? ''),
-      value: Number(order['value'] ?? 29.9),
-      fbp: String(order['fbp'] ?? ''),
-      fbc: String(order['fbc'] ?? ''),
-      clientIp: String(order['clientIp'] ?? ''),
-      userAgent: String(order['userAgent'] ?? ''),
-      pageUrl: String(order['pageUrl'] ?? ''),
-      brief: String(order['brief'] ?? ''),
-    });
+    const sent = await sendMetaCapiPurchase(env.META_PIXEL_ID, env.META_CAPI_TOKEN, capiOrder);
     console.log('[capi] Purchase result:', sent ? 'SUCCESS' : 'FAILED');
     if (sent) {
       order['metaCapiSent'] = true;
@@ -87,6 +91,19 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     }
   } else if (isPaid && order['metaCapiSent']) {
     console.log('[capi] Purchase already sent, skipping');
+  }
+
+  if (isPaid && !order['metaCapiSent2']) {
+    console.log('[capi-2] attempting Purchase - pixelId:', env.META_PIXEL_ID_2 ? 'SET' : 'MISSING', 'token:', env.META_CAPI_TOKEN_2 ? 'SET' : 'MISSING');
+    const sent2 = await sendMetaCapiPurchase(env.META_PIXEL_ID_2, env.META_CAPI_TOKEN_2, capiOrder);
+    console.log('[capi-2] Purchase result:', sent2 ? 'SUCCESS' : 'FAILED');
+    if (sent2) {
+      order['metaCapiSent2'] = true;
+      order['updated_at'] = new Date().toISOString();
+      await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 30 });
+    }
+  } else if (isPaid && order['metaCapiSent2']) {
+    console.log('[capi-2] Purchase already sent, skipping');
   }
 
   if (isPaid) {
