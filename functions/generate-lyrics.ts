@@ -1,4 +1,5 @@
 interface Env {
+  ORDERS_KV: KVNamespace;
   OPENAI_API_KEY: string;
   ANTHROPIC_API_KEY: string;
 }

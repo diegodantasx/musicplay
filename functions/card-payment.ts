@@ -1,8 +1,13 @@
 import { asaas } from './_shared/asaas';
+import { sendMetaCapiPurchase } from './_shared/meta-capi';
 
 interface Env {
   ORDERS_KV: KVNamespace;
   ASAAS_API_KEY: string;
+  META_PIXEL_ID: string;
+  META_CAPI_TOKEN: string;
+  META_PIXEL_ID_2: string;
+  META_CAPI_TOKEN_2: string;
 }
 
 function json(data: unknown, status = 200): Response {
@@ -14,6 +19,9 @@ function json(data: unknown, status = 200): Response {
 
 function digits(s: string) { return s.replace(/\D/g, ''); }
 function clean(v: unknown, limit = 200) { return String(v ?? '').trim().slice(0, limit); }
+function cleanAttr(obj: Record<string, unknown>, key: string, limit = 500): string {
+  return String(obj[key] ?? '').trim().replace(/[^\S\n]+/g, ' ').slice(0, limit);
+}
 
 export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   if (request.method !== 'POST') return json({ ok: false, error: 'method_not_allowed' }, 405);
@@ -106,7 +114,7 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   const paid = payRes.data['status'] === 'CONFIRMED' || payRes.data['status'] === 'RECEIVED';
 
   // 3. Salvar no KV
-  const order = {
+  const order: Record<string, unknown> = {
     paymentId,
     customerId: cid,
     externalReference: externalRef,
@@ -115,19 +123,19 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
     billingType: 'CREDIT_CARD',
     orderBumpBackOffer: true,
     orderBumpVideo: true,
-    fbp: clean(attr, 'fbp', 180),
-    fbc: clean(attr, 'fbc', 260),
-    fbclid: clean(attr, 'fbclid', 260),
-    gclid: clean(attr, 'gclid', 260),
-    wbraid: clean(attr, 'wbraid', 260),
-    gbraid: clean(attr, 'gbraid', 260),
-    dclid: clean(attr, 'dclid', 260),
-    pageUrl: clean(attr, 'pageUrl', 900),
-    utmSource:   clean(attr, 'utmSource',   120),
-    utmMedium:   clean(attr, 'utmMedium',   120),
-    utmCampaign: clean(attr, 'utmCampaign', 200),
-    utmContent:  clean(attr, 'utmContent',  200),
-    utmTerm:     clean(attr, 'utmTerm',     200),
+    fbp: cleanAttr(attr, 'fbp', 180),
+    fbc: cleanAttr(attr, 'fbc', 260),
+    fbclid: cleanAttr(attr, 'fbclid', 260),
+    gclid: cleanAttr(attr, 'gclid', 260),
+    wbraid: cleanAttr(attr, 'wbraid', 260),
+    gbraid: cleanAttr(attr, 'gbraid', 260),
+    dclid: cleanAttr(attr, 'dclid', 260),
+    pageUrl: cleanAttr(attr, 'pageUrl', 900),
+    utmSource:   cleanAttr(attr, 'utmSource',   120),
+    utmMedium:   cleanAttr(attr, 'utmMedium',   120),
+    utmCampaign: cleanAttr(attr, 'utmCampaign', 200),
+    utmContent:  cleanAttr(attr, 'utmContent',  200),
+    utmTerm:     cleanAttr(attr, 'utmTerm',     200),
     paid,
     status: String(payRes.data['status'] || 'PENDING'),
     clientIp,
@@ -136,6 +144,33 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   };
   if (env.ORDERS_KV) {
     await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 30 });
+  }
+
+  if (paid) {
+    const capiOrder = {
+      paymentId,
+      customerId: cid,
+      externalReference: externalRef,
+      name,
+      email,
+      phone,
+      value: 49.90,
+      fbp: String(order['fbp'] ?? ''),
+      fbc: String(order['fbc'] ?? ''),
+      clientIp,
+      userAgent: String(order['userAgent'] ?? ''),
+      pageUrl: String(order['pageUrl'] ?? ''),
+      brief,
+    };
+    const [sent1, sent2] = await Promise.all([
+      sendMetaCapiPurchase(env.META_PIXEL_ID, env.META_CAPI_TOKEN, capiOrder),
+      sendMetaCapiPurchase(env.META_PIXEL_ID_2, env.META_CAPI_TOKEN_2, capiOrder),
+    ]);
+    if (sent1) order['metaCapiSent'] = true;
+    if (sent2) order['metaCapiSent2'] = true;
+    if ((sent1 || sent2) && env.ORDERS_KV) {
+      await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 30 });
+    }
   }
 
   return json({ ok: true, paid, paymentId, status: payRes.data['status'] });
