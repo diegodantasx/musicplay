@@ -28,7 +28,41 @@
     'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1224220496350318');
     fbq('init', '937888532615113');
-    fbq('track', 'PageView');
+    window.mlMetaEventId = function(name) {
+      return name + '_' + Date.now() + '_' + Math.random().toString(36).slice(2, 10);
+    };
+    window.mlMetaServerEvent = function(eventName, customData, eventId) {
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var cookies = document.cookie.split('; ').reduce(function(acc, row) {
+          var parts = row.split('=');
+          acc[parts[0]] = parts.slice(1).join('=');
+          return acc;
+        }, {});
+        var fbclid = params.get('fbclid') || '';
+        var fbc = cookies._fbc || (fbclid ? ('fb.1.' + Date.now() + '.' + fbclid) : '');
+        var payload = {
+          eventName: eventName,
+          eventId: eventId,
+          customData: customData || {},
+          attribution: {
+            fbp: cookies._fbp || '',
+            fbc: fbc,
+            pageUrl: window.location.href,
+            userAgent: navigator.userAgent
+          }
+        };
+        fetch('/meta-event', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload),
+          keepalive: true
+        }).catch(function(){});
+      } catch(e) {}
+    };
+    var pageViewEventId = window.mlMetaEventId('PageView');
+    fbq('track', 'PageView', {}, {eventID: pageViewEventId});
+    window.mlMetaServerEvent('PageView', {}, pageViewEventId);
   </script>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1224220496350318&ev=PageView&noscript=1"></noscript>
   <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=937888532615113&ev=PageView&noscript=1"></noscript>
@@ -1373,10 +1407,10 @@
         nextButton.textContent = "Comprar minha música — R$29,90";
         nextButton.classList.add("green");
         nextButton.style.display = '';
-        if (window.fbq) fbq('track', 'Lead', {content_name: 'Briefing concluído', currency: 'BRL', value: 29.90});
+        metaTrack('Lead', {content_name: 'Briefing concluído', currency: 'BRL', value: 29.90});
         gaEvent('generate_lead', { event_category: 'funnel', event_label: 'letra_pronta' });
       }
-      if (step === 2) { nextButton.textContent = "Pagar com PIX — " + formatBRL(currentTotal()); nextButton.classList.add("green"); nextButton.style.display = ''; if (window.fbq) fbq('track', 'InitiateCheckout', {currency: 'BRL', value: currentTotal(), content_name: 'MusicLove Studio', content_ids: ['musiclove_studio'], num_items: 1}); gaEvent('begin_checkout', { value: currentTotal(), event_category: 'checkout' }); }
+      if (step === 2) { nextButton.textContent = "Pagar com PIX — " + formatBRL(currentTotal()); nextButton.classList.add("green"); nextButton.style.display = ''; metaTrack('InitiateCheckout', {currency: 'BRL', value: currentTotal(), content_name: 'MusicLove Studio', content_ids: ['musiclove_studio'], num_items: 1}); gaEvent('begin_checkout', { value: currentTotal(), event_category: 'checkout' }); }
       errorBox.classList.remove("show");
       updateFunnelShell();
     }
@@ -1390,12 +1424,44 @@
       }, params || {}));
     }
 
+    function metaTrack(eventName, customData, options) {
+      const eventId = (options && options.eventID) || (window.mlMetaEventId ? window.mlMetaEventId(eventName) : (eventName + '_' + Date.now()));
+      if (window.fbq) fbq('track', eventName, customData || {}, {eventID: eventId});
+      const customer = {};
+      const email = value("email");
+      const phone = value("whatsapp");
+      const name = value("nome");
+      if (email) customer.email = email;
+      if (phone) customer.phone = phone;
+      if (name) customer.name = name;
+      if (window.mlMetaServerEvent) {
+        try {
+          const attribution = getAttribution();
+          fetch('/meta-event', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+              eventName,
+              eventId,
+              customData: customData || {},
+              attribution,
+              customer
+            }),
+            keepalive: true
+          }).catch(function(){});
+        } catch(e) {
+          window.mlMetaServerEvent(eventName, customData || {}, eventId);
+        }
+      }
+      return eventId;
+    }
+
     function track(event) { fetch('/track', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ event }) }).catch(() => {}); }
 
     function openFunnel() {
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
-      if (window.fbq) fbq('track', 'ViewContent', {content_name: 'MusicLove Studio – Checkout Aberto', content_type: 'product', content_ids: ['musiclove_studio'], currency: 'BRL', value: 29.90});
+      metaTrack('ViewContent', {content_name: 'MusicLove Studio – Checkout Aberto', content_type: 'product', content_ids: ['musiclove_studio'], currency: 'BRL', value: 29.90});
       gaEvent('view_item', { event_category: 'funnel', event_label: 'checkout_aberto' });
       track('funnel_open');
       updateFunnelShell();
@@ -1660,7 +1726,7 @@ a melodia fala por mim baixinho.`;
         currentPaymentValue = Number(data.value || currentTotal());
         currentWhatsappMessage = whatsappMessage;
         updateFunnelShell();
-        if (window.fbq) fbq('track', 'AddPaymentInfo', {currency: 'BRL', value: currentTotal(), content_name: 'Pix gerado MusicLove Studio'});
+        metaTrack('AddPaymentInfo', {currency: 'BRL', value: currentTotal(), content_name: 'Pix gerado MusicLove Studio'});
         gaEvent('add_payment_info', { value: currentPaymentValue, payment_type: 'Pix', event_category: 'checkout' });
         startPaymentPolling(data.paymentId, whatsappMessage);
         pixGenerated = true;
@@ -1714,7 +1780,7 @@ a melodia fala por mim baixinho.`;
       if (data.ok && data.paid) {
         trackKwaiPurchaseAfterPayment(paymentId, currentPaymentValue);
         const cleanPid = (paymentId || '').replace(/[^a-zA-Z0-9_.-]/g, '');
-        if (window.fbq && cleanPid) fbq('track', 'Purchase', {currency: 'BRL', value: currentPaymentValue, content_name: 'MusicLove Studio', content_ids: ['musiclove_studio'], content_type: 'product'}, {eventID: 'purchase_' + cleanPid});
+        if (cleanPid) metaTrack('Purchase', {currency: 'BRL', value: currentPaymentValue, content_name: 'MusicLove Studio', content_ids: ['musiclove_studio'], content_type: 'product'}, {eventID: 'purchase_' + cleanPid});
         gaEvent('purchase', { transaction_id: cleanPid, value: currentPaymentValue, event_category: 'checkout' });
         if (window.gtag && cleanPid) gtag('event', 'conversion', {'send_to': 'AW-17868003171/DfnPCJD62bUcEOOukMhC', 'value': currentPaymentValue, 'currency': 'BRL', 'transaction_id': cleanPid});
         // Ocultar PIX e mostrar thank you com WhatsApp
