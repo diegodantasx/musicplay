@@ -174,7 +174,7 @@ tr:hover td{background:#1a1a24}
   <div class="controls">
     <button class="fbtn active" onclick="setFilter('all',this)">Todos</button>
     <button class="fbtn" id="fbtn-hoje" onclick="setFilter('today',this)">📅 Hoje</button>
-    <button class="fbtn" onclick="setFilter('paid',this)">Pagos</button>
+    <button class="fbtn" onclick="setFilter('paid',this)">Pagos a entregar</button>
     <button class="fbtn" onclick="setFilter('pending',this)">Pendentes</button>
     <button class="fbtn" onclick="setFilter('delivered',this)">Entregues</button>
     <input class="search-inp" type="text" id="srch" placeholder="Buscar nome, email..." oninput="renderTable()">
@@ -570,7 +570,7 @@ function setFilter(f, btn) {
 function getFiltered() {
   var q = document.getElementById('srch').value.toLowerCase();
   return allOrders.filter(function(o){
-    if (currentFilter==='paid' && !o.paid) return false;
+    if (currentFilter==='paid' && (!o.paid || o.delivered)) return false;
     if (currentFilter==='pending' && o.paid) return false;
     if (currentFilter==='delivered' && !o.delivered) return false;
     if (currentFilter==='today' && !isToday(o)) return false;
