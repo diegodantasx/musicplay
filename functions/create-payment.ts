@@ -43,7 +43,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   }
 
   const total = backOffer ? 49.90 : (
-    39.90
+    49.90
     + (bumpVersion ? 19.89 : 0)
     + (bumpSongs   ? 25.89 : 0)
     + (bumpVideo   ? 32.89 : 0)
