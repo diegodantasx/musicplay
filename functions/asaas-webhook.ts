@@ -71,7 +71,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     name: String(order['name'] ?? ''),
     email: String(order['email'] ?? ''),
     phone: String(order['phone'] ?? ''),
-    value: Number(order['value'] ?? 29.9),
+    value: Number(order['value'] ?? 39.9),
     fbp: String(order['fbp'] ?? ''),
     fbc: String(order['fbc'] ?? ''),
     clientIp: String(order['clientIp'] ?? ''),
@@ -113,7 +113,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     // 0. Push notification de nova venda
     if (env.VAPID_PUBLIC_KEY && env.VAPID_PRIVATE_KEY) {
       const name   = String(order['name']  ?? 'Cliente').split(' ')[0];
-      const value  = Number(order['value'] ?? 29.9).toFixed(2).replace('.', ',');
+      const value  = Number(order['value'] ?? 39.9).toFixed(2).replace('.', ',');
       const bumps  = [
         order['orderBumpVideo']        ? '🎬 Vídeo' : '',
         order['orderBumpExtraSongs']   ? '🎵 +2 músicas' : '',

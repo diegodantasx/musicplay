@@ -63,7 +63,7 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   const newPay = await asaas(env.ASAAS_API_KEY, 'POST', '/payments', {
     customer: order['customerId'],
     billingType: 'PIX',
-    value: Number(order['value'] ?? 29.9),
+    value: Number(order['value'] ?? 39.9),
     dueDate: dueDateStr,
     description: 'MusicLove Studio – recuperação de pedido',
     externalReference: String(order['externalReference'] ?? paymentId),

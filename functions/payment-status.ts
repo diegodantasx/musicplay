@@ -52,7 +52,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     name: String(order['name'] ?? ''),
     email: String(order['email'] ?? ''),
     phone: String(order['phone'] ?? ''),
-    value: Number(order['value'] ?? 29.9),
+    value: Number(order['value'] ?? 39.9),
     fbp: String(order['fbp'] ?? ''),
     fbc: String(order['fbc'] ?? ''),
     clientIp: String(order['clientIp'] ?? ''),

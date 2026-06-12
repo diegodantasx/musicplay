@@ -36,7 +36,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     name: 'Teste MusicLove',
     email: 'teste@musiclovestudio.online',
     phone: '5511999999999',
-    value: 29.90,
+    value: 39.90,
     fbp: '',
     fbc: '',
     clientIp: request.headers.get('CF-Connecting-IP') || '',

@@ -175,7 +175,7 @@ export async function sendMetaCapiPurchase(
       user_data: userData,
       custom_data: {
         currency: 'BRL',
-        value: Number(order.value || 29.9),
+        value: Number(order.value || 39.9),
         content_name: contentName,
         content_ids: ['musiclove_studio'],
         content_type: 'product',
