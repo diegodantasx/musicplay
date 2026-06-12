@@ -123,7 +123,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     updated_at: new Date().toISOString(),
   };
   if (env.ORDERS_KV) {
-    await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 7 });
+    await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 365 });
   }
 
   return json({

@@ -499,7 +499,13 @@ function loadOrders() {
 function fetchAllOrders(cursor, accumulated) {
   var url = '/admin-orders' + (cursor ? '?cursor=' + encodeURIComponent(cursor) : '');
   fetch(url, { headers: { 'Authorization': auth } })
-    .then(function(r){ return r.status === 401 ? null : r.json(); })
+    .then(function(r){
+      if (r.status === 401) return null;
+      return r.json().then(function(body){
+        if (!r.ok || body.ok === false) throw new Error(body.error || ('HTTP ' + r.status));
+        return body;
+      });
+    })
     .then(function(d) {
       if (!d) { document.getElementById('tload').style.display = 'none'; document.getElementById('lerr').textContent = 'Senha incorreta.'; return; }
       var combined = accumulated.concat(d.orders || []);
@@ -513,7 +519,12 @@ function fetchAllOrders(cursor, accumulated) {
         updateStats(); updateTodayBar(); renderTable();
       }
     })
-    .catch(function(){ document.getElementById('tload').style.display = 'none'; document.getElementById('lerr').textContent = 'Erro ao conectar.'; });
+    .catch(function(err){
+      document.getElementById('tload').style.display = 'none';
+      document.getElementById('lerr').textContent = 'Erro ao carregar pedidos: ' + (err && err.message ? err.message : 'verifique a conexão.');
+      document.getElementById('tempty').style.display = 'block';
+      document.getElementById('tempty').textContent = 'Não foi possível carregar os pedidos agora.';
+    });
 }
 
 function todayStr() {

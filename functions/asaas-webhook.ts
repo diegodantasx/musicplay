@@ -62,7 +62,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   order['updated_at'] = new Date().toISOString();
   order['asaas_event'] = event;
 
-  await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 30 });
+  await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 365 });
 
   const capiOrder = {
     paymentId,
@@ -100,7 +100,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     if (sent2) {
       order['metaCapiSent2'] = true;
       order['updated_at'] = new Date().toISOString();
-      await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 30 });
+      await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 365 });
     }
   } else if (isPaid && order['metaCapiSent2']) {
     console.log('[capi-2] Purchase already sent, skipping');
@@ -137,7 +137,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       order['videoPending']  = true;
       order['videoNotified'] = false;
       order['updated_at']    = new Date().toISOString();
-      await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 30 });
+      await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 365 });
 
       if (env.OWNER_WHATSAPP && env.CALLMEBOT_API_KEY) {
         const name  = String(order['name'] ?? '');
@@ -155,7 +155,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     if (order['orderBumpExtraSongs'] === true && !order['extraSongsPending']) {
       order['extraSongsPending'] = true;
       order['updated_at']        = new Date().toISOString();
-      await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 30 });
+      await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 365 });
     }
   }
 

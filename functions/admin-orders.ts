@@ -63,23 +63,32 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   // GET /admin-orders  → list all orders
   if (method === 'GET') {
     const cursor = url.searchParams.get('cursor') ?? undefined;
-    const list = await env.ORDERS_KV.list({ prefix: 'order:', cursor, limit: 100 });
+    let list: KVNamespaceListResult<unknown>;
+    try {
+      list = await env.ORDERS_KV.list({ prefix: 'order:', cursor, limit: 100 });
+    } catch (error) {
+      console.log('[admin-orders] KV list failed:', String(error));
+      return json({ ok: false, error: 'kv_list_failed' }, 500);
+    }
 
     const orders = await Promise.all(
       list.keys.map(async (k) => {
-        const raw = await env.ORDERS_KV.get(k.name);
-        if (!raw) return null;
         try {
+          const raw = await env.ORDERS_KV.get(k.name);
+          if (!raw) return null;
           return JSON.parse(raw) as Record<string, unknown>;
-        } catch {
+        } catch (error) {
+          console.log('[admin-orders] bad order:', k.name, String(error));
           return null;
         }
       })
     );
 
+    const cleanOrders = orders.filter(Boolean);
     return json({
       ok: true,
-      orders: orders.filter(Boolean),
+      count: cleanOrders.length,
+      orders: cleanOrders,
       cursor: list.list_complete ? null : list.cursor,
     });
   }

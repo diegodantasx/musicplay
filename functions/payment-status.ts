@@ -40,7 +40,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
         order['paid'] = true;
         order['status'] = status;
         order['updated_at'] = new Date().toISOString();
-        if (env.ORDERS_KV) await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 30 });
+        if (env.ORDERS_KV) await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 365 });
       }
     }
   }
@@ -66,7 +66,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     if (sent) {
       order['metaCapiSent'] = true;
       order['updated_at'] = new Date().toISOString();
-      if (env.ORDERS_KV) await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 30 });
+      if (env.ORDERS_KV) await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 365 });
     }
   }
 
@@ -75,7 +75,7 @@ export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
     if (sent2) {
       order['metaCapiSent2'] = true;
       order['updated_at'] = new Date().toISOString();
-      if (env.ORDERS_KV) await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 30 });
+      if (env.ORDERS_KV) await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 365 });
     }
   }
 
