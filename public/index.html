@@ -842,7 +842,7 @@
                 <summary style="cursor:pointer;font-size:13px;color:var(--muted);font-weight:700;padding:4px 0">📄 Ver letra completa</summary>
                 <div id="previewLyrics" style="margin-top:8px;font-size:13px;line-height:1.7;white-space:pre-line;background:#f9f9ff;padding:12px;border-radius:8px;color:#344054"></div>
               </details>
-              <button type="button" class="preview-buy-btn" id="previewBuyBtn">🎵 Comprar música completa — R$49,90</button>
+              <button type="button" class="preview-buy-btn" id="previewBuyBtn">🎵 Comprar música completa — R$39,99</button>
               <div style="text-align:center;margin-top:10px">
                 <a id="regenPreviewBtn" style="font-size:13px;color:var(--muted);cursor:pointer;text-decoration:underline">Não gostou? Gerar outra versão (1x)</a>
               </div>
@@ -861,14 +861,14 @@
             <div class="promo">🎁 Entrega imediata após o pagamento — baixe sua música na hora.</div>
             <div class="price-box">
               <div class="price-row"><span>Preço original:</span><strong class="old-price">R$ 97,00</strong></div>
-              <div class="price-row"><span>Preço com desconto:</span><strong class="new-price">R$ 49,90</strong></div>
-              <span class="save-badge">Voc&ecirc; economiza R$ 47,10</span>
+              <div class="price-row"><span>Preço com desconto:</span><strong class="new-price">R$ 39,99</strong></div>
+              <span class="save-badge">Voc&ecirc; economiza R$ 57,01</span>
             </div>
             <div class="summary">
-              <div class="summary-row"><span>Música personalizada</span><strong>R$ 49,90</strong></div>
+              <div class="summary-row"><span>Música personalizada</span><strong>R$ 39,99</strong></div>
               <div class="summary-row"><span>MP3 de alta qualidade</span><strong>Incluído</strong></div>
               <div class="summary-row"><span>Letra personalizada</span><strong>Incluído</strong></div>
-              <div class="summary-row"><span>Total</span><strong id="totalPrice">R$ 49,90</strong></div>
+              <div class="summary-row"><span>Total</span><strong id="totalPrice">R$ 39,99</strong></div>
             </div>
             <label class="bump-compact" for="extraVersionBump">
               <input type="checkbox" id="extraVersionBump" name="extraVersionBump" value="1">
@@ -1006,7 +1006,7 @@
     let currentPaymentId = ""; window.currentPaymentId = "";
     let currentExternalReference = "";
     let currentWhatsappMessage = "";
-    let currentPaymentValue = 49.90;
+    let currentPaymentValue = 39.99;
     let lyricsSubStep = 'lyrics';
     let currentSessionId = '';
     let funnelHasStarted = false;
@@ -1029,7 +1029,7 @@
       "Ajustando os detalhes musicais...",
       "Quase pronto, só mais um instante..."
     ];
-    const BASE_PRICE = 49.90;
+    const BASE_PRICE = 39.99;
     const EXTRA_VERSION_BUMP_PRICE = 19.89;
     const EXTRA_SONGS_BUMP_PRICE = 25.89;
     const VIDEO_BUMP_PRICE = 32.89;
@@ -1404,10 +1404,10 @@
       if (step === 0) { nextButton.textContent = "Gerar letra da música"; nextButton.classList.remove("green"); nextButton.style.display = ''; }
       if (step === 1) {
         showLyricsSubView('lyrics');
-        nextButton.textContent = "Comprar minha música — R$49,90";
+        nextButton.textContent = "Comprar minha música — R$39,99";
         nextButton.classList.add("green");
         nextButton.style.display = '';
-        metaTrack('Lead', {content_name: 'Briefing concluído', currency: 'BRL', value: 49.90});
+        metaTrack('Lead', {content_name: 'Briefing concluído', currency: 'BRL', value: 39.99});
         gaEvent('generate_lead', { event_category: 'funnel', event_label: 'letra_pronta' });
       }
       if (step === 2) { nextButton.textContent = "Pagar com PIX — " + formatBRL(currentTotal()); nextButton.classList.add("green"); nextButton.style.display = ''; metaTrack('InitiateCheckout', {currency: 'BRL', value: currentTotal(), content_name: 'MusicLove Studio', content_ids: ['musiclove_studio'], num_items: 1}); gaEvent('begin_checkout', { value: currentTotal(), event_category: 'checkout' }); }
@@ -1419,8 +1419,8 @@
       if (!window.gtag) return;
       gtag('event', name, Object.assign({
         currency: 'BRL',
-        value: typeof currentTotal === 'function' ? currentTotal() : 49.90,
-        items: [{ item_id: 'musiclove_studio', item_name: 'MusicLove Studio', price: 49.90, quantity: 1 }]
+        value: typeof currentTotal === 'function' ? currentTotal() : 39.99,
+        items: [{ item_id: 'musiclove_studio', item_name: 'MusicLove Studio', price: 39.99, quantity: 1 }]
       }, params || {}));
     }
 
@@ -1461,7 +1461,7 @@
     function openFunnel() {
       modal.classList.add("open");
       modal.setAttribute("aria-hidden", "false");
-      metaTrack('ViewContent', {content_name: 'MusicLove Studio – Checkout Aberto', content_type: 'product', content_ids: ['musiclove_studio'], currency: 'BRL', value: 49.90});
+      metaTrack('ViewContent', {content_name: 'MusicLove Studio – Checkout Aberto', content_type: 'product', content_ids: ['musiclove_studio'], currency: 'BRL', value: 39.99});
       gaEvent('view_item', { event_category: 'funnel', event_label: 'checkout_aberto' });
       track('funnel_open');
       updateFunnelShell();
@@ -1635,7 +1635,7 @@ a melodia fala por mim baixinho.`;
       } finally {
         nextButton.disabled = false;
         regenButton.style.pointerEvents = ''; regenButton.style.opacity = '';
-        nextButton.textContent = "Comprar minha música — R$49,90";
+        nextButton.textContent = "Comprar minha música — R$39,99";
         nextButton.classList.add("green");
       }
     }
