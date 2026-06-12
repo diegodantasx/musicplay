@@ -44,10 +44,10 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
   const total = backOffer ? 49.90 : (
     39.90
-    + (bumpVersion ? 12.90 : 0)
-    + (bumpSongs   ? 18.90 : 0)
-    + (bumpVideo   ? 25.90 : 0)
-    + (bumpQrCode  ? 14.90 : 0)
+    + (bumpVersion ? 19.89 : 0)
+    + (bumpSongs   ? 25.89 : 0)
+    + (bumpVideo   ? 32.89 : 0)
+    + (bumpQrCode  ? 21.89 : 0)
   );
 
   const externalRef = 'music-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);
