@@ -879,6 +879,84 @@
     .footer-grid { border-bottom-color: rgba(255,255,255,.12); }
     .footer p, .footer small, .footer a { color: #c9bacd; }
 
+    .funnel {
+      background: #17111d;
+      color: #fff7ef;
+      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 34px 90px rgba(0,0,0,.46);
+    }
+    .funnel-head {
+      background: #17111d;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+    .funnel h2 {
+      color: #fff7ef;
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+    .close { color: #d7c9d8; }
+    .funnel-body { background: #17111d; }
+    .progress-step { color: #c9bacd; }
+    .dot {
+      background: #2a2030;
+      color: #c9bacd;
+    }
+    .progress-step.active .dot,
+    .progress-step.done .dot {
+      background: #f06a3d;
+      color: #fff7ef;
+    }
+    .field label {
+      color: #fff7ef;
+    }
+    .field input,
+    .field textarea,
+    .field select {
+      background: #100b14;
+      border-color: rgba(255,255,255,.18);
+      color: #fff7ef;
+    }
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: #9f90a7;
+    }
+    .field select option {
+      background: #100b14;
+      color: #fff7ef;
+    }
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: #f06a3d;
+      box-shadow: 0 0 0 3px rgba(240,106,61,.16);
+    }
+    .radio-row label {
+      background: #100b14;
+      border-color: rgba(255,255,255,.18);
+      color: #fff7ef;
+    }
+    .radio-row label:has(input:checked) {
+      border-color: #f06a3d;
+      background: rgba(240,106,61,.14);
+      color: #f06a3d;
+    }
+    .funnel-actions {
+      background: #17111d;
+      border-top: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 -10px 24px rgba(0,0,0,.22);
+    }
+    .funnel-actions .back-link {
+      color: #c9bacd;
+    }
+    .funnel-actions .back-link:hover {
+      color: #f06a3d;
+    }
+    .funnel-actions-row .btn,
+    #nextBtn {
+      background: #f06a3d;
+      color: #fff7ef;
+      box-shadow: 0 14px 30px rgba(240,106,61,.26);
+    }
+
     @media (max-width: 900px) {
       .hero-grid, .proof-grid, .process, .cards { gap: 28px; }
       .process { grid-template-columns: repeat(2, minmax(0, 1fr)); }
