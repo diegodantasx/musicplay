@@ -95,8 +95,10 @@
       font-family: 'Inter', Arial, Helvetica, sans-serif;
       background: #fff;
       line-height: 1.5;
+      text-transform: uppercase;
     }
     button, input, textarea, select { font: inherit; }
+    input, textarea, select, [contenteditable="true"] { text-transform: none; }
     .wrap { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
 
     .topbar {
