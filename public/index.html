@@ -1969,7 +1969,8 @@ a melodia fala por mim baixinho.`;
       };
       var normalizeHeader = function(line) {
         var cleaned = line
-          .replace(/^[([{\s]+|[\])}\s:]+$/g, '')
+          .replace(/^[\s([{]+/, '')
+          .replace(/[\s\])}:]+$/, '')
           .replace(/^\s*[-\u2013\u2014\u2022]+\s*/, '')
           .replace(/\s*:\s*$/, '')
           .trim();
@@ -1977,8 +1978,10 @@ a melodia fala por mim baixinho.`;
         if (/^verso\s*\d*$/.test(plain)) return cleaned.toUpperCase();
         if (/^pre\s*-?\s*refrao$/.test(plain)) return 'PR\u00c9-REFR\u00c3O';
         if (/^refrao$/.test(plain)) return 'REFR\u00c3O';
+        if (/^refrao\s*final$/.test(plain)) return 'REFR\u00c3O FINAL';
         if (/^ponte$/.test(plain)) return 'PONTE';
         if (/^intro(ducao)?$/.test(plain)) return 'INTRO';
+        if (/^(fechamento|encerramento|finalizacao)$/.test(plain)) return 'FECHAMENTO';
         if (/^final$/.test(plain)) return 'FINAL';
         return '';
       };
