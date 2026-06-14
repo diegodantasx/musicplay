@@ -575,6 +575,331 @@
     .preview-prog-fill { height:100%;width:0%;background:var(--violet);border-radius:3px;transition:width .5s linear; }
     .preview-buy-btn { width:100%;border-radius:10px;font-size:15px;min-height:52px;border:0;background:linear-gradient(135deg,var(--purple),var(--pink),var(--coral));color:#fff;font-weight:900;cursor:pointer;box-shadow:0 14px 28px rgba(236,91,154,.24); }
     .gen-error-wrap { text-align:center;padding:16px 0; }
+
+    /* Layout premium inspirado na nova referencia */
+    body {
+      background: #130f18;
+      color: #fff7ef;
+    }
+    main {
+      display: flex;
+      flex-direction: column;
+      background: #130f18;
+    }
+    .wrap { width: min(980px, calc(100% - 42px)); }
+    .topbar {
+      min-height: 58px;
+      background: #16111c;
+      border-bottom: 1px solid rgba(255,255,255,.11);
+    }
+    .brand {
+      color: #fff7ef;
+      font-family: 'Playfair Display', Georgia, serif;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+    .brand span, .grad-text, .script { color: #f06a3d; }
+    .nav { color: #e7d9cd; font-size: 12px; gap: 30px; }
+    .btn {
+      min-height: 40px;
+      padding: 0 22px;
+      border-radius: 999px;
+      background: #f06a3d;
+      color: #fff7ef;
+      box-shadow: 0 14px 30px rgba(240,106,61,.26);
+      font-size: 12px;
+      letter-spacing: .2px;
+    }
+    .hero {
+      order: 1;
+      min-height: 560px;
+      padding: 74px 0 90px;
+      background:
+        radial-gradient(circle at 77% 35%, rgba(116, 81, 126, .32), transparent 28%),
+        linear-gradient(180deg, #17111d 0%, #17111d 100%);
+      color: #fff7ef;
+    }
+    .hero:before, .hero:after { display: none; }
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 390px);
+      gap: 94px;
+    }
+    .hero-grid > div:first-child::before {
+      content: "MUSICA PERSONALIZADA, FEITA PRA VOCE";
+      display: block;
+      margin-bottom: 18px;
+      color: #f06a3d;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 1.1px;
+    }
+    h1 {
+      max-width: 520px;
+      color: #fff7ef;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: .92;
+      letter-spacing: 0;
+    }
+    .hero p {
+      max-width: 540px;
+      color: #d7c9d8;
+      font-size: 17px;
+      line-height: 1.75;
+    }
+    .hero p[style] {
+      color: #d7c9d8 !important;
+      font-size: 13px !important;
+    }
+    .hero-actions { gap: 12px; align-items: center; }
+    .hero-actions::after {
+      content: "VER EXEMPLOS";
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 38px;
+      padding: 0 20px;
+      border: 1px solid #fff7ef;
+      border-radius: 999px;
+      color: #fff7ef;
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .trust-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+      max-width: 560px;
+    }
+    .trust-pills span {
+      border: 1px solid rgba(123,183,170,.6);
+      color: #9fe0d2;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 11px;
+      font-weight: 800;
+      background: rgba(123,183,170,.07);
+    }
+    .sample-card {
+      border-radius: 14px;
+      background: #2a2030;
+      border: 1px solid rgba(255,255,255,.09);
+      box-shadow: 0 24px 60px rgba(0,0,0,.24);
+      padding: 20px;
+      color: #fff7ef;
+    }
+    .sample-card::before {
+      content: "EXEMPLO REAL";
+      display: block;
+      color: #f06a3d;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+    }
+    .sample-cover {
+      min-height: auto;
+      padding: 0;
+      background: transparent;
+      color: #fff7ef;
+      text-shadow: none;
+    }
+    .sample-cover small { display: none; }
+    .sample-cover strong {
+      font-size: 19px;
+      line-height: 1.3;
+      text-shadow: none;
+    }
+    .player-wave {
+      height: 34px;
+      margin: 20px 0 14px;
+      background: repeating-linear-gradient(90deg, #f06a3d 0 6px, transparent 6px 13px);
+      opacity: .92;
+    }
+    audio { height: 34px; accent-color: #f06a3d; }
+    section {
+      padding: 88px 0;
+      background: #17111d;
+      color: #fff7ef;
+    }
+    .section-title {
+      color: #fff7ef;
+      font-size: clamp(28px, 4vw, 43px);
+      font-family: 'Playfair Display', Georgia, serif;
+      text-transform: uppercase;
+    }
+    .section-title::before {
+      content: "SIMPLES, RAPIDO E PROFISSIONAL";
+      display: block;
+      margin-bottom: 13px;
+      color: #f06a3d;
+      font: 900 11px/1 'Inter', Arial, sans-serif;
+      letter-spacing: 1.1px;
+    }
+    .section-copy {
+      color: #c9bacd;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+    .occasions {
+      order: 2;
+      background: #251d2d;
+    }
+    .occasions .section-title::before { content: "UMA CANCAO INESQUECIVEL"; }
+    .cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .card {
+      min-height: 148px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 8px;
+      box-shadow: none;
+      padding: 22px;
+      color: #fff7ef;
+    }
+    .icon {
+      width: 27px;
+      height: 27px;
+      margin-bottom: 16px;
+      background: rgba(240,106,61,.12);
+      color: #f6bf42;
+      font-size: 13px;
+    }
+    .card strong { color: #fff7ef; font-size: 15px; }
+    .card p { color: #c9bacd; font-size: 12px; line-height: 1.65; }
+    #como {
+      order: 3;
+      background: #17111d;
+    }
+    #como .section-title::before { content: "SIMPLES, RAPIDO E PROFISSIONAL"; }
+    .process {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 28px;
+      max-width: none;
+    }
+    .process-item {
+      display: block;
+      text-align: left;
+    }
+    .num {
+      width: 26px;
+      height: 26px;
+      margin-bottom: 14px;
+      border: 1px solid #f06a3d;
+      background: transparent;
+      color: #f06a3d;
+      font-size: 12px;
+    }
+    .process-item strong { color: #fff7ef; font-size: 14px; }
+    .process-item p { color: #c9bacd; font-size: 12px; line-height: 1.65; }
+    .proof {
+      order: 4;
+      background: #7bb7aa;
+      color: #120d16;
+    }
+    .proof .section-title, .proof .grad-text { color: #120d16; }
+    .proof .section-title::before {
+      content: "";
+      width: 210px;
+      height: 12px;
+      margin: 0 auto 18px;
+      background: #f0c54b;
+    }
+    .proof .section-copy { color: rgba(18,13,22,.72); }
+    .proof-grid {
+      grid-template-columns: 1.15fr .85fr;
+      gap: 46px;
+    }
+    .proof-img {
+      min-height: 230px;
+      background: transparent;
+      box-shadow: none;
+    }
+    .proof-img img {
+      height: 100%;
+      min-height: 230px;
+      object-fit: contain;
+      filter: drop-shadow(0 22px 30px rgba(0,0,0,.12));
+    }
+    .review-card {
+      background: #22182a;
+      color: #fff7ef;
+      border: 0;
+      border-radius: 10px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.18);
+      padding: 28px;
+    }
+    .review-card p { color: #fff7ef; font-size: 15px; line-height: 1.75; }
+    .avatar { background: #f06a3d; color: #fff7ef; }
+    #depoimentos {
+      order: 5;
+      background: #17111d;
+    }
+    #depoimentos .section-title::before { content: "HISTORIAS REAIS"; }
+    .testimonials-grid { gap: 18px; }
+    .quote {
+      background: transparent;
+      color: #fff7ef;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 8px;
+      box-shadow: none;
+      padding: 22px;
+    }
+    .quote:before {
+      content: "★★★★★";
+      display: block;
+      color: #f6bf42;
+      font-size: 12px;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .quote p { color: #fff7ef; font-size: 13px; line-height: 1.7; }
+    .quote strong { color: #f06a3d; }
+    .cta {
+      order: 6;
+      background: #e8653d;
+      color: #fff7ef;
+      padding: 78px 0;
+    }
+    .cta .section-title::before { display: none; }
+    .cta .section-title, .cta .script { color: #fff7ef; }
+    .cta .section-copy { color: rgba(255,255,255,.9); }
+    .cta .btn.white {
+      background: #fff7ef;
+      color: #e8653d;
+      box-shadow: 0 16px 30px rgba(87,39,28,.2);
+    }
+    .footer {
+      background: #100b14;
+      color: #fff7ef;
+      padding-top: 54px;
+    }
+    .footer-grid { border-bottom-color: rgba(255,255,255,.12); }
+    .footer p, .footer small, .footer a { color: #c9bacd; }
+
+    @media (max-width: 900px) {
+      .hero-grid, .proof-grid, .process, .cards { gap: 28px; }
+      .process { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 620px) {
+      .wrap { width: min(100% - 28px, 980px); }
+      .topbar { position: sticky; }
+      .nav { gap: 10px; }
+      .hero { min-height: auto; padding: 54px 0 70px; text-align: left; }
+      .hero-grid { grid-template-columns: 1fr; gap: 34px; }
+      .hero-grid > div:first-child::before { max-width: 190px; line-height: 1.45; }
+      h1 { width: 100%; max-width: 100%; font-size: clamp(36px, 10.5vw, 43px); line-height: .98; overflow-wrap: break-word; }
+      .hero p { width: 100%; max-width: 100%; font-size: 15px; text-align: left; }
+      .hero-actions { justify-content: flex-start; }
+      .hero-actions::after { min-height: 36px; padding: 0 15px; }
+      .trust-pills { max-width: 100%; }
+      .sample-card { width: 100%; max-width: none; }
+      .cards, .process, .testimonials-grid, .footer-grid { grid-template-columns: 1fr; }
+      .proof-grid { grid-template-columns: 1fr; }
+    }
   </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XLLSQGPFP6"></script>
@@ -613,6 +938,9 @@
             <button class="btn open-funnel" type="button">Crie sua música agora</button>
           </div>
           <p style="margin:14px 0 0;font-size:15px;color:#6b4f8a;font-weight:700">💜 Entrega em até 15 minutos pelo WhatsApp</p>
+          <div class="trust-pills">
+            <span>Aceita Pix</span><span>7 dias de garantia</span><span>Entrega pelo WhatsApp</span><span>Mais de 5.000 clientes</span>
+          </div>
         </div>
         <div class="sample-card" id="exemplo">
           <div class="sample-cover">
@@ -661,10 +989,12 @@
         <h2 class="section-title">Perfeito para <span class="grad-text">Qualquer Ocasião</span></h2>
         <p class="section-copy">Seja uma celebração ou apenas porque, uma música personalizada torna inesquecível.</p>
         <div class="cards">
-          <div class="card"><div class="icon">▦</div><strong>Aniversário</strong><p>Torne o dia especial ainda mais memorável com uma música só para ela/ele.</p></div>
-          <div class="card"><div class="icon">♥</div><strong>Para sua namorada(o)</strong><p>Celebre sua história de amor com uma música que captura sua jornada juntos.</p></div>
-          <div class="card"><div class="icon">●</div><strong>Pedido de casamento</strong><p>Peça em casamento da forma mais romântica possível.</p></div>
-          <div class="card"><div class="icon">✦</div><strong>Apenas porque</strong><p>Às vezes os melhores presentes são os inesperados que vêm do coração.</p></div>
+          <div class="card"><div class="icon">?</div><strong>Anivers?rio</strong><p>Surpreenda quem voc? ama com uma trilha sonora s? dela.</p></div>
+          <div class="card"><div class="icon">?</div><strong>Para quem voc? ama</strong><p>Diga "eu te amo" de um jeito que ningu?m esquece.</p></div>
+          <div class="card"><div class="icon">?</div><strong>Homenagens especiais</strong><p>Pai, m?e, filhos e pessoas que merecem uma emo??o real.</p></div>
+          <div class="card"><div class="icon">?</div><strong>Nascimento de um filho</strong><p>Registre esse momento ?nico em uma can??o feita de verdade.</p></div>
+          <div class="card"><div class="icon">?</div><strong>M?sica para postar</strong><p>Uma homenagem cantada e pronta para compartilhar nas redes.</p></div>
+          <div class="card"><div class="icon">?</div><strong>Reconcilia??o</strong><p>Use uma letra emocionante para reabrir uma conversa especial.</p></div>
         </div>
       </div>
     </section>
