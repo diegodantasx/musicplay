@@ -783,31 +783,75 @@
     .occasions {
       order: 2;
       background: #251d2d;
+      padding: 106px 0 82px;
     }
-    .occasions .section-title::before { content: "UMA CANCAO INESQUECIVEL"; }
-    .cards {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
+    .occasions .section-title {
+      max-width: 640px;
+      margin-left: auto;
+      margin-right: auto;
+      font-size: clamp(34px, 5vw, 54px);
+      line-height: 1.12;
     }
-    .card {
-      min-height: 148px;
-      background: transparent;
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: 8px;
-      box-shadow: none;
-      padding: 22px;
-      color: #fff7ef;
+    .occasions .section-title::before {
+      content: "PARA QUALQUER MOMENTO";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      color: #f06a3d;
+      margin-bottom: 24px;
+      letter-spacing: 1.6px;
     }
-    .icon {
-      width: 27px;
-      height: 27px;
-      margin-bottom: 16px;
-      background: rgba(240,106,61,.12);
-      color: #f6bf42;
+    .occasions .section-title::before,
+    .occasions .section-title::after {
       font-size: 13px;
     }
-    .card strong { color: #fff7ef; font-size: 15px; }
-    .card p { color: #c9bacd; font-size: 12px; line-height: 1.65; }
+    .occasions .section-copy {
+      max-width: 690px;
+      margin-bottom: 62px;
+      color: #d7c9d8;
+      font-size: 18px;
+    }
+    .cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+    .card {
+      appearance: none;
+      width: 100%;
+      min-height: 202px;
+      background: rgba(255,255,255,.015);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 16px;
+      box-shadow: none;
+      padding: 26px;
+      color: #fff7ef;
+      text-align: left;
+      cursor: pointer;
+      transition: border-color .18s ease, background .18s ease, transform .18s ease, box-shadow .18s ease;
+    }
+    .card:hover,
+    .card:focus-visible {
+      border-color: rgba(240,106,61,.82);
+      background: rgba(255,255,255,.035);
+      transform: translateY(-2px);
+      outline: none;
+    }
+    .card.selected {
+      border-color: #f06a3d;
+      box-shadow: 0 0 0 1px rgba(240,106,61,.34), 0 18px 45px rgba(0,0,0,.18);
+    }
+    .icon {
+      width: 46px;
+      height: 46px;
+      margin-bottom: 16px;
+      border-radius: 14px;
+      background: rgba(240,106,61,.12);
+      color: #f6bf42;
+      font-size: 21px;
+    }
+    .card strong { color: #fff7ef; font-size: 20px; line-height: 1.25; margin-bottom: 12px; }
+    .card p { color: #d7c9d8; font-size: 15px; line-height: 1.55; }
     #como {
       order: 3;
       background: #17111d;
@@ -1159,13 +1203,25 @@
       <div class="wrap">
         <h2 class="section-title">Perfeito para <span class="grad-text">Qualquer Ocasião</span></h2>
         <p class="section-copy">Seja uma celebração ou apenas porque, uma música personalizada torna inesquecível.</p>
-        <div class="cards">
-          <div class="card"><div class="icon">?</div><strong>Anivers?rio</strong><p>Surpreenda quem voc? ama com uma trilha sonora s? dela.</p></div>
-          <div class="card"><div class="icon">?</div><strong>Para quem voc? ama</strong><p>Diga "eu te amo" de um jeito que ningu?m esquece.</p></div>
-          <div class="card"><div class="icon">?</div><strong>Homenagens especiais</strong><p>Pai, m?e, filhos e pessoas que merecem uma emo??o real.</p></div>
-          <div class="card"><div class="icon">?</div><strong>Nascimento de um filho</strong><p>Registre esse momento ?nico em uma can??o feita de verdade.</p></div>
-          <div class="card"><div class="icon">?</div><strong>M?sica para postar</strong><p>Uma homenagem cantada e pronta para compartilhar nas redes.</p></div>
-          <div class="card"><div class="icon">?</div><strong>Reconcilia??o</strong><p>Use uma letra emocionante para reabrir uma conversa especial.</p></div>
+        <div class="cards occasion-cards">
+          <button class="card occasion-card selected" type="button" data-occasion="Anivers&aacute;rio" aria-label="Selecionar ocasi&atilde;o Anivers&aacute;rio">
+            <div class="icon">&#127874;</div><strong>Anivers&aacute;rio</strong><p>Surpreenda quem voc&ecirc; ama com uma trilha sonora s&oacute; dela.</p>
+          </button>
+          <button class="card occasion-card" type="button" data-occasion="Dia dos Namorados" aria-label="Selecionar ocasi&atilde;o Para quem voc&ecirc; ama">
+            <div class="icon">&#128150;</div><strong>Para quem voc&ecirc; ama</strong><p>Diga "eu te amo" de um jeito que ningu&eacute;m nunca te deu.</p>
+          </button>
+          <button class="card occasion-card" type="button" data-occasion="Homenagem aos pais" aria-label="Selecionar ocasi&atilde;o Homenagem aos pais">
+            <div class="icon">&#128106;</div><strong>Homenagem aos pais</strong><p>Agrade&ccedil;a por tudo com uma m&uacute;sica feita s&oacute; para eles.</p>
+          </button>
+          <button class="card occasion-card" type="button" data-occasion="Nascimento de um filho" aria-label="Selecionar ocasi&atilde;o Nascimento de um filho">
+            <div class="icon">&#128118;</div><strong>Nascimento de um filho</strong><p>Marque esse momento para sempre, em forma de can&ccedil;&atilde;o.</p>
+          </button>
+          <button class="card occasion-card" type="button" data-occasion="M&uacute;sica para o pet" aria-label="Selecionar ocasi&atilde;o M&uacute;sica para o pet">
+            <div class="icon">&#128062;</div><strong>M&uacute;sica para o pet</strong><p>Uma homenagem divertida e cheia de carinho ao seu melhor amigo.</p>
+          </button>
+          <button class="card occasion-card" type="button" data-occasion="Em mem&oacute;ria" aria-label="Selecionar ocasi&atilde;o Em mem&oacute;ria">
+            <div class="icon">&#128330;&#65039;</div><strong>Em mem&oacute;ria</strong><p>Uma forma linda e emocionante de manter viva uma lembran&ccedil;a.</p>
+          </button>
         </div>
       </div>
     </section>
@@ -1228,6 +1284,10 @@
                   <option>Aniversário de casamento</option>
                   <option>Casamento/Pedido</option>
                   <option>Dia dos Namorados</option>
+                  <option>Homenagem aos pais</option>
+                  <option>Nascimento de um filho</option>
+                  <option>M&uacute;sica para o pet</option>
+                  <option>Em mem&oacute;ria</option>
                   <option>Apenas porque</option>
                   <option>Outro</option>
                 </select>
@@ -2404,6 +2464,21 @@ a melodia fala por mim baixinho.`;
       });
     });
     openButtons.forEach((button) => button.addEventListener("click", openFunnel));
+    document.querySelectorAll(".occasion-card").forEach((card) => {
+      card.addEventListener("click", () => {
+        const occasion = card.dataset.occasion || "";
+        document.querySelectorAll(".occasion-card").forEach((item) => item.classList.remove("selected"));
+        card.classList.add("selected");
+        const occasionSelect = document.getElementById("ocasiao");
+        if (occasionSelect && occasion) {
+          occasionSelect.value = occasion;
+          occasionSelect.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+        openFunnel();
+        setStep(0);
+        document.getElementById("destinatario")?.focus();
+      });
+    });
     closeButton.addEventListener("click", requestCloseFunnel);
     resumeFunnelButton?.addEventListener("click", openFunnel);
     modal.addEventListener("click", handleBackdropClick);
