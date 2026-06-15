@@ -635,6 +635,9 @@
       grid-template-columns: minmax(0, 1fr) minmax(300px, 390px);
       gap: 94px;
     }
+    .hero-grid > * {
+      min-width: 0;
+    }
     .hero-grid > div:first-child::before {
       content: "MUSICA PERSONALIZADA, FEITA PRA VOCE";
       display: block;
@@ -731,9 +734,10 @@
       display: block;
       width: 100%;
       max-width: 100%;
+      height: auto;
       aspect-ratio: 16 / 9;
       max-height: 320px;
-      object-fit: cover;
+      object-fit: contain;
       border-radius: 10px;
       background: #100b14;
     }
@@ -1153,18 +1157,18 @@
       .topbar { position: sticky; }
       .nav { gap: 10px; }
       .hero { min-height: auto; padding: 54px 0 70px; text-align: left; }
-      .hero-grid { grid-template-columns: 1fr; gap: 34px; }
+      .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 34px; width: 100%; max-width: 100%; }
       .hero-grid > div:first-child::before { max-width: 100%; font-size: 18px; line-height: 1.35; }
       h1 { width: 100%; max-width: 100%; font-size: clamp(35px, 10.2vw, 42px); line-height: 1.08; overflow-wrap: break-word; }
       .hero p { width: 100%; max-width: 100%; font-size: 15px; line-height: 1.8; text-align: left; }
       .hero-actions { justify-content: flex-start; }
       .hero-actions::after { min-height: 36px; padding: 0 15px; }
       .trust-pills { max-width: 100%; }
-      .hero-media-stack { width: 100%; max-width: 100%; overflow: hidden; }
-      .video-card, .sample-card { width: 100%; max-width: none; }
+      .hero-media-stack { width: 100%; max-width: calc(100vw - 28px); overflow: hidden; justify-self: stretch; }
+      .video-card, .sample-card { width: 100%; max-width: 100%; min-width: 0; }
       .video-card { padding: 10px; border-radius: 12px; }
       .video-card::before { margin: 4px 6px 8px; }
-      .video-card video { max-height: none; border-radius: 9px; }
+      .video-card video { display: block; width: 100%; max-width: 100%; height: auto; max-height: none; object-fit: contain; border-radius: 9px; }
       .cards, .process, .testimonials-grid, .footer-grid { grid-template-columns: 1fr; }
       .proof-grid { grid-template-columns: 1fr; }
     }
@@ -1176,6 +1180,7 @@
       .hero p { font-size: 14px; line-height: 1.75; }
       .trust-pills { gap: 7px; }
       .trust-pills span { font-size: 10px; padding: 6px 9px; }
+      .hero-media-stack { max-width: calc(100vw - 24px); }
       .video-card, .sample-card { padding: 9px; }
       .video-card video { aspect-ratio: 16 / 9; width: 100%; }
     }
