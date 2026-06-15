@@ -680,6 +680,38 @@
       font-weight: 800;
       background: rgba(123,183,170,.07);
     }
+    .hero-media-stack {
+      display: grid;
+      gap: 18px;
+      align-items: start;
+    }
+    .video-card {
+      border-radius: 14px;
+      background: #2a2030;
+      border: 1px solid rgba(255,255,255,.09);
+      box-shadow: 0 24px 60px rgba(0,0,0,.24);
+      padding: 12px;
+      color: #fff7ef;
+      overflow: hidden;
+    }
+    .video-card::before {
+      content: "VIDEO REAL";
+      display: block;
+      color: #f06a3d;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      margin: 6px 8px 10px;
+    }
+    .video-card video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      max-height: 320px;
+      object-fit: cover;
+      border-radius: 10px;
+      background: #100b14;
+    }
     .sample-card {
       border-radius: 14px;
       background: #2a2030;
@@ -711,38 +743,27 @@
       text-shadow: none;
     }
     .player-wave {
-      min-height: 42px;
+      min-height: 48px;
       margin: 20px 0 14px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 6px;
+      justify-content: center;
+      gap: 4px;
       opacity: .96;
       overflow: hidden;
-      border-radius: 999px;
-      padding: 0 2px;
+      padding: 0 4px;
     }
-    .player-wave::before,
-    .player-wave::after {
-      content: "";
-      width: 13px;
-      height: 30px;
-      flex: 0 0 auto;
-      background: #f06a3d;
-    }
-    .player-wave::before { border-radius: 999px 0 0 999px; }
-    .player-wave::after { border-radius: 0 999px 999px 0; }
     .player-wave span {
-      width: 6px;
-      height: calc(var(--level, .45) * 34px);
-      min-height: 8px;
+      width: 4px;
+      height: calc(var(--level, .45) * 40px);
+      min-height: 10px;
       border-radius: 999px;
       background: #f06a3d;
       transform-origin: center;
       transition: height .08s linear, opacity .16s ease;
     }
     .player-wave:not(.is-playing) span {
-      height: 30px;
+      height: calc(var(--idle, .58) * 40px);
     }
     .player-wave.is-playing span {
       animation: waveFallback .7s ease-in-out infinite alternate;
@@ -752,8 +773,8 @@
       animation: none;
     }
     @keyframes waveFallback {
-      from { height: 10px; opacity: .68; }
-      to { height: 34px; opacity: 1; }
+      from { height: calc(max(.24, var(--idle, .58) - .22) * 40px); opacity: .72; }
+      to { height: calc(min(1, var(--idle, .58) + .28) * 40px); opacity: 1; }
     }
     audio { height: 34px; accent-color: #f06a3d; }
     section {
@@ -1157,7 +1178,14 @@
             <span>Aceita Pix</span><span>7 dias de garantia</span><span>Entrega pelo WhatsApp</span><span>Mais de 5.000 clientes</span>
           </div>
         </div>
-        <div class="sample-card" id="exemplo">
+        <div class="hero-media-stack">
+          <div class="video-card">
+            <video controls preload="metadata" playsinline poster="assets/polaroids-musica.png">
+              <source src="assets/musiclove-demo-video.mp4" type="video/mp4">
+              Seu navegador não conseguiu carregar este vídeo.
+            </video>
+          </div>
+          <div class="sample-card" id="exemplo">
           <div class="sample-cover">
             <small>Exemplo de pedido:</small>
             <strong>"Quero uma música romântica para minha namorada..."</strong>
@@ -1167,6 +1195,7 @@
             <source src="assets/melodia-exemplo.aac" type="audio/aac">
             Seu navegador não conseguiu carregar este áudio.
           </audio>
+        </div>
         </div>
       </div>
     </section>
@@ -1204,7 +1233,7 @@
         <h2 class="section-title">Perfeito para <span class="grad-text">Qualquer Ocasião</span></h2>
         <p class="section-copy">Seja uma celebração ou apenas porque, uma música personalizada torna inesquecível.</p>
         <div class="cards occasion-cards">
-          <button class="card occasion-card selected" type="button" data-occasion="Anivers&aacute;rio" aria-label="Selecionar ocasi&atilde;o Anivers&aacute;rio">
+          <button class="card occasion-card" type="button" data-occasion="Anivers&aacute;rio" aria-label="Selecionar ocasi&atilde;o Anivers&aacute;rio">
             <div class="icon">&#127874;</div><strong>Anivers&aacute;rio</strong><p>Surpreenda quem voc&ecirc; ama com uma trilha sonora s&oacute; dela.</p>
           </button>
           <button class="card occasion-card" type="button" data-occasion="Dia dos Namorados" aria-label="Selecionar ocasi&atilde;o Para quem voc&ecirc; ama">
@@ -2516,9 +2545,9 @@ a melodia fala por mim baixinho.`;
       const wave = document.getElementById("sampleWave");
       if (!audio || !wave) return;
 
-      const barCount = 28;
-      wave.innerHTML = Array.from({ length: barCount }, (_, index) => (
-        '<span style="--i:' + index + ';--level:.72"></span>'
+      const idlePattern = [.55,.78,.62,.72,.48,.66,.58,.74,.82,.64,.52,.69,.76,.45,.58,.86,.96,.74,.88,.92,.68,.77,.60,.82,.72,.57,.73,.79,.64,.84,.92,.78,.67,.59,.76,.86,.95,.81,.70,.88];
+      wave.innerHTML = idlePattern.map((level, index) => (
+        '<span style="--i:' + index + ';--idle:' + level + ';--level:' + level + '"></span>'
       )).join("");
       const bars = Array.from(wave.querySelectorAll("span"));
       let audioContext = null;
@@ -2528,7 +2557,9 @@ a melodia fala por mim baixinho.`;
       const data = new Uint8Array(64);
 
       function setIdleWave() {
-        bars.forEach((bar) => bar.style.setProperty("--level", ".72"));
+        bars.forEach((bar, index) => {
+          bar.style.setProperty("--level", idlePattern[index % idlePattern.length]);
+        });
       }
 
       function drawWave() {
