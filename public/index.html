@@ -704,6 +704,8 @@
       display: grid;
       gap: 18px;
       align-items: start;
+      width: 100%;
+      min-width: 0;
     }
     .video-card {
       border-radius: 14px;
@@ -713,6 +715,8 @@
       padding: 12px;
       color: #fff7ef;
       overflow: hidden;
+      width: 100%;
+      min-width: 0;
     }
     .video-card::before {
       content: "VIDEO REAL";
@@ -726,6 +730,7 @@
     .video-card video {
       display: block;
       width: 100%;
+      max-width: 100%;
       aspect-ratio: 16 / 9;
       max-height: 320px;
       object-fit: cover;
@@ -1144,6 +1149,7 @@
     }
     @media (max-width: 620px) {
       .wrap { width: min(100% - 28px, 980px); }
+      body { overflow-x: hidden; }
       .topbar { position: sticky; }
       .nav { gap: 10px; }
       .hero { min-height: auto; padding: 54px 0 70px; text-align: left; }
@@ -1154,9 +1160,24 @@
       .hero-actions { justify-content: flex-start; }
       .hero-actions::after { min-height: 36px; padding: 0 15px; }
       .trust-pills { max-width: 100%; }
-      .sample-card { width: 100%; max-width: none; }
+      .hero-media-stack { width: 100%; max-width: 100%; overflow: hidden; }
+      .video-card, .sample-card { width: 100%; max-width: none; }
+      .video-card { padding: 10px; border-radius: 12px; }
+      .video-card::before { margin: 4px 6px 8px; }
+      .video-card video { max-height: none; border-radius: 9px; }
       .cards, .process, .testimonials-grid, .footer-grid { grid-template-columns: 1fr; }
       .proof-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .wrap { width: min(100% - 24px, 980px); }
+      .hero { padding-top: 46px; }
+      .hero-grid { gap: 28px; }
+      h1 { font-size: clamp(32px, 9.5vw, 38px); line-height: 1.12; margin-bottom: 20px; }
+      .hero p { font-size: 14px; line-height: 1.75; }
+      .trust-pills { gap: 7px; }
+      .trust-pills span { font-size: 10px; padding: 6px 9px; }
+      .video-card, .sample-card { padding: 9px; }
+      .video-card video { aspect-ratio: 16 / 9; width: 100%; }
     }
   </style>
 <!-- Google tag (gtag.js) -->
@@ -1202,7 +1223,7 @@
         </div>
         <div class="hero-media-stack">
           <div class="video-card">
-            <video controls autoplay muted loop preload="metadata" playsinline poster="assets/polaroids-musica.png">
+            <video controls autoplay loop preload="metadata" playsinline poster="assets/polaroids-musica.png">
               <source src="assets/musiclove-demo-video.mp4" type="video/mp4">
               Seu navegador não conseguiu carregar este vídeo.
             </video>
