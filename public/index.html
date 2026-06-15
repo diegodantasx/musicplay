@@ -1228,7 +1228,7 @@
         </div>
         <div class="hero-media-stack">
           <div class="video-card">
-            <video controls autoplay loop preload="metadata" playsinline poster="assets/polaroids-musica.png">
+            <video controls autoplay muted loop preload="metadata" playsinline poster="assets/polaroids-musica.png">
               <source src="assets/musiclove-demo-video.mp4" type="video/mp4">
               Seu navegador não conseguiu carregar este vídeo.
             </video>
@@ -2672,6 +2672,15 @@ a melodia fala por mim baixinho.`;
       setIdleWave();
     }
 
+    function setupHeroVideoAutoplay() {
+      const video = document.querySelector(".video-card video");
+      if (!video) return;
+      video.muted = true;
+      video.defaultMuted = true;
+      video.play().catch(() => {});
+    }
+
+    setupHeroVideoAutoplay();
     setupSampleVisualizer();
     setStep(0);
   </script>
