@@ -711,6 +711,7 @@
       min-width: 0;
     }
     .video-card {
+      position: relative;
       border-radius: 14px;
       background: #2a2030;
       border: 1px solid rgba(255,255,255,.09);
@@ -740,6 +741,25 @@
       object-fit: contain;
       border-radius: 10px;
       background: #100b14;
+    }
+    .video-sound-btn {
+      position: absolute;
+      right: 22px;
+      bottom: 22px;
+      z-index: 2;
+      min-height: 38px;
+      border: 0;
+      border-radius: 999px;
+      padding: 0 14px;
+      background: rgba(16, 11, 20, .86);
+      color: #fff7ef;
+      font-size: 11px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 12px 28px rgba(0,0,0,.28);
+    }
+    .video-card.sound-on .video-sound-btn {
+      display: none;
     }
     .sample-card {
       border-radius: 14px;
@@ -1169,6 +1189,7 @@
       .video-card { padding: 10px; border-radius: 12px; }
       .video-card::before { margin: 4px 6px 8px; }
       .video-card video { display: block; width: 100%; max-width: 100%; height: auto; max-height: none; object-fit: contain; border-radius: 9px; }
+      .video-sound-btn { right: 18px; bottom: 18px; min-height: 34px; padding: 0 12px; font-size: 10px; }
       .cards, .process, .testimonials-grid, .footer-grid { grid-template-columns: 1fr; }
       .proof-grid { grid-template-columns: 1fr; }
     }
@@ -1232,6 +1253,7 @@
               <source src="assets/musiclove-demo-video.mp4" type="video/mp4">
               Seu navegador não conseguiu carregar este vídeo.
             </video>
+            <button class="video-sound-btn" type="button" aria-label="Ativar som do video">ATIVAR SOM</button>
           </div>
           <div class="sample-card" id="exemplo">
           <div class="sample-cover">
@@ -2674,10 +2696,28 @@ a melodia fala por mim baixinho.`;
 
     function setupHeroVideoAutoplay() {
       const video = document.querySelector(".video-card video");
+      const card = document.querySelector(".video-card");
+      const soundButton = document.querySelector(".video-sound-btn");
       if (!video) return;
+
+      function enableSound() {
+        video.muted = false;
+        video.defaultMuted = false;
+        video.volume = 1;
+        card?.classList.add("sound-on");
+        video.play().catch(() => {});
+      }
+
       video.muted = true;
       video.defaultMuted = true;
       video.play().catch(() => {});
+      soundButton?.addEventListener("click", enableSound);
+      video.addEventListener("volumechange", () => {
+        card?.classList.toggle("sound-on", !video.muted);
+      });
+      ["pointerdown", "touchstart"].forEach((eventName) => {
+        window.addEventListener(eventName, enableSound, { once: true, passive: true });
+      });
     }
 
     setupHeroVideoAutoplay();
