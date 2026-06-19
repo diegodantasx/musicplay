@@ -8,8 +8,8 @@
   <!-- Fontes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <!-- Preconnect domínios externos -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Preconnect domínios externos -->
   <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
   <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
   <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
@@ -87,21 +87,12 @@
       --dark: #111827;
       --shadow: 0 22px 55px rgba(105, 58, 139, .16);
     }
-    * {
-      box-sizing: border-box;
-      font-family: 'Sora', Arial, Helvetica, sans-serif;
-      font-style: normal;
-    }
-    *::before,
-    *::after {
-      font-family: 'Sora', Arial, Helvetica, sans-serif;
-      font-style: normal;
-    }
+    * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
       color: var(--ink);
-      font-family: 'Sora', Arial, Helvetica, sans-serif;
+      font-family: 'Inter', Arial, Helvetica, sans-serif;
       background: #fff;
       line-height: 1.5;
       text-transform: uppercase;
@@ -183,15 +174,13 @@
     h1 {
       margin: 0 0 18px;
       font-size: clamp(44px, 7vw, 74px);
-      line-height: 1.08;
-      letter-spacing: 0;
-      word-spacing: .05em;
-      font-family: 'Sora', Arial, Helvetica, sans-serif;
+      line-height: .98;
+      letter-spacing: -.5px;
+      font-family: 'Playfair Display', Georgia, serif;
       font-weight: 800;
     }
-    .script { color: var(--purple); font-family: 'Sora', Arial, Helvetica, sans-serif; font-style: normal; font-weight: 800; }
-    h1 .script { display: inline-block; margin: 0 .08em 0 0; }
-    .hero p { color: #3f4353; font-size: 21px; max-width: 620px; margin: 0 0 26px; line-height: 1.7; }
+    .script { color: var(--purple); font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-weight: 700; }
+    .hero p { color: #3f4353; font-size: 21px; max-width: 620px; margin: 0 0 26px; }
     .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; }
 
     .sample-card {
@@ -264,7 +253,7 @@
     .proof-img img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
     .review-card { background: #fff; border-radius: 14px; padding: 30px; box-shadow: var(--shadow); border: 1px solid #eef0f4; }
     .stars { color: #f7b500; font-weight: 900; letter-spacing: 1px; }
-    .review-card p { color: #475467; font-size: 18px; font-style: normal; }
+    .review-card p { color: #475467; font-size: 18px; font-style: italic; }
     .avatar {
       width: 38px; height: 38px; border-radius: 50%;
       display: inline-grid; place-items: center;
@@ -299,7 +288,7 @@
       border: 1px solid #eef0f4;
     }
     .quote:before { content: "“"; color: #efd7ff; font-size: 54px; line-height: 0; }
-    .quote p { color: #344054; font-style: normal; }
+    .quote p { color: #344054; font-style: italic; }
 
     .cta { background: linear-gradient(135deg, var(--purple), var(--pink), var(--coral)); color: #fff; text-align: center; }
     .cta .section-copy { color: rgba(255,255,255,.88); }
@@ -421,8 +410,8 @@
     .lyric-card { background: linear-gradient(145deg,#f9f3ff,#fdf0fb); border:1px solid #e5d0f5; border-radius:18px; padding:22px 18px 18px; margin-bottom:14px; position:relative; overflow:hidden }
     .lyric-card::before { content:''; position:absolute; top:-30px; right:-30px; width:120px; height:120px; border-radius:50%; background:radial-gradient(circle,#e0c8ff44,transparent); }
     .lyric-card-icon { font-size:30px; text-align:center; margin-bottom:8px; color:var(--violet) }
-    .lyric-card-title { font-size:14px; font-weight:900; color:var(--violet); text-align:center; margin-bottom:8px; letter-spacing:0; font-family: 'Sora', Arial, Helvetica, sans-serif }
-    .lyric-card-recipient { font-size:30px; font-weight:900; color:var(--ink); text-align:center; margin-bottom:18px; line-height:1.1; font-family: 'Sora', Arial, Helvetica, sans-serif; text-transform:uppercase }
+    .lyric-card-title { font-size:14px; font-weight:900; color:var(--violet); text-align:center; margin-bottom:8px; letter-spacing:0; font-family:'Inter',sans-serif }
+    .lyric-card-recipient { font-size:30px; font-weight:900; color:var(--ink); text-align:center; margin-bottom:18px; line-height:1.1; font-family:'Playfair Display',Georgia,serif; text-transform:uppercase }
     .lyric-card-body { text-align:left; max-height:320px; overflow-y:auto; padding-right:10px; position:relative; z-index:1 }
     .lyric-card-body::-webkit-scrollbar { width:4px } .lyric-card-body::-webkit-scrollbar-thumb { background:#d0b0ef; border-radius:2px }
     .lyric-stanza { margin-bottom:16px; line-height:1.75; font-size:14px; color:#333 }
@@ -497,7 +486,7 @@
     .bump-qr-body { display:grid; grid-template-columns:1fr auto; gap:0; padding:12px 16px 10px; align-items:center; }
     .bump-qr-left .tag { font-size:10px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:#a07ce8; margin-bottom:8px; }
     .bump-qr-left h3 { font-size:20px; font-weight:800; color:#e8e8f0; line-height:1.2; margin-bottom:6px; }
-    .bump-qr-left h3 em { font-style:normal; color:#c084fc; }
+    .bump-qr-left h3 em { font-style:italic; color:#c084fc; }
     .bump-qr-left p { font-size:12px; color:#888; line-height:1.6; margin-bottom:14px; max-width:280px; }
     .bump-qr-check { display:flex; align-items:flex-start; gap:10px; margin-bottom:14px; cursor:pointer; }
     .bump-qr-check-box { width:20px; height:20px; border:2px solid #7c5cbf; border-radius:5px; background:transparent; flex-shrink:0; margin-top:1px; display:flex; align-items:center; justify-content:center; transition:background .15s; }
@@ -536,7 +525,7 @@
     .spm-text { font-size:12px; color:#667085; line-height:1.6; margin-top:3px }
     .pix-copy-box { border: 1px solid #d9dce3; border-radius: 12px; padding: 12px; margin-bottom: 14px; background: #fbfbff; }
     .pix-copy-box label { display: block; font-weight: 900; margin-bottom: 8px; }
-    .pix-copy-box textarea { width: 100%; min-height: 92px; resize: vertical; border: 1px solid #d9dce3; border-radius: 10px; padding: 10px; font: 700 12px/1.4 'Sora', Arial, Helvetica, sans-serif; color: #172033; background: #fff; }
+    .pix-copy-box textarea { width: 100%; min-height: 92px; resize: vertical; border: 1px solid #d9dce3; border-radius: 10px; padding: 10px; font: 700 12px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; color: #172033; background: #fff; }
     .copy-pix-btn { width: 100%; border: 0; border-radius: 10px; margin-top: 10px; padding: 12px; font-weight: 900; color: #fff; cursor: pointer; background: linear-gradient(90deg, var(--violet), var(--pink)); }
 
     .check-payment-btn { display: none; width: 100%; border: 1px solid var(--violet); border-radius: 10px; margin-top: 10px; padding: 12px; font-weight: 900; color: var(--violet); cursor: pointer; background: #fff; }
@@ -546,7 +535,7 @@
     .pix-result { display: none; border: 1px solid #e9d5ff; border-radius: 12px; padding: 14px; margin-bottom: 14px; background: #fbf7ff; text-align: center; }
     .pix-result.show { display: block; }
     .pix-result img { width: min(220px, 80%); border-radius: 10px; background: #fff; padding: 8px; margin: 8px auto; display: block; }
-    .pix-result textarea { width: 100%; min-height: 88px; resize: vertical; border: 1px solid #d9dce3; border-radius: 10px; padding: 10px; font: 700 12px/1.4 'Sora', Arial, Helvetica, sans-serif; color: #172033; background: #fff; }
+    .pix-result textarea { width: 100%; min-height: 88px; resize: vertical; border: 1px solid #d9dce3; border-radius: 10px; padding: 10px; font: 700 12px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace; color: #172033; background: #fff; }
     .pix-status { font-size: 13px; color: #94a3b8; margin: 4px 0 6px; }
     .guarantee { border: 1px solid #a7f3d0; background: #ecfdf3; color: #047857; border-radius: 10px; padding: 12px; font-weight: 900; margin-bottom: 14px; }
     .error { display: none; color: #a31d4f; background: #ffeaf2; border: 1px solid #ffc7dc; border-radius: 8px; padding: 10px 12px; font-weight: 800; margin-top: 14px; }
@@ -586,625 +575,6 @@
     .preview-prog-fill { height:100%;width:0%;background:var(--violet);border-radius:3px;transition:width .5s linear; }
     .preview-buy-btn { width:100%;border-radius:10px;font-size:15px;min-height:52px;border:0;background:linear-gradient(135deg,var(--purple),var(--pink),var(--coral));color:#fff;font-weight:900;cursor:pointer;box-shadow:0 14px 28px rgba(236,91,154,.24); }
     .gen-error-wrap { text-align:center;padding:16px 0; }
-
-    /* Layout premium inspirado na nova referencia */
-    body {
-      background: #130f18;
-      color: #fff7ef;
-    }
-    main {
-      display: flex;
-      flex-direction: column;
-      background: #130f18;
-    }
-    .wrap { width: min(980px, calc(100% - 42px)); }
-    .topbar {
-      min-height: 58px;
-      background: #16111c;
-      border-bottom: 1px solid rgba(255,255,255,.11);
-    }
-    .brand {
-      color: #fff7ef;
-      font-family: 'Sora', Arial, Helvetica, sans-serif;
-      font-size: 17px;
-      letter-spacing: 0;
-    }
-    .brand span, .grad-text, .script { color: #f06a3d; }
-    .nav { color: #e7d9cd; font-size: 12px; gap: 30px; }
-    .btn {
-      min-height: 40px;
-      padding: 0 22px;
-      border-radius: 999px;
-      background: #f06a3d;
-      color: #fff7ef;
-      box-shadow: 0 14px 30px rgba(240,106,61,.26);
-      font-size: 12px;
-      letter-spacing: .2px;
-    }
-    .hero {
-      order: 1;
-      min-height: 560px;
-      padding: 74px 0 90px;
-      background:
-        radial-gradient(circle at 77% 35%, rgba(116, 81, 126, .32), transparent 28%),
-        linear-gradient(180deg, #17111d 0%, #17111d 100%);
-      color: #fff7ef;
-    }
-    .hero:before, .hero:after { display: none; }
-    .hero-grid {
-      grid-template-columns: minmax(0, 1fr) minmax(300px, 390px);
-      gap: 94px;
-    }
-    .hero-grid > * {
-      min-width: 0;
-    }
-    .hero-grid > div:first-child::before {
-      content: "MUSICA PERSONALIZADA, FEITA PRA VOCE";
-      display: block;
-      margin-bottom: 24px;
-      color: #f06a3d;
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: 1.1px;
-    }
-    h1 {
-      max-width: 520px;
-      color: #fff7ef;
-      font-size: clamp(42px, 6vw, 72px);
-      line-height: 1.08;
-      letter-spacing: 0;
-      word-spacing: .04em;
-      margin-bottom: 26px;
-    }
-    h1 .script {
-      display: inline-block;
-      margin-right: .08em;
-      color: #f06a3d;
-      font-weight: 900;
-    }
-    .hero p {
-      max-width: 540px;
-      color: #d7c9d8;
-      font-size: 17px;
-      line-height: 1.85;
-      letter-spacing: .01em;
-    }
-    .hero p[style] {
-      color: #d7c9d8 !important;
-      font-size: 13px !important;
-    }
-    .hero-actions { gap: 12px; align-items: center; }
-    .hero-actions::after {
-      content: "VER EXEMPLOS";
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 38px;
-      padding: 0 20px;
-      border: 1px solid #fff7ef;
-      border-radius: 999px;
-      color: #fff7ef;
-      font-size: 11px;
-      font-weight: 900;
-    }
-    .trust-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 18px;
-      max-width: 560px;
-    }
-    .trust-pills span {
-      border: 1px solid rgba(123,183,170,.6);
-      color: #9fe0d2;
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 11px;
-      font-weight: 800;
-      background: rgba(123,183,170,.07);
-    }
-    .hero-media-stack {
-      display: grid;
-      gap: 18px;
-      align-items: start;
-      width: 100%;
-      min-width: 0;
-    }
-    .video-card {
-      position: relative;
-      border-radius: 14px;
-      background: #2a2030;
-      border: 1px solid rgba(255,255,255,.09);
-      box-shadow: 0 24px 60px rgba(0,0,0,.24);
-      padding: 12px;
-      color: #fff7ef;
-      overflow: hidden;
-      width: 100%;
-      min-width: 0;
-    }
-    .video-card::before {
-      content: "VIDEO REAL";
-      display: block;
-      color: #f06a3d;
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      margin: 6px 8px 10px;
-    }
-    .video-card video {
-      display: block;
-      width: 100%;
-      max-width: 100%;
-      height: auto;
-      aspect-ratio: 16 / 9;
-      max-height: 320px;
-      object-fit: contain;
-      border-radius: 10px;
-      background: #100b14;
-    }
-    .video-sound-btn {
-      position: absolute;
-      right: 22px;
-      bottom: 22px;
-      z-index: 2;
-      min-height: 38px;
-      border: 0;
-      border-radius: 999px;
-      padding: 0 14px;
-      background: rgba(16, 11, 20, .86);
-      color: #fff7ef;
-      font-size: 11px;
-      font-weight: 900;
-      cursor: pointer;
-      box-shadow: 0 12px 28px rgba(0,0,0,.28);
-    }
-    .video-card.sound-on .video-sound-btn {
-      display: none;
-    }
-    .sample-card {
-      border-radius: 14px;
-      background: #2a2030;
-      border: 1px solid rgba(255,255,255,.09);
-      box-shadow: 0 24px 60px rgba(0,0,0,.24);
-      padding: 20px;
-      color: #fff7ef;
-    }
-    .sample-card::before {
-      content: "EXEMPLO REAL";
-      display: block;
-      color: #f06a3d;
-      font-size: 10px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      margin-bottom: 10px;
-    }
-    .sample-cover {
-      min-height: auto;
-      padding: 0;
-      background: transparent;
-      color: #fff7ef;
-      text-shadow: none;
-    }
-    .sample-cover small { display: none; }
-    .sample-cover strong {
-      font-size: 19px;
-      line-height: 1.3;
-      text-shadow: none;
-    }
-    .player-wave {
-      min-height: 54px;
-      margin: 20px 0 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      opacity: 1;
-      overflow: hidden;
-      padding: 9px 12px;
-      border-radius: 10px;
-      background: #fff;
-    }
-    .player-wave span {
-      width: 4px;
-      height: calc(var(--level, .45) * 42px);
-      min-height: 8px;
-      border-radius: 999px;
-      background: #111;
-      transform-origin: center;
-      transition: height .06s linear, opacity .16s ease;
-    }
-    .player-wave:not(.is-playing) span {
-      height: calc(var(--idle, .58) * 42px);
-    }
-    .player-wave.is-playing span {
-      animation: waveFallback .7s ease-in-out infinite alternate;
-      animation-delay: calc(var(--i, 0) * -48ms);
-    }
-    .player-wave.has-audio-data span {
-      animation: none;
-    }
-    @keyframes waveFallback {
-      from { height: calc(max(.18, var(--idle, .58) - .24) * 42px); opacity: .72; }
-      to { height: calc(min(1, var(--idle, .58) + .34) * 42px); opacity: 1; }
-    }
-    audio { height: 34px; accent-color: #f06a3d; }
-    section {
-      padding: 88px 0;
-      background: #17111d;
-      color: #fff7ef;
-    }
-    .section-title {
-      color: #fff7ef;
-      font-size: clamp(28px, 4vw, 43px);
-      font-family: 'Sora', Arial, Helvetica, sans-serif;
-      text-transform: uppercase;
-    }
-    .section-title::before {
-      content: "SIMPLES, RAPIDO E PROFISSIONAL";
-      display: block;
-      margin-bottom: 13px;
-      color: #f06a3d;
-      font: 900 11px/1 'Sora', Arial, sans-serif;
-      letter-spacing: 1.1px;
-    }
-    .section-copy {
-      color: #c9bacd;
-      font-size: 14px;
-      line-height: 1.7;
-    }
-    .occasions {
-      order: 2;
-      background: #251d2d;
-      padding: 106px 0 82px;
-    }
-    .occasions .section-title {
-      max-width: 640px;
-      margin-left: auto;
-      margin-right: auto;
-      font-size: clamp(34px, 5vw, 54px);
-      line-height: 1.12;
-    }
-    .occasions .section-title::before {
-      content: "PARA QUALQUER MOMENTO";
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      color: #f06a3d;
-      margin-bottom: 24px;
-      letter-spacing: 1.6px;
-    }
-    .occasions .section-title::before,
-    .occasions .section-title::after {
-      font-size: 13px;
-    }
-    .occasions .section-copy {
-      max-width: 690px;
-      margin-bottom: 62px;
-      color: #d7c9d8;
-      font-size: 18px;
-    }
-    .cards {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 20px;
-    }
-    .card {
-      appearance: none;
-      width: 100%;
-      min-height: 202px;
-      background: rgba(255,255,255,.015);
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: 16px;
-      box-shadow: none;
-      padding: 26px;
-      color: #fff7ef;
-      text-align: left;
-      cursor: pointer;
-      transition: border-color .18s ease, background .18s ease, transform .18s ease, box-shadow .18s ease;
-    }
-    .card:hover,
-    .card:focus-visible {
-      border-color: rgba(240,106,61,.82);
-      background: rgba(255,255,255,.035);
-      transform: translateY(-2px);
-      outline: none;
-    }
-    .card.selected {
-      border-color: #f06a3d;
-      box-shadow: 0 0 0 1px rgba(240,106,61,.34), 0 18px 45px rgba(0,0,0,.18);
-    }
-    .icon {
-      width: 46px;
-      height: 46px;
-      margin-bottom: 16px;
-      border-radius: 14px;
-      background: rgba(240,106,61,.12);
-      color: #f6bf42;
-      font-size: 21px;
-    }
-    .card strong { color: #fff7ef; font-size: 20px; line-height: 1.25; margin-bottom: 12px; }
-    .card p { color: #d7c9d8; font-size: 15px; line-height: 1.55; }
-    #como {
-      order: 3;
-      background: #17111d;
-    }
-    #como .section-title::before { content: "SIMPLES, RAPIDO E PROFISSIONAL"; }
-    .process {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 28px;
-      max-width: none;
-    }
-    .process-item {
-      display: block;
-      text-align: left;
-    }
-    .num {
-      width: 26px;
-      height: 26px;
-      margin-bottom: 14px;
-      border: 1px solid #f06a3d;
-      background: transparent;
-      color: #f06a3d;
-      font-size: 12px;
-    }
-    .process-item strong { color: #fff7ef; font-size: 14px; }
-    .process-item p { color: #c9bacd; font-size: 12px; line-height: 1.65; }
-    .proof {
-      order: 4;
-      background: #7bb7aa;
-      color: #120d16;
-    }
-    .proof .section-title, .proof .grad-text { color: #120d16; }
-    .proof .section-title::before {
-      content: "";
-      width: 210px;
-      height: 12px;
-      margin: 0 auto 18px;
-      background: #f0c54b;
-    }
-    .proof .section-copy { color: rgba(18,13,22,.72); }
-    .proof-grid {
-      grid-template-columns: 1.15fr .85fr;
-      gap: 46px;
-    }
-    .proof-img {
-      min-height: 230px;
-      background: transparent;
-      box-shadow: none;
-    }
-    .proof-img img {
-      height: 100%;
-      min-height: 230px;
-      object-fit: contain;
-      filter: drop-shadow(0 22px 30px rgba(0,0,0,.12));
-    }
-    .review-card {
-      background: #22182a;
-      color: #fff7ef;
-      border: 0;
-      border-radius: 10px;
-      box-shadow: 0 20px 50px rgba(0,0,0,.18);
-      padding: 28px;
-    }
-    .review-card p { color: #fff7ef; font-size: 15px; line-height: 1.75; }
-    .avatar { background: #f06a3d; color: #fff7ef; }
-    #depoimentos {
-      order: 5;
-      background: #17111d;
-    }
-    #depoimentos .section-title::before { content: "HISTORIAS REAIS"; }
-    .testimonials-grid { gap: 18px; }
-    .quote {
-      background: transparent;
-      color: #fff7ef;
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: 8px;
-      box-shadow: none;
-      padding: 22px;
-    }
-    .quote:before {
-      content: "★★★★★";
-      display: block;
-      color: #f6bf42;
-      font-size: 12px;
-      line-height: 1;
-      margin-bottom: 16px;
-    }
-    .quote p { color: #fff7ef; font-size: 13px; line-height: 1.7; }
-    .quote strong { color: #f06a3d; }
-    .cta {
-      order: 6;
-      background: #e8653d;
-      color: #fff7ef;
-      padding: 78px 0;
-    }
-    .cta .section-title::before { display: none; }
-    .cta .section-title, .cta .script { color: #fff7ef; }
-    .cta .section-copy { color: rgba(255,255,255,.9); }
-    .cta .btn.white {
-      background: #fff7ef;
-      color: #e8653d;
-      box-shadow: 0 16px 30px rgba(87,39,28,.2);
-    }
-    .footer {
-      background: #100b14;
-      color: #fff7ef;
-      padding-top: 54px;
-    }
-    .footer-grid { border-bottom-color: rgba(255,255,255,.12); }
-    .footer p, .footer small, .footer a { color: #c9bacd; }
-
-    .funnel {
-      background: #17111d;
-      color: #fff7ef;
-      border: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 34px 90px rgba(0,0,0,.46);
-    }
-    .funnel-head {
-      background: #17111d;
-      border-bottom: 1px solid rgba(255,255,255,.12);
-    }
-    .funnel h2 {
-      color: #fff7ef;
-      font-family: 'Sora', Arial, Helvetica, sans-serif;
-    }
-    .close { color: #d7c9d8; }
-    .funnel-body { background: #17111d; }
-    .progress-step { color: #c9bacd; }
-    .dot {
-      background: #2a2030;
-      color: #c9bacd;
-    }
-    .progress-step.active .dot,
-    .progress-step.done .dot {
-      background: #f06a3d;
-      color: #fff7ef;
-    }
-    .field label {
-      color: #fff7ef;
-    }
-    .field input,
-    .field textarea,
-    .field select {
-      background: #100b14;
-      border-color: rgba(255,255,255,.18);
-      color: #fff7ef;
-    }
-    .field input::placeholder,
-    .field textarea::placeholder {
-      color: #9f90a7;
-    }
-    .field select option {
-      background: #100b14;
-      color: #fff7ef;
-    }
-    .field input:focus,
-    .field textarea:focus,
-    .field select:focus {
-      border-color: #f06a3d;
-      box-shadow: 0 0 0 3px rgba(240,106,61,.16);
-    }
-    .radio-row label {
-      background: #100b14;
-      border-color: rgba(255,255,255,.18);
-      color: #fff7ef;
-    }
-    .radio-row label:has(input:checked) {
-      border-color: #f06a3d;
-      background: rgba(240,106,61,.14);
-      color: #f06a3d;
-    }
-    .funnel-actions {
-      background: #17111d;
-      border-top: 1px solid rgba(255,255,255,.12);
-      box-shadow: 0 -10px 24px rgba(0,0,0,.22);
-    }
-    .funnel-actions .back-link {
-      color: #c9bacd;
-    }
-    .funnel-actions .back-link:hover {
-      color: #f06a3d;
-    }
-    .funnel-actions-row .btn,
-    #nextBtn {
-      background: #f06a3d;
-      color: #fff7ef;
-      box-shadow: 0 14px 30px rgba(240,106,61,.26);
-    }
-    .funnel .promo {
-      background: rgba(22, 163, 74, .14);
-      border-color: #22c55e;
-      color: #86efac;
-    }
-    .funnel .price-box {
-      background: #100b14;
-      border-color: #f06a3d;
-      color: #fff7ef;
-    }
-    .funnel .price-row,
-    .funnel .summary-row {
-      border-bottom-color: rgba(255,255,255,.18);
-      color: #fff7ef;
-    }
-    .funnel .price-row span,
-    .funnel .summary-row span {
-      color: #fff7ef;
-    }
-    .funnel .price-row strong,
-    .funnel .summary-row strong {
-      color: #fff7ef;
-    }
-    .funnel .old-price {
-      color: #a8a0ae;
-    }
-    .funnel .price-row .new-price,
-    .funnel .summary-row #totalPrice {
-      color: #f06a3d;
-    }
-    .funnel .save-badge {
-      background: rgba(34,197,94,.16);
-      color: #86efac;
-    }
-    .funnel .summary {
-      background: #100b14;
-      border-color: rgba(255,255,255,.28);
-      color: #fff7ef;
-    }
-    .funnel .bump-compact {
-      background: #100b14;
-      border-color: rgba(240,106,61,.5);
-      color: #fff7ef;
-    }
-    .funnel .bump-compact-text strong,
-    .funnel .bump-compact-price {
-      color: #f06a3d;
-    }
-    .funnel .bump-compact-text small {
-      color: #c9bacd;
-    }
-    .funnel .bump-compact input {
-      accent-color: #f06a3d;
-    }
-
-    @media (max-width: 900px) {
-      .hero-grid, .proof-grid, .process, .cards { gap: 28px; }
-      .process { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    }
-    @media (max-width: 620px) {
-      .wrap { width: min(100% - 28px, 980px); }
-      body { overflow-x: hidden; }
-      .topbar { position: sticky; }
-      .nav { gap: 10px; }
-      .hero { min-height: auto; padding: 54px 0 70px; text-align: left; }
-      .hero-grid { grid-template-columns: minmax(0, 1fr); gap: 34px; width: 100%; max-width: 100%; }
-      .hero-grid > div:first-child::before { max-width: 100%; font-size: 18px; line-height: 1.35; }
-      h1 { width: 100%; max-width: 100%; font-size: clamp(35px, 10.2vw, 42px); line-height: 1.08; overflow-wrap: break-word; }
-      .hero p { width: 100%; max-width: 100%; font-size: 15px; line-height: 1.8; text-align: left; }
-      .hero-actions { justify-content: flex-start; }
-      .hero-actions::after { min-height: 36px; padding: 0 15px; }
-      .trust-pills { max-width: 100%; }
-      .hero-media-stack { width: 100%; max-width: calc(100vw - 28px); overflow: hidden; justify-self: stretch; }
-      .video-card, .sample-card { width: 100%; max-width: 100%; min-width: 0; }
-      .video-card { padding: 10px; border-radius: 12px; }
-      .video-card::before { margin: 4px 6px 8px; }
-      .video-card video { display: block; width: 100%; max-width: 100%; height: auto; max-height: none; object-fit: contain; border-radius: 9px; }
-      .video-sound-btn { right: 18px; bottom: 18px; min-height: 34px; padding: 0 12px; font-size: 10px; }
-      .cards, .process, .testimonials-grid, .footer-grid { grid-template-columns: 1fr; }
-      .proof-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 480px) {
-      .wrap { width: min(100% - 24px, 980px); }
-      .hero { padding-top: 46px; }
-      .hero-grid { gap: 28px; }
-      h1 { font-size: clamp(32px, 9.5vw, 38px); line-height: 1.12; margin-bottom: 20px; }
-      .hero p { font-size: 14px; line-height: 1.75; }
-      .trust-pills { gap: 7px; }
-      .trust-pills span { font-size: 10px; padding: 6px 9px; }
-      .hero-media-stack { max-width: calc(100vw - 24px); }
-      .video-card, .sample-card { padding: 9px; }
-      .video-card video { aspect-ratio: 16 / 9; width: 100%; }
-    }
   </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XLLSQGPFP6"></script>
@@ -1243,29 +613,17 @@
             <button class="btn open-funnel" type="button">Crie sua música agora</button>
           </div>
           <p style="margin:14px 0 0;font-size:15px;color:#6b4f8a;font-weight:700">💜 Entrega em até 15 minutos pelo WhatsApp</p>
-          <div class="trust-pills">
-            <span>Aceita Pix</span><span>7 dias de garantia</span><span>Entrega pelo WhatsApp</span><span>Mais de 5.000 clientes</span>
-          </div>
         </div>
-        <div class="hero-media-stack">
-          <div class="video-card">
-            <video controls autoplay muted loop preload="metadata" playsinline poster="assets/polaroids-musica.png">
-              <source src="assets/musiclove-demo-video.mp4" type="video/mp4">
-              Seu navegador não conseguiu carregar este vídeo.
-            </video>
-            <button class="video-sound-btn" type="button" aria-label="Ativar som do video">ATIVAR SOM</button>
-          </div>
-          <div class="sample-card" id="exemplo">
+        <div class="sample-card" id="exemplo">
           <div class="sample-cover">
             <small>Exemplo de pedido:</small>
             <strong>"Quero uma música romântica para minha namorada..."</strong>
           </div>
-          <div class="player-wave" id="sampleWave" aria-hidden="true"></div>
-          <audio controls preload="metadata" id="sampleAudio">
+          <div class="player-wave"></div>
+          <audio controls preload="none">
             <source src="assets/melodia-exemplo.aac" type="audio/aac">
             Seu navegador não conseguiu carregar este áudio.
           </audio>
-        </div>
         </div>
       </div>
     </section>
@@ -1302,25 +660,11 @@
       <div class="wrap">
         <h2 class="section-title">Perfeito para <span class="grad-text">Qualquer Ocasião</span></h2>
         <p class="section-copy">Seja uma celebração ou apenas porque, uma música personalizada torna inesquecível.</p>
-        <div class="cards occasion-cards">
-          <button class="card occasion-card" type="button" data-occasion="Anivers&aacute;rio" aria-label="Selecionar ocasi&atilde;o Anivers&aacute;rio">
-            <div class="icon">&#127874;</div><strong>Anivers&aacute;rio</strong><p>Surpreenda quem voc&ecirc; ama com uma trilha sonora s&oacute; dela.</p>
-          </button>
-          <button class="card occasion-card" type="button" data-occasion="Dia dos Namorados" aria-label="Selecionar ocasi&atilde;o Para quem voc&ecirc; ama">
-            <div class="icon">&#128150;</div><strong>Para quem voc&ecirc; ama</strong><p>Diga "eu te amo" de um jeito que ningu&eacute;m nunca te deu.</p>
-          </button>
-          <button class="card occasion-card" type="button" data-occasion="Homenagem aos pais" aria-label="Selecionar ocasi&atilde;o Homenagem aos pais">
-            <div class="icon">&#128106;</div><strong>Homenagem aos pais</strong><p>Agrade&ccedil;a por tudo com uma m&uacute;sica feita s&oacute; para eles.</p>
-          </button>
-          <button class="card occasion-card" type="button" data-occasion="Nascimento de um filho" aria-label="Selecionar ocasi&atilde;o Nascimento de um filho">
-            <div class="icon">&#128118;</div><strong>Nascimento de um filho</strong><p>Marque esse momento para sempre, em forma de can&ccedil;&atilde;o.</p>
-          </button>
-          <button class="card occasion-card" type="button" data-occasion="M&uacute;sica para o pet" aria-label="Selecionar ocasi&atilde;o M&uacute;sica para o pet">
-            <div class="icon">&#128062;</div><strong>M&uacute;sica para o pet</strong><p>Uma homenagem divertida e cheia de carinho ao seu melhor amigo.</p>
-          </button>
-          <button class="card occasion-card" type="button" data-occasion="Em mem&oacute;ria" aria-label="Selecionar ocasi&atilde;o Em mem&oacute;ria">
-            <div class="icon">&#128330;&#65039;</div><strong>Em mem&oacute;ria</strong><p>Uma forma linda e emocionante de manter viva uma lembran&ccedil;a.</p>
-          </button>
+        <div class="cards">
+          <div class="card"><div class="icon">▦</div><strong>Aniversário</strong><p>Torne o dia especial ainda mais memorável com uma música só para ela/ele.</p></div>
+          <div class="card"><div class="icon">♥</div><strong>Para sua namorada(o)</strong><p>Celebre sua história de amor com uma música que captura sua jornada juntos.</p></div>
+          <div class="card"><div class="icon">●</div><strong>Pedido de casamento</strong><p>Peça em casamento da forma mais romântica possível.</p></div>
+          <div class="card"><div class="icon">✦</div><strong>Apenas porque</strong><p>Às vezes os melhores presentes são os inesperados que vêm do coração.</p></div>
         </div>
       </div>
     </section>
@@ -1383,10 +727,6 @@
                   <option>Aniversário de casamento</option>
                   <option>Casamento/Pedido</option>
                   <option>Dia dos Namorados</option>
-                  <option>Homenagem aos pais</option>
-                  <option>Nascimento de um filho</option>
-                  <option>M&uacute;sica para o pet</option>
-                  <option>Em mem&oacute;ria</option>
                   <option>Apenas porque</option>
                   <option>Outro</option>
                 </select>
@@ -1452,12 +792,12 @@
               <!-- Header -->
               <div style="margin-bottom:14px">
                 <div style="display:inline-block;background:linear-gradient(135deg,#ff6b6b,#ff9a9a);color:#fff;font-size:10px;font-weight:900;letter-spacing:1.5px;padding:3px 10px;border-radius:999px;margin-bottom:8px">COMPONDO AGORA</div>
-                <div style="font-size:22px;font-weight:800;color:#182033;line-height:1.2;font-family: 'Sora', Arial, Helvetica, sans-serif">Sua música está nascendo</div>
+                <div style="font-size:22px;font-weight:800;color:#182033;line-height:1.2;font-family:'Playfair Display',Georgia,serif">Sua música está nascendo</div>
               </div>
               <!-- Countdown card -->
               <div style="background:linear-gradient(145deg,#f5f0ff,#fdf3fb);border:1px solid #e8d8f8;border-radius:16px;padding:18px;margin-bottom:14px;text-align:center">
                 <div style="font-size:10px;font-weight:700;color:#9b76d4;letter-spacing:1.2px;margin-bottom:6px">PREVISÃO DE CRIAÇÃO</div>
-                <div id="genCountdown" style="font-size:42px;font-weight:700;color:#182033;font-variant-numeric:tabular-nums;letter-spacing:-1px;line-height:1;font-family: 'Sora', Arial, Helvetica, sans-serif">3:50</div>
+                <div id="genCountdown" style="font-size:42px;font-weight:700;color:#182033;font-variant-numeric:tabular-nums;letter-spacing:-1px;line-height:1;font-family:'Inter',sans-serif">3:50</div>
               </div>
               <!-- Progress bar -->
               <div style="background:#f0e8ff;border-radius:999px;height:5px;margin-bottom:14px;overflow:hidden">
@@ -1601,7 +941,7 @@
 
               <!-- Campo mascarado + botão copiar -->
               <div id="pixCopyWrap" style="display:none;margin-top:8px">
-                <div style="display:flex;align-items:center;gap:8px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-size:12px;color:#94a3b8;font-family:'Sora', Arial, Helvetica, sans-serif">
+                <div style="display:flex;align-items:center;gap:8px;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;font-size:12px;color:#94a3b8;font-family:monospace">
                   <span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">pix.bcb.gov.br/qr/v2/••••••••••••</span>
                 </div>
                 <textarea id="pixPayload" readonly style="display:none"></textarea>
@@ -1611,7 +951,7 @@
             <div id="thankYouScreen" style="display:none;border-radius:16px;margin-bottom:14px;overflow:hidden">
               <div style="background:linear-gradient(135deg,#0d2218,#0a1a10);border:2px solid #16a34a;border-radius:16px;padding:28px 20px;text-align:center">
                 <div style="font-size:52px;margin-bottom:12px">🎉</div>
-                <h2 style="color:#4ade80;font-size:20px;font-weight:900;margin-bottom:8px;font-family: 'Sora', Arial, Helvetica, sans-serif">Pagamento confirmado!</h2>
+                <h2 style="color:#4ade80;font-size:20px;font-weight:900;margin-bottom:8px;font-family:'Playfair Display',Georgia,serif">Pagamento confirmado!</h2>
                 <p style="font-size:14px;color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:20px">Nossa equipe já recebeu seu pedido e vai criar sua música personalizada com carinho. 🎵<br><br>Toque no botão abaixo para nos avisar e acompanhar a entrega pelo WhatsApp.</p>
                 <a id="tyWhatsappBtn" href="#" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:17px;border-radius:14px;background:#16a34a;color:#fff;font-weight:900;font-size:16px;text-decoration:none;box-shadow:0 8px 24px rgba(22,163,74,.4);margin-bottom:14px">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.138.564 4.139 1.544 5.871L0 24l6.335-1.52A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.908 0-3.703-.498-5.258-1.373l-.375-.22-3.766.904.952-3.68-.244-.386A9.96 9.96 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
@@ -2221,8 +1561,7 @@ a melodia fala por mim baixinho.`;
       };
       var normalizeHeader = function(line) {
         var cleaned = line
-          .replace(/^[\s([{]+/, '')
-          .replace(/[\s\])}:]+$/, '')
+          .replace(/^[([{\s]+|[\])}\s:]+$/g, '')
           .replace(/^\s*[-\u2013\u2014\u2022]+\s*/, '')
           .replace(/\s*:\s*$/, '')
           .trim();
@@ -2230,10 +1569,8 @@ a melodia fala por mim baixinho.`;
         if (/^verso\s*\d*$/.test(plain)) return cleaned.toUpperCase();
         if (/^pre\s*-?\s*refrao$/.test(plain)) return 'PR\u00c9-REFR\u00c3O';
         if (/^refrao$/.test(plain)) return 'REFR\u00c3O';
-        if (/^refrao\s*final$/.test(plain)) return 'REFR\u00c3O FINAL';
         if (/^ponte$/.test(plain)) return 'PONTE';
         if (/^intro(ducao)?$/.test(plain)) return 'INTRO';
-        if (/^(fechamento|encerramento|finalizacao)$/.test(plain)) return 'FECHAMENTO';
         if (/^final$/.test(plain)) return 'FINAL';
         return '';
       };
@@ -2563,21 +1900,6 @@ a melodia fala por mim baixinho.`;
       });
     });
     openButtons.forEach((button) => button.addEventListener("click", openFunnel));
-    document.querySelectorAll(".occasion-card").forEach((card) => {
-      card.addEventListener("click", () => {
-        const occasion = card.dataset.occasion || "";
-        document.querySelectorAll(".occasion-card").forEach((item) => item.classList.remove("selected"));
-        card.classList.add("selected");
-        const occasionSelect = document.getElementById("ocasiao");
-        if (occasionSelect && occasion) {
-          occasionSelect.value = occasion;
-          occasionSelect.dispatchEvent(new Event("change", { bubbles: true }));
-        }
-        openFunnel();
-        setStep(0);
-        document.getElementById("destinatario")?.focus();
-      });
-    });
     closeButton.addEventListener("click", requestCloseFunnel);
     resumeFunnelButton?.addEventListener("click", openFunnel);
     modal.addEventListener("click", handleBackdropClick);
@@ -2609,119 +1931,6 @@ a melodia fala por mim baixinho.`;
       if (el) el.style.display = 'none';
       startMusicGeneration();
     });
-
-    function setupSampleVisualizer() {
-      const audio = document.getElementById("sampleAudio");
-      const wave = document.getElementById("sampleWave");
-      if (!audio || !wave) return;
-
-      const idlePattern = [.38,.62,.52,.70,.46,.58,.44,.66,.76,.54,.42,.60,.50,.36,.48,.72,.86,.64,.78,.92,.68,.82,.56,.74,.63,.47,.69,.80,.58,.73,.88,.96,.76,.66,.52,.61,.84,.94,.72,.57,.49,.64,.71,.55,.43,.59,.68,.83,.91,.75,.62,.46,.57,.79];
-      wave.innerHTML = idlePattern.map((level, index) => (
-        '<span style="--i:' + index + ';--idle:' + level + ';--level:' + level + '"></span>'
-      )).join("");
-      const bars = Array.from(wave.querySelectorAll("span"));
-      let audioContext = null;
-      let analyser = null;
-      let source = null;
-      let frameId = 0;
-      const data = new Uint8Array(64);
-
-      function setIdleWave() {
-        bars.forEach((bar, index) => {
-          bar.style.setProperty("--level", idlePattern[index % idlePattern.length]);
-        });
-      }
-
-      function drawWave() {
-        if (!analyser || audio.paused || audio.ended) {
-          wave.classList.remove("is-playing");
-          wave.classList.remove("has-audio-data");
-          setIdleWave();
-          frameId = 0;
-          return;
-        }
-
-        analyser.getByteFrequencyData(data);
-        wave.classList.add("has-audio-data");
-        bars.forEach((bar, index) => {
-          const start = Math.floor(index * data.length / bars.length);
-          const end = Math.max(start + 1, Math.floor((index + 1) * data.length / bars.length));
-          let sum = 0;
-          for (let i = start; i < end; i += 1) sum += data[i];
-          const avg = sum / (end - start || 1);
-          const level = Math.max(.16, Math.min(1, Math.pow(avg / 170, .72)));
-          bar.style.setProperty("--level", level.toFixed(2));
-        });
-        frameId = requestAnimationFrame(drawWave);
-      }
-
-      async function ensureAudioGraph() {
-        if (!audioContext) {
-          const AudioCtx = window.AudioContext || window.webkitAudioContext;
-          if (!AudioCtx) return false;
-          audioContext = new AudioCtx();
-          analyser = audioContext.createAnalyser();
-          analyser.fftSize = 128;
-          analyser.smoothingTimeConstant = .7;
-          source = audioContext.createMediaElementSource(audio);
-          source.connect(analyser);
-          analyser.connect(audioContext.destination);
-        }
-        if (audioContext.state === "suspended") await audioContext.resume();
-        return true;
-      }
-
-      audio.addEventListener("play", async () => {
-        wave.classList.add("is-playing");
-        try {
-          if (await ensureAudioGraph()) {
-            cancelAnimationFrame(frameId);
-            drawWave();
-          }
-        } catch (error) {
-          console.warn("Visualizador de áudio indisponível:", error);
-        }
-      });
-      ["pause", "ended", "emptied"].forEach((eventName) => {
-        audio.addEventListener(eventName, () => {
-          wave.classList.remove("is-playing");
-          wave.classList.remove("has-audio-data");
-          cancelAnimationFrame(frameId);
-          frameId = 0;
-          setIdleWave();
-        });
-      });
-      setIdleWave();
-    }
-
-    function setupHeroVideoAutoplay() {
-      const video = document.querySelector(".video-card video");
-      const card = document.querySelector(".video-card");
-      const soundButton = document.querySelector(".video-sound-btn");
-      if (!video) return;
-
-      function enableSound() {
-        video.muted = false;
-        video.defaultMuted = false;
-        video.volume = 1;
-        card?.classList.add("sound-on");
-        video.play().catch(() => {});
-      }
-
-      video.muted = true;
-      video.defaultMuted = true;
-      video.play().catch(() => {});
-      soundButton?.addEventListener("click", enableSound);
-      video.addEventListener("volumechange", () => {
-        card?.classList.toggle("sound-on", !video.muted);
-      });
-      ["pointerdown", "touchstart"].forEach((eventName) => {
-        window.addEventListener(eventName, enableSound, { once: true, passive: true });
-      });
-    }
-
-    setupHeroVideoAutoplay();
-    setupSampleVisualizer();
     setStep(0);
   </script>
 
