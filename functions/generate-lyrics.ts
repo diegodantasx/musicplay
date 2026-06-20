@@ -75,7 +75,7 @@ Regras obrigatorias:
 - Formato exato: {\"title\":\"Titulo: ...\",\"lyrics\":\"(Verso 1)\\n...\"}
 - A letra precisa ser completa, com no minimo: Verso 1, Pre-refrao, Refrao, Verso 2, Ponte e Refrao Final.
 - Quando a historia tiver muitos detalhes, inclua tambem um Verso 3 ou uma segunda ponte curta.
-- Tamanho da letra: 42 a 70 linhas, contando titulos de secoes e versos. Nao faca menos que isso.
+- Tamanho da letra: aproximadamente 30 linhas, contando titulos de secoes e versos. Mantenha entre 28 e 32 linhas.
 - Use detalhes reais da historia do cliente: nomes, datas, lugares, apelidos, momentos, dificuldades, promessas, filhos, familia, distancia, profissao ou qualquer detalhe citado.
 - Nao invente fatos especificos que o cliente nao contou. Se faltar detalhe, escreva de forma emocional sem criar mentira.
 - A letra deve ter cara de musica, nao de texto narrativo. Use frases cantaveis, ritmo natural, rimas quando combinarem e repeticoes bonitas no refrao.
@@ -179,7 +179,7 @@ async function tryAnthropic(apiKey: string, prompt: string): Promise<{ title: st
       },
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
-        max_tokens: 2200,
+        max_tokens: 1400,
         messages: [{ role: 'user', content: prompt }],
       }),
     });
@@ -206,7 +206,7 @@ async function tryOpenAI(apiKey: string, prompt: string): Promise<{ title: strin
         model: 'gpt-4o-mini',
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.88,
-        max_tokens: 2200,
+        max_tokens: 1400,
         response_format: { type: 'json_object' },
       }),
     });
