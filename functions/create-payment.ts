@@ -12,6 +12,10 @@ function cleanBrief(obj: Record<string, unknown>, limit = 3000): string {
   return String(obj['brief'] ?? '').trim().slice(0, limit);
 }
 function digits(s: string): string { return s.replace(/\D/g, ''); }
+async function sha256(value: string): Promise<string> {
+  const bytes = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
+  return Array.from(new Uint8Array(bytes)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
 function json(data: unknown, status = 200): Response {
   return new Response(JSON.stringify(data), {
     status,
@@ -19,7 +23,8 @@ function json(data: unknown, status = 200): Response {
   });
 }
 
-export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+export const onRequestPost: PagesFunction<Env> = async (context) => {
+  const { request, env } = context;
   let input: Record<string, unknown>;
   try { input = await request.json() as Record<string, unknown>; }
   catch { return json({ ok: false, error: 'invalid_json' }, 400); }
@@ -37,6 +42,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const backOffer     = input['orderBumpBackOffer']    === true || input['orderBumpBackOffer']    === 'true';
   const attr = (input['attribution'] && typeof input['attribution'] === 'object')
     ? input['attribution'] as Record<string, string> : {};
+  const gaClientId  = clean(input, 'gaClientId', 160).replace(/[^a-zA-Z0-9_.-]/g, '');
+  const gaSessionId = clean(input, 'gaSessionId', 160).replace(/[^a-zA-Z0-9_.-]/g, '');
 
   if (!name || !email || !phone || !cpf) {
     return json({ ok: false, error: 'missing_customer_fields' }, 422);
@@ -54,21 +61,27 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const clientIp  = request.headers.get('CF-Connecting-IP') || '';
   const userAgent = request.headers.get('User-Agent') || '';
 
-  // 1. Create or find customer
-  const customerRes = await asaas(env.ASAAS_API_KEY, 'POST', '/customers', {
-    name, email, cpfCnpj: cpf,
-    mobilePhone: phone,
-    externalReference: externalRef,
-    notificationDisabled: true,
-  });
+  // 1. Reuse a known Asaas customer on PIX retries.
+  const customerCacheKey = 'asaas-customer:' + await sha256(cpf);
+  let customerId = env.ORDERS_KV ? String(await env.ORDERS_KV.get(customerCacheKey) || '') : '';
+  if (!customerId) {
+    const customerRes = await asaas(env.ASAAS_API_KEY, 'POST', '/customers', {
+      name, email, cpfCnpj: cpf,
+      mobilePhone: phone,
+      externalReference: externalRef,
+      notificationDisabled: true,
+    });
 
-  if (!customerRes.ok || !customerRes.data['id']) {
-    const msg = (customerRes.data['errors'] as Array<{description:string}>)?.[0]?.description
-      ?? 'Não foi possível criar o cliente.';
-    return json({ ok: false, error: 'customer_create_failed', message: msg }, 502);
+    if (!customerRes.ok || !customerRes.data['id']) {
+      const msg = (customerRes.data['errors'] as Array<{description:string}>)?.[0]?.description
+        ?? 'Não foi possível criar o cliente.';
+      return json({ ok: false, error: 'customer_create_failed', message: msg }, 502);
+    }
+    customerId = String(customerRes.data['id']);
+    if (env.ORDERS_KV) {
+      context.waitUntil(env.ORDERS_KV.put(customerCacheKey, customerId, { expirationTtl: 86400 * 365 }));
+    }
   }
-
-  const customerId = String(customerRes.data['id']);
 
   // 2. Create PIX payment
   const paymentRes = await asaas(env.ASAAS_API_KEY, 'POST', '/payments', {
@@ -111,6 +124,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     wbraid: clean(attr, 'wbraid', 260),
     gbraid: clean(attr, 'gbraid', 260),
     dclid: clean(attr, 'dclid', 260),
+    gaClientId,
+    gaSessionId,
     pageUrl: clean(attr, 'pageUrl', 900),
     utmSource:   clean(attr, 'utmSource',   120),
     utmMedium:   clean(attr, 'utmMedium',   120),
@@ -123,7 +138,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     updated_at: new Date().toISOString(),
   };
   if (env.ORDERS_KV) {
-    await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 365 });
+    context.waitUntil(env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 365 }));
   }
 
   return json({
