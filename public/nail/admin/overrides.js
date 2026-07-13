@@ -139,7 +139,7 @@
       document.getElementById('rc-reused').style.display = data.reused ? 'block' : 'none';
       var phone = String(data.phone || '').replace(/\D/g, '');
       if (phone && !phone.startsWith('55')) phone = '55' + phone;
-      var message = 'Olá, ' + String(data.name || 'Cliente').split(' ')[0] + '!\n\nPara concluir sua compra do Nail Collection por R$ 10,00, pague o Pix abaixo:\n\n' + data.payload;
+      var message = 'Olá, ' + String(data.name || 'Cliente').split(' ')[0] + '! Tudo bem? 💅\n\nVi que você iniciou a compra do Nail Collection, mas o pagamento ainda não foi concluído.\n\nVou enviar o código Pix em uma mensagem separada logo abaixo. Assim que o pagamento for confirmado, você receberá o acesso automaticamente pelo WhatsApp.';
       document.getElementById('rc-whatsapp').href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message);
       if (!data.reused) loadOrders();
     }).catch(function (error) {
@@ -156,4 +156,8 @@
     headers[6].textContent = 'Entrega';
     if (headers[7]) headers[7].textContent = 'Ações';
   }
+  var recoveryWhatsApp = document.getElementById('rc-whatsapp');
+  if (recoveryWhatsApp) recoveryWhatsApp.innerHTML = '1. Enviar mensagem de recuperação';
+  var recoveryCopy = document.querySelector('[onclick="copyRecoverPix()"]');
+  if (recoveryCopy) recoveryCopy.innerHTML = '2. Copiar código PIX';
 })();
