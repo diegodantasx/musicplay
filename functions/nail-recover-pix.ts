@@ -8,6 +8,8 @@ interface Env {
   EVOLUTION_API_URL: string;
   EVOLUTION_API_KEY: string;
   EVOLUTION_INSTANCE: string;
+  NAIL_EVOLUTION_API_URL?: string;
+  NAIL_EVOLUTION_INSTANCE?: string;
 }
 
 function json(data: unknown, status = 200): Response {
@@ -51,9 +53,9 @@ async function sendRecovery(
 ): Promise<{ messageSent: boolean; pixSent: boolean }> {
   const firstName = String(order.name || 'Cliente').trim().split(/\s+/)[0];
   const config = {
-    apiUrl: env.EVOLUTION_API_URL,
+    apiUrl: env.NAIL_EVOLUTION_API_URL || env.EVOLUTION_API_URL,
     apiKey: env.EVOLUTION_API_KEY,
-    instance: env.EVOLUTION_INSTANCE,
+    instance: env.NAIL_EVOLUTION_INSTANCE || env.EVOLUTION_INSTANCE,
   };
   const message = `Olá, ${firstName}! Tudo bem? 💅\n\nVi que você iniciou a compra do Nail Collection, mas o pagamento ainda não foi concluído.\n\nVou enviar o código Pix em uma mensagem separada logo abaixo. Assim que o pagamento for confirmado, você receberá o acesso automaticamente pelo WhatsApp.`;
   const messageSent = await sendEvolutionWithRetry(config, String(order.phone || ''), message);

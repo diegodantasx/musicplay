@@ -6,6 +6,8 @@ interface Env {
   EVOLUTION_API_URL: string;
   EVOLUTION_API_KEY: string;
   EVOLUTION_INSTANCE: string;
+  NAIL_EVOLUTION_API_URL?: string;
+  NAIL_EVOLUTION_INSTANCE?: string;
   NAIL_DELIVERY_URL: string;
 }
 
@@ -81,9 +83,9 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
     const firstName = String(order.name || 'Cliente').trim().split(/\s+/)[0];
     const message = `Olá, ${firstName}! ✅\n\nSeu pagamento do Nail Collection foi confirmado.\n\nAcesse seus arquivos aqui:\n${env.NAIL_DELIVERY_URL}\n\nSalve o link para consultar quando quiser.`;
     const sent = Boolean(env.NAIL_DELIVERY_URL) && await sendEvolutionText({
-      apiUrl: env.EVOLUTION_API_URL,
+      apiUrl: env.NAIL_EVOLUTION_API_URL || env.EVOLUTION_API_URL,
       apiKey: env.EVOLUTION_API_KEY,
-      instance: env.EVOLUTION_INSTANCE,
+      instance: env.NAIL_EVOLUTION_INSTANCE || env.EVOLUTION_INSTANCE,
     }, String(order.phone || ''), message);
 
     order.deliverySent = sent;

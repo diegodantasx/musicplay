@@ -17,6 +17,8 @@ interface Env {
   EVOLUTION_API_URL: string;
   EVOLUTION_API_KEY: string;
   EVOLUTION_INSTANCE: string;
+  NAIL_EVOLUTION_API_URL?: string;
+  NAIL_EVOLUTION_INSTANCE?: string;
   NAIL_DELIVERY_URL: string;
   NAIL_META_PIXEL_ID: string;
   NAIL_META_CAPI_TOKEN: string;
@@ -140,9 +142,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       const deliveryUrl = env.NAIL_DELIVERY_URL || '';
       const message = `Olá, ${firstName}! ✅\n\nSeu pagamento do Nail Collection foi confirmado.\n\nAcesse seus arquivos aqui:\n${deliveryUrl}\n\nSalve o link para consultar quando quiser.`;
       const delivered = Boolean(deliveryUrl) && await sendEvolutionText({
-        apiUrl: env.EVOLUTION_API_URL,
+        apiUrl: env.NAIL_EVOLUTION_API_URL || env.EVOLUTION_API_URL,
         apiKey: env.EVOLUTION_API_KEY,
-        instance: env.EVOLUTION_INSTANCE,
+        instance: env.NAIL_EVOLUTION_INSTANCE || env.EVOLUTION_INSTANCE,
       }, String(order['phone'] ?? ''), message);
 
       order['deliverySent'] = delivered;
