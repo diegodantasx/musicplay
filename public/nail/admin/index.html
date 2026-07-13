@@ -1952,7 +1952,9 @@ function recoverPix(pid, name, phone) {
   document.getElementById('recover-error').style.display = 'none';
   ov.style.display = 'flex';
 
-  fetch('/nail-recover-pix?paymentId=' + encodeURIComponent(pid), { headers: { 'Authorization': auth } })
+  var recoveryController = new AbortController();
+  var recoveryTimeout = setTimeout(function(){ recoveryController.abort(); }, 25000);
+  fetch('/nail-recover-pix?paymentId=' + encodeURIComponent(pid), { headers: { 'Authorization': auth }, signal: recoveryController.signal })
     .then(function(r){ return r.json(); })
     .then(function(d) {
       document.getElementById('recover-loading').style.display = 'none';
@@ -1992,11 +1994,12 @@ function recoverPix(pid, name, phone) {
         document.getElementById('recover-error').textContent = 'Não foi possível confirmar o envio no WhatsApp.';
       }
     })
-    .catch(function(){
+    .catch(function(error){
       document.getElementById('recover-loading').style.display = 'none';
       document.getElementById('recover-error').style.display = 'block';
-      document.getElementById('recover-error').textContent = 'Erro ao conectar.';
-    });
+      document.getElementById('recover-error').textContent = error && error.name === 'AbortError' ? 'O envio demorou demais. Tente novamente.' : 'Erro ao conectar.';
+    })
+    .finally(function(){ clearTimeout(recoveryTimeout); });
 }
 
 function uploadMp3() {

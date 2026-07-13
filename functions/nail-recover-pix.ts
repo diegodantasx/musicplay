@@ -26,11 +26,22 @@ async function sendEvolutionWithRetry(
   phone: string,
   content: string,
 ): Promise<boolean> {
-  for (let attempt = 0; attempt < 3; attempt += 1) {
-    if (await sendEvolutionText(config, phone, content)) return true;
-    await new Promise((resolve) => setTimeout(resolve, 1000 * (attempt + 1)));
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const sent = await Promise.race([
+      sendEvolutionText(config, phone, content),
+      new Promise<boolean>((resolve) => setTimeout(() => resolve(false), 4000)),
+    ]);
+    if (sent) return true;
+    if (attempt === 0) await new Promise((resolve) => setTimeout(resolve, 750));
   }
   return false;
+}
+
+async function withTimeout<T>(promise: Promise<T>, milliseconds = 8000): Promise<T | null> {
+  return Promise.race([
+    promise,
+    new Promise<null>((resolve) => setTimeout(() => resolve(null), milliseconds)),
+  ]);
 }
 
 async function sendRecovery(
@@ -67,8 +78,8 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   if (order.product !== 'nail-collection') return json({ ok: false, error: 'not_found' }, 404);
   if (order.paid === true) return json({ ok: false, error: 'already_paid' }, 409);
 
-  const existing = await asaas(env.ASAAS_API_KEY, 'GET', `/payments/${encodeURIComponent(paymentId)}/pixQrCode`);
-  if (existing.ok && existing.data.payload) {
+  const existing = await withTimeout(asaas(env.ASAAS_API_KEY, 'GET', `/payments/${encodeURIComponent(paymentId)}/pixQrCode`));
+  if (existing?.ok && existing.data.payload) {
     const delivery = await sendRecovery(env, order, String(existing.data.payload));
     return json({
       ok: true,
@@ -86,19 +97,19 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
 
   const due = new Date();
   due.setDate(due.getDate() + 1);
-  const payment = await asaas(env.ASAAS_API_KEY, 'POST', '/payments', {
+  const payment = await withTimeout(asaas(env.ASAAS_API_KEY, 'POST', '/payments', {
     customer: order.customerId,
     billingType: 'PIX',
     value: Number(order.value || 10),
     dueDate: due.toISOString().slice(0, 10),
     description: 'Nail Collection - recuperação de pedido',
     externalReference: `${String(order.externalReference || paymentId)}-recovery-${Date.now()}`,
-  });
-  if (!payment.ok || !payment.data.id) return json({ ok: false, error: 'asaas_error' }, 502);
+  }));
+  if (!payment?.ok || !payment.data.id) return json({ ok: false, error: 'asaas_error' }, 502);
 
   const newPaymentId = String(payment.data.id);
-  const qr = await asaas(env.ASAAS_API_KEY, 'GET', `/payments/${encodeURIComponent(newPaymentId)}/pixQrCode`);
-  if (!qr.ok || !qr.data.payload) return json({ ok: false, error: 'qr_not_ready' }, 502);
+  const qr = await withTimeout(asaas(env.ASAAS_API_KEY, 'GET', `/payments/${encodeURIComponent(newPaymentId)}/pixQrCode`));
+  if (!qr?.ok || !qr.data.payload) return json({ ok: false, error: 'qr_not_ready' }, 502);
 
   const recoveredOrder: Record<string, unknown> = {
     ...order,
