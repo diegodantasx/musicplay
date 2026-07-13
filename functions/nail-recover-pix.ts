@@ -21,6 +21,18 @@ function authorized(request: Request, password: string): boolean {
   catch { return false; }
 }
 
+async function sendEvolutionWithRetry(
+  config: { apiUrl: string; apiKey: string; instance: string },
+  phone: string,
+  content: string,
+): Promise<boolean> {
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    if (await sendEvolutionText(config, phone, content)) return true;
+    await new Promise((resolve) => setTimeout(resolve, 1000 * (attempt + 1)));
+  }
+  return false;
+}
+
 async function sendRecovery(
   env: Env,
   order: Record<string, unknown>,
@@ -33,9 +45,10 @@ async function sendRecovery(
     instance: env.EVOLUTION_INSTANCE,
   };
   const message = `Olá, ${firstName}! Tudo bem? 💅\n\nVi que você iniciou a compra do Nail Collection, mas o pagamento ainda não foi concluído.\n\nVou enviar o código Pix em uma mensagem separada logo abaixo. Assim que o pagamento for confirmado, você receberá o acesso automaticamente pelo WhatsApp.`;
-  const messageSent = await sendEvolutionText(config, String(order.phone || ''), message);
+  const messageSent = await sendEvolutionWithRetry(config, String(order.phone || ''), message);
+  if (messageSent) await new Promise((resolve) => setTimeout(resolve, 1500));
   const pixSent = messageSent
-    ? await sendEvolutionText(config, String(order.phone || ''), payload)
+    ? await sendEvolutionWithRetry(config, String(order.phone || ''), payload)
     : false;
   return { messageSent, pixSent };
 }
