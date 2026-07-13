@@ -18,6 +18,8 @@ interface Env {
   EVOLUTION_API_KEY: string;
   EVOLUTION_INSTANCE: string;
   NAIL_DELIVERY_URL: string;
+  NAIL_META_PIXEL_ID: string;
+  NAIL_META_CAPI_TOKEN: string;
 }
 
 function json(data: unknown, status = 200): Response {
@@ -84,8 +86,9 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     pageUrl: String(order['pageUrl'] ?? ''),
     brief: String(order['brief'] ?? ''),
   };
+  const isNailOrder = order['product'] === 'nail-collection';
 
-  if (isPaid && !order['metaCapiSent']) {
+  if (isPaid && !isNailOrder && !order['metaCapiSent']) {
     console.log('[capi] attempting Purchase — pixelId:', env.META_PIXEL_ID ? 'SET' : 'MISSING', 'token:', env.META_CAPI_TOKEN ? 'SET' : 'MISSING');
     const sent = await sendMetaCapiPurchase(env.META_PIXEL_ID, env.META_CAPI_TOKEN, capiOrder);
     console.log('[capi] Purchase result:', sent ? 'SUCCESS' : 'FAILED');
@@ -94,11 +97,11 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       order['updated_at'] = new Date().toISOString();
       await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 30 });
     }
-  } else if (isPaid && order['metaCapiSent']) {
+  } else if (isPaid && !isNailOrder && order['metaCapiSent']) {
     console.log('[capi] Purchase already sent, skipping');
   }
 
-  if (isPaid && !order['metaCapiSent2']) {
+  if (isPaid && !isNailOrder && !order['metaCapiSent2']) {
     console.log('[capi-2] attempting Purchase - pixelId:', env.META_PIXEL_ID_2 ? 'SET' : 'MISSING', 'token:', env.META_CAPI_TOKEN_2 ? 'SET' : 'MISSING');
     const sent2 = await sendMetaCapiPurchase(env.META_PIXEL_ID_2, env.META_CAPI_TOKEN_2, capiOrder);
     console.log('[capi-2] Purchase result:', sent2 ? 'SUCCESS' : 'FAILED');
@@ -107,8 +110,24 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       order['updated_at'] = new Date().toISOString();
       await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 365 });
     }
-  } else if (isPaid && order['metaCapiSent2']) {
+  } else if (isPaid && !isNailOrder && order['metaCapiSent2']) {
     console.log('[capi-2] Purchase already sent, skipping');
+  }
+
+  if (isPaid && isNailOrder && !order['nailMetaCapiSent']
+      && env.NAIL_META_PIXEL_ID && env.NAIL_META_CAPI_TOKEN) {
+    console.log('[nail-capi] attempting Purchase');
+    const nailSent = await sendMetaCapiPurchase(
+      env.NAIL_META_PIXEL_ID,
+      env.NAIL_META_CAPI_TOKEN,
+      capiOrder,
+    );
+    console.log('[nail-capi] Purchase result:', nailSent ? 'SUCCESS' : 'FAILED');
+    if (nailSent) {
+      order['nailMetaCapiSent'] = true;
+      order['updated_at'] = new Date().toISOString();
+      await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 365 });
+    }
   }
 
   if (isPaid) {
