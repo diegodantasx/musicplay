@@ -40,7 +40,8 @@ async function sendRecovery(
   return { messageSent, pixSent };
 }
 
-export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
+export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
+  if (request.method !== 'GET' && request.method !== 'POST') return json({ ok: false, error: 'method_not_allowed' }, 405);
   if (!authorized(request, env.ADMIN_PASSWORD)) return json({ ok: false, error: 'unauthorized' }, 401);
   const url = new URL(request.url);
   const paymentId = (url.searchParams.get('paymentId') || '').replace(/[^a-zA-Z0-9_.-]/g, '');
@@ -66,6 +67,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       phone: order.phone,
       value: order.value,
       ...delivery,
+      whatsapp: { sent: delivery.messageSent && delivery.pixSent },
     });
   }
 
@@ -114,5 +116,6 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     phone: recoveredOrder.phone,
     value: recoveredOrder.value,
     ...delivery,
+    whatsapp: { sent: delivery.messageSent && delivery.pixSent },
   });
 };

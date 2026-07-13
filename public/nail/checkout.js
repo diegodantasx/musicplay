@@ -1,4 +1,8 @@
 (() => {
+  const params = new URLSearchParams(location.search);
+  const trafficSource = params.get('utm_source') || params.get('src') || document.referrer || 'direct';
+  const track = (event) => fetch('/nail-track', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ event, source: trafficSource }) }).catch(() => {});
+  track('funnel_open');
   const checkoutLinks = document.querySelectorAll(
     'a[href*="pay.cakto.com"], a[href*="nailartspremium.pages.dev"]',
   );
@@ -50,6 +54,7 @@
     event.preventDefault();
     event.stopImmediatePropagation();
     backdrop.classList.add('open');
+    track('checkout_reached');
   };
   document.addEventListener('click', (event) => {
     const link = event.target instanceof Element ? event.target.closest('a') : null;
@@ -71,6 +76,7 @@
     payButton.disabled = true;
     payButton.textContent = 'GERANDO PIX…';
     const data = Object.fromEntries(new FormData(form).entries());
+    data.utmSource = trafficSource;
     try {
       const response = await fetch('/nail-create-payment', {
         method: 'POST',
@@ -82,6 +88,7 @@
       formStep.hidden = true;
       pixStep.hidden = false;
       pixCode.textContent = result.payload || '';
+      track('pix_generated');
       pixStep.querySelector('img').src = `data:image/png;base64,${result.encodedImage}`;
 
       statusTimer = setInterval(async () => {

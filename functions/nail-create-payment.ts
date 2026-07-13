@@ -35,6 +35,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const email = text(input.email, 160).toLowerCase();
   const phone = digits(input.whatsapp).replace(/^55/, '');
   const cpf = digits(input.cpf);
+  const utmSource = text(input.utmSource, 80).toLowerCase();
 
   if (!name || !email || phone.length < 10 || cpf.length !== 11) {
     return json({ ok: false, error: 'invalid_customer_fields' }, 422);
@@ -101,6 +102,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     clientIp: request.headers.get('CF-Connecting-IP') || '',
     userAgent: request.headers.get('User-Agent') || '',
     pageUrl: new URL(request.url).origin + '/nail/',
+    utmSource,
+    source: utmSource.includes('kwai') ? 'kwai' : utmSource.includes('facebook') || utmSource.includes('fb') || utmSource.includes('meta') ? 'facebook' : 'direct',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   };
