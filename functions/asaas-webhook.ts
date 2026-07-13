@@ -1,4 +1,5 @@
 import { sendMetaCapiPurchase } from './_shared/meta-capi';
+import { sendEvolutionText } from './_shared/evolution';
 
 interface Env {
   ORDERS_KV: KVNamespace;
@@ -13,6 +14,10 @@ interface Env {
   VAPID_PUBLIC_KEY: string;
   VAPID_PRIVATE_KEY: string;
   ASAAS_WEBHOOK_TOKEN: string;
+  EVOLUTION_API_URL: string;
+  EVOLUTION_API_KEY: string;
+  EVOLUTION_INSTANCE: string;
+  NAIL_DELIVERY_URL: string;
 }
 
 function json(data: unknown, status = 200): Response {
@@ -109,6 +114,24 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
   if (isPaid) {
     const origin = new URL(request.url).origin;
     const auth   = 'Basic ' + btoa(':' + (env.ADMIN_PASSWORD || ''));
+
+    // Entrega automática do Nail Collection pelo WhatsApp (Evolution API).
+    if (order['product'] === 'nail-collection' && !order['deliverySent']) {
+      const firstName = String(order['name'] ?? 'Cliente').trim().split(/\s+/)[0];
+      const deliveryUrl = env.NAIL_DELIVERY_URL || '';
+      const message = `Olá, ${firstName}! ✅\n\nSeu pagamento do Nail Collection foi confirmado.\n\nAcesse seus arquivos aqui:\n${deliveryUrl}\n\nSalve o link para consultar quando quiser.`;
+      const delivered = Boolean(deliveryUrl) && await sendEvolutionText({
+        apiUrl: env.EVOLUTION_API_URL,
+        apiKey: env.EVOLUTION_API_KEY,
+        instance: env.EVOLUTION_INSTANCE,
+      }, String(order['phone'] ?? ''), message);
+
+      order['deliverySent'] = delivered;
+      order['deliveryAttemptedAt'] = new Date().toISOString();
+      order['updated_at'] = new Date().toISOString();
+      await env.ORDERS_KV.put('order:' + paymentId, JSON.stringify(order), { expirationTtl: 86400 * 365 });
+      console.log('[nail-delivery] Evolution result:', delivered ? 'SUCCESS' : 'FAILED');
+    }
 
     // 0. Push notification de nova venda
     if (env.VAPID_PUBLIC_KEY && env.VAPID_PRIVATE_KEY) {
