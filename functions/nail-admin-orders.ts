@@ -41,24 +41,36 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
   const method = request.method.toUpperCase();
 
   if (method === 'GET') {
-    const orders: Record<string, unknown>[] = [];
-    let cursor: string | undefined;
-    do {
-      const page = await env.ORDERS_KV.list({ prefix: 'order:', cursor, limit: 100 });
-      const values = await Promise.all(page.keys.map(async ({ name }) => {
-        const raw = await env.ORDERS_KV.get(name);
-        if (!raw) return null;
-        try { return JSON.parse(raw) as Record<string, unknown>; }
-        catch { return null; }
-      }));
-      for (const order of values) {
-        if (order?.product === 'nail-collection' && order.archived !== true) orders.push(order);
-      }
-      cursor = page.list_complete ? undefined : page.cursor;
-    } while (cursor);
+    const requestedPaymentId = paymentIdFrom(url);
+    if (requestedPaymentId) {
+      const raw = await env.ORDERS_KV.get(`order:${requestedPaymentId}`);
+      if (!raw) return json({ ok: false, error: 'not_found' }, 404);
+      const order = JSON.parse(raw) as Record<string, unknown>;
+      if (order.product !== 'nail-collection') return json({ ok: false, error: 'not_found' }, 404);
+      return json({ ok: true, order });
+    }
+
+    // Uma página por requisição evita exceder o limite de leituras do Cloudflare.
+    // O painel já segue o cursor automaticamente até concluir todas as páginas.
+    const cursor = url.searchParams.get('cursor') || undefined;
+    const page = await env.ORDERS_KV.list({ prefix: 'order:', cursor, limit: 35 });
+    const values = await Promise.all(page.keys.map(async ({ name }) => {
+      const raw = await env.ORDERS_KV.get(name);
+      if (!raw) return null;
+      try { return JSON.parse(raw) as Record<string, unknown>; }
+      catch { return null; }
+    }));
+    const orders = values.filter((order): order is Record<string, unknown> => (
+      order?.product === 'nail-collection' && order.archived !== true
+    ));
 
     orders.sort((a, b) => String(b.created_at || '').localeCompare(String(a.created_at || '')));
-    return json({ ok: true, count: orders.length, orders });
+    return json({
+      ok: true,
+      count: orders.length,
+      orders,
+      cursor: page.list_complete ? undefined : page.cursor,
+    });
   }
 
   const paymentId = paymentIdFrom(url);
