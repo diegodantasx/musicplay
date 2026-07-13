@@ -1,45 +1,1351 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#b51f68">
-  <title>Nail Collection — Admin</title>
-  <style>
-    *{box-sizing:border-box}body{margin:0;background:#100a0f;color:#f8edf3;font:14px Inter,system-ui,sans-serif;min-height:100vh}button,input,textarea{font:inherit}button{cursor:pointer}
-    .login{min-height:100vh;display:grid;place-items:center;padding:20px}.card{background:#1c121a;border:1px solid #3c2131;border-radius:20px;padding:28px;width:min(390px,100%);box-shadow:0 24px 70px #0008}.brand{font-size:25px;font-weight:900}.brand span{color:#f062a6}.muted{color:#aa8e9d}.field{width:100%;background:#100a0f;color:#fff;border:1px solid #4a293b;border-radius:11px;padding:13px;margin:7px 0;outline:none}.field:focus{border-color:#f062a6}.primary{border:0;border-radius:11px;background:linear-gradient(135deg,#b51f68,#f062a6);color:#fff;padding:13px 18px;font-weight:800}.wide{width:100%;margin-top:10px}.error{color:#ff7d8c;margin-top:10px}
-    #app{display:none}.top{position:sticky;top:0;z-index:5;background:#1c121aee;backdrop-filter:blur(12px);border-bottom:1px solid #3c2131;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px}.actions{display:flex;gap:8px}.secondary{border:1px solid #4a293b;background:#251720;color:#ead6e1;border-radius:9px;padding:8px 12px}
-    .wrap{max-width:1400px;margin:auto;padding:20px}.stats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.stat{background:#1c121a;border:1px solid #3c2131;border-radius:14px;padding:16px}.stat strong{display:block;font-size:24px;color:#f062a6}.stat span{font-size:12px;color:#aa8e9d}
-    .tools{display:flex;gap:9px;flex-wrap:wrap;margin:18px 0}.tools .field{margin:0;flex:1;min-width:220px;padding:10px}.filter{border:1px solid #4a293b;background:transparent;color:#c9aab9;border-radius:20px;padding:8px 13px}.filter.active{background:#b51f68;border-color:#b51f68;color:#fff}
-    .table{overflow:auto;background:#1c121a;border:1px solid #3c2131;border-radius:14px}table{width:100%;border-collapse:collapse;min-width:800px}th,td{text-align:left;padding:12px;border-bottom:1px solid #2e1b27}th{font-size:11px;color:#aa8e9d;text-transform:uppercase}tr:last-child td{border-bottom:0}.badge{display:inline-block;border-radius:20px;padding:4px 9px;font-size:11px;font-weight:800}.paid{background:#123621;color:#72dfa0}.pending{background:#3c2b10;color:#ffd373}.sent{background:#152f46;color:#82c8ff}.failed{background:#421a23;color:#ff9eaa}.mini{border:1px solid #5a3147;background:#281723;color:#f0c8dc;border-radius:8px;padding:7px 10px}.empty{text-align:center;padding:45px;color:#aa8e9d}
-    .overlay{position:fixed;inset:0;background:#000b;display:none;place-items:center;padding:18px;z-index:20}.modal{width:min(580px,100%);max-height:92vh;overflow:auto;background:#1c121a;border:1px solid #4a293b;border-radius:18px;padding:22px}.modal-head{display:flex;justify-content:space-between;gap:15px;align-items:center}.close{border:0;background:transparent;color:#fff;font-size:24px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0}.info{background:#100a0f;border-radius:10px;padding:11px}.info small{display:block;color:#aa8e9d;margin-bottom:4px}.modal-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:#2e1930;border:1px solid #f062a6;border-radius:10px;padding:10px 16px;display:none;z-index:30}
-    .pix-box{text-align:center}.pix-box img{width:min(260px,100%);background:#fff;border-radius:12px;padding:8px}.pix-code{width:100%;min-height:100px;background:#100a0f;color:#fff;border:1px solid #4a293b;border-radius:10px;padding:10px;font:12px monospace;word-break:break-all}.wa{display:inline-block;text-decoration:none;background:#168c4b;color:#fff;border-radius:10px;padding:12px 16px;font-weight:800}
-    @media(max-width:900px){.stats{grid-template-columns:repeat(3,1fr)}}@media(max-width:700px){.stats{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr}.top{padding:12px}.wrap{padding:12px}.brand{font-size:19px}}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin – Nail Collection</title>
+<link rel="manifest" href="/admin/manifest.json">
+<meta name="theme-color" content="#7c5cbf">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Nail Collection Admin">
+<link rel="apple-touch-icon" href="/admin/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Sora',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f0f13;color:#e8e8f0;min-height:100vh;font-size:15px}
+a{color:inherit}
+/* Login */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px}
+.login-box{background:#1a1a24;border:1px solid #2a2a3a;border-radius:16px;padding:36px 32px;width:100%;max-width:340px;text-align:center}
+.login-box h1{font-size:22px;margin-bottom:6px}.login-box h1 span{color:#a07ce8}
+.login-box p{color:#888;font-size:13px;margin-bottom:24px}
+.inp{width:100%;padding:12px 14px;background:#0f0f13;border:1px solid #2a2a3a;border-radius:8px;color:#e8e8f0;font-size:15px;margin-bottom:10px;outline:none}
+.inp:focus{border-color:#7c5cbf}
+.btn-primary{width:100%;padding:13px;background:linear-gradient(135deg,#7c5cbf,#a07ce8);border:none;border-radius:8px;color:#fff;font-size:15px;font-weight:600;cursor:pointer;min-height:48px}
+.btn-primary:hover{opacity:.9}
+.err{color:#e55;font-size:13px;margin-top:6px}
+/* App */
+#app{display:none;flex-direction:column;min-height:100vh}
+header{background:#1a1a24;border-bottom:1px solid #2a2a3a;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+header h1{font-size:17px;font-weight:700}header h1 span{color:#a07ce8}
+.hdr-right{display:flex;gap:10px;align-items:center}
+/* Stats */
+.stats{display:flex;gap:10px;padding:16px 20px 0;overflow-x:auto}
+.stat{background:#1a1a24;border:1px solid #2a2a3a;border-radius:10px;padding:14px 18px;flex:1;min-width:110px}
+.stat .sv{font-size:24px;font-weight:700;color:#a07ce8}
+.stat .sl{font-size:11px;color:#888;margin-top:3px}
+/* Controls */
+.controls{padding:14px 20px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.fbtn{padding:7px 14px;border-radius:20px;border:1px solid #2a2a3a;background:transparent;color:#aaa;cursor:pointer;font-size:12px;min-height:34px}
+.fbtn.active,.fbtn:hover{background:#7c5cbf;border-color:#7c5cbf;color:#fff}
+.search-inp{flex:1;min-width:160px;padding:7px 14px;background:#1a1a24;border:1px solid #2a2a3a;border-radius:20px;color:#e8e8f0;font-size:13px;outline:none}
+.search-inp:focus{border-color:#7c5cbf}
+/* Table */
+.table-wrap{overflow-x:auto;padding:0 20px 32px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:9px 12px;font-size:11px;color:#888;border-bottom:1px solid #2a2a3a;font-weight:500;white-space:nowrap}
+td{padding:11px 12px;border-bottom:1px solid #1a1a24;font-size:13px;vertical-align:middle}
+tr:hover td{background:#1a1a24}
+.badge{display:inline-block;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.bp{background:#1a3a2a;color:#4caf82}.bpend{background:#2a2a1a;color:#c8a84b}.bd{background:#1a2a3a;color:#4c8ec8}
+.abtn{padding:5px 11px;border-radius:6px;border:1px solid #2a2a3a;background:transparent;color:#aaa;cursor:pointer;font-size:12px;min-height:30px}
+.abtn:hover{border-color:#7c5cbf;color:#a07ce8}
+.abtn.gn:hover{border-color:#4caf82;color:#4caf82}
+.loading{text-align:center;padding:60px;color:#666}
+.empty{text-align:center;padding:60px;color:#666;font-size:13px}
+/* Modal */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:flex-end;justify-content:center;z-index:100;padding:0}
+@media(min-width:640px){.overlay{align-items:center;padding:20px}}
+.modal{background:#1a1a24;border:1px solid #2a2a3a;border-radius:16px 16px 0 0;width:100%;max-width:700px;height:90vh;display:flex;flex-direction:column;overflow:hidden}
+@media(min-width:640px){.modal{border-radius:16px;height:82vh}}
+.modal-head{padding:16px 20px;border-bottom:1px solid #2a2a3a;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.modal-head h2{font-size:16px;font-weight:700}
+.close-btn{background:none;border:none;color:#888;font-size:22px;cursor:pointer;line-height:1;padding:4px}
+/* Tabs */
+.tabs{display:flex;overflow-x:auto;border-bottom:1px solid #2a2a3a;flex-shrink:0;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:11px 14px;font-size:12px;color:#888;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;flex-shrink:0;background:none;border-top:none;border-left:none;border-right:none}
+.tab.active{color:#a07ce8;border-bottom-color:#a07ce8}
+.tab:hover{color:#e8e8f0}
+/* Tab content */
+.tab-content{flex:1;overflow-y:auto;padding:18px 20px}
+.tab-pane{display:none}.tab-pane.active{display:block}
+/* Fields */
+.fld{margin-bottom:14px}
+.fld label{display:flex;align-items:center;gap:6px;font-size:11px;color:#888;margin-bottom:5px;text-transform:uppercase;letter-spacing:.4px}
+.fld .ico{font-size:13px}
+.fval{font-size:14px;color:#e8e8f0;background:#0f0f13;padding:10px 14px;border-radius:8px;border:1px solid #2a2a3a;word-break:break-word}
+.fld textarea,.fld select,.fld input[type=text],.fld input[type=email],.fld input[type=tel],.fld input[type=date],.fld input[type=number]{width:100%;padding:11px 14px;background:#0f0f13;border:1px solid #2a2a3a;border-radius:8px;color:#e8e8f0;font-size:14px;outline:none;min-height:44px}
+.fld textarea:focus,.fld select:focus,.fld input:focus{border-color:#7c5cbf}
+.fld select option{background:#1a1a24}
+.fld textarea{resize:vertical}
+.char-count{font-size:11px;color:#666;text-align:right;margin-top:3px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:480px){.row2{grid-template-columns:1fr}}
+/* Status badges */
+.status-badge{display:inline-block;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:600;margin-bottom:12px}
+.sb-briefing{background:#2a1a3a;color:#c07ce8}
+.sb-gerando{background:#2a2a1a;color:#c8a84b}
+.sb-letra{background:#1a2a3a;color:#4c8ec8}
+.sb-musica{background:#1a1a3a;color:#7c7ce8}
+.sb-pronto{background:#1a3a2a;color:#4caf82}
+/* Prompt box */
+.prompt-box{background:#0f0f13;border:1px solid #2a2a3a;border-radius:8px;padding:14px;font-size:12px;line-height:1.7;color:#c8e8c8;white-space:pre-wrap;max-height:200px;overflow-y:auto;font-family:monospace}
+/* Letter box */
+.letra-box{background:#0a1a0a;border:1px solid #2a4a2a;border-radius:8px;padding:14px;font-size:13px;line-height:1.8;color:#a0e8a0;white-space:pre-wrap;max-height:280px;overflow-y:auto}
+/* Modal footer */
+.modal-foot{padding:14px 20px;border-top:1px solid #2a2a3a;display:flex;gap:10px;flex-shrink:0;flex-wrap:wrap}
+.modal-foot .btn-primary{width:auto;padding:10px 22px;min-height:44px}
+.btn-sec{padding:10px 18px;border-radius:8px;border:1px solid #2a2a3a;background:transparent;color:#aaa;cursor:pointer;font-size:14px;min-height:44px}
+.btn-sec:hover{border-color:#7c5cbf;color:#a07ce8}
+/* Toast */
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2a3a2a;border:1px solid #4caf82;color:#a0e8a0;padding:10px 20px;border-radius:8px;font-size:13px;z-index:999;opacity:0;pointer-events:none;transition:opacity .2s;white-space:nowrap}
+#toast.show{opacity:1}
+/* Scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:#0f0f13}
+::-webkit-scrollbar-thumb{background:#2a2a3a;border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:#3a3a4a}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 </head>
 <body>
-  <section class="login" id="login"><div class="card"><div class="brand">Nail Collection <span>Admin</span></div><p class="muted">Painel exclusivo de pedidos Nail.</p><input class="field" id="user" value="admin" placeholder="Usuário"><input class="field" id="password" type="password" placeholder="Senha"><button class="primary wide" id="enter">Entrar</button><div class="error" id="login-error"></div></div></section>
-  <main id="app"><header class="top"><div class="brand">Nail <span>Admin</span></div><div class="actions"><button class="secondary" id="export">Exportar CSV</button><button class="secondary" id="refresh">Atualizar</button><button class="secondary" id="logout">Sair</button></div></header><div class="wrap">
-    <section class="stats"><div class="stat"><strong id="total">0</strong><span>Total de pedidos</span></div><div class="stat"><strong id="paid">0</strong><span>Pagos</span></div><div class="stat"><strong id="pending">0</strong><span>Pendentes</span></div><div class="stat"><strong id="sent">0</strong><span>Entregues</span></div><div class="stat"><strong id="revenue">R$ 0</strong><span>Receita total</span></div><div class="stat"><strong id="today-revenue">R$ 0</strong><span>Receita de hoje</span></div></section>
-    <section class="tools"><button class="filter active" data-filter="all">Todos</button><button class="filter" data-filter="today">Hoje</button><button class="filter" data-filter="paid">Pagos</button><button class="filter" data-filter="pending">Pendentes</button><button class="filter" data-filter="sent">Entregues</button><input class="field" id="search" placeholder="Buscar nome, WhatsApp ou e-mail"></section>
-    <div class="table"><table><thead><tr><th>Data e hora</th><th>Nome</th><th>E-mail</th><th>WhatsApp</th><th>Valor</th><th>Pagamento</th><th>Entrega</th><th>Ações</th></tr></thead><tbody id="rows"></tbody></table><div class="empty" id="empty">Carregando pedidos...</div></div>
-  </div></main>
-  <div class="overlay" id="overlay"><div class="modal"><div class="modal-head"><div><div class="brand">Detalhes do pedido</div><div class="muted" id="modal-id"></div></div><button class="close" id="close">×</button></div><div class="grid" id="details"></div><label class="muted">Observações</label><textarea class="field" id="notes" rows="4"></textarea><div class="modal-actions"><button class="primary" id="save">Salvar observações</button><button class="secondary" id="resend">Reenviar entrega</button><button class="secondary" id="recover">Recuperar PIX</button><a class="wa" id="contact" target="_blank">Falar no WhatsApp</a></div></div></div>
-  <div class="overlay" id="recover-overlay"><div class="modal pix-box"><div class="modal-head"><div><div class="brand">Recuperação de venda</div><div class="muted" id="recover-customer"></div></div><button class="close" id="recover-close">×</button></div><p class="muted">Envie este Pix ao cliente para recuperar o pedido.</p><img id="recover-qr" alt="QR Code Pix"><textarea class="pix-code" id="recover-code" readonly></textarea><div class="modal-actions" style="justify-content:center"><button class="primary" id="copy-pix">Copiar código Pix</button><a class="wa" id="send-pix" target="_blank">Enviar no WhatsApp</a></div></div></div>
-  <div class="toast" id="toast"></div>
+
+<div id="login-screen">
+  <div class="login-box">
+    <h1>Nail Collection <span>Admin</span></h1>
+    <p>Painel administrativo</p>
+    <input class="inp" type="text" id="lu" placeholder="Usuário" value="admin">
+    <input class="inp" type="password" id="lp" placeholder="Senha">
+    <button class="btn-primary" onclick="doLogin()">Entrar</button>
+    <div class="err" id="lerr"></div>
+  </div>
+</div>
+
+<div id="app">
+  <header>
+    <h1>Nail Collection <span>Admin</span></h1>
+    <div class="hdr-right">
+      <button class="abtn" id="push-btn" onclick="togglePush()" title="Notificações" style="display:none">🔔</button>
+      <button class="abtn" onclick="loadOrders()">&#8635; Atualizar</button>
+      <button class="abtn" onclick="doLogout()">Sair</button>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div class="stat"><div class="sv" id="s-total">-</div><div class="sl">Total pedidos</div></div>
+    <div class="stat"><div class="sv" id="s-paid">-</div><div class="sl">Pagos</div></div>
+    <div class="stat"><div class="sv" id="s-delivered">-</div><div class="sl">Entregues</div></div>
+    <div class="stat"><div class="sv" id="s-revenue">-</div><div class="sl">Receita total</div></div>
+  </div>
+
+  <div id="today-bar" style="display:none;margin:10px 20px 0;background:#0d2218;border:1px solid #16a34a;border-radius:10px;padding:12px 16px;display:none">
+    <div style="font-size:11px;color:#4ade80;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">📅 Faturamento de hoje</div>
+    <div style="display:flex;gap:20px;flex-wrap:wrap">
+      <div><div style="font-size:22px;font-weight:700;color:#4ade80" id="td-vendas">0</div><div style="font-size:11px;color:#888">Vendas pagas</div></div>
+      <div><div style="font-size:22px;font-weight:700;color:#4ade80" id="td-receita">R$ 0,00</div><div style="font-size:11px;color:#888">Faturamento</div></div>
+      <div><div style="font-size:22px;font-weight:700;color:#a07ce8" id="td-pendente">0</div><div style="font-size:11px;color:#888">Pendentes</div></div>
+      <div><div style="font-size:22px;font-weight:700;color:#888" id="td-data">-</div><div style="font-size:11px;color:#888">Data</div></div>
+    </div>
+  </div>
+
+  <!-- Funil de Conversão -->
+  <div id="funnel-section" style="margin:12px 20px 0;background:#1a1a24;border:1px solid #2a2a3a;border-radius:12px;overflow:hidden">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;user-select:none" onclick="toggleFunnel()">
+      <div style="font-size:12px;font-weight:700;color:#a07ce8;text-transform:uppercase;letter-spacing:.5px">📊 Funil de Conversão</div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <select id="funnel-day-select" onchange="renderFunnelDay()" onclick="event.stopPropagation()" style="background:#0f0f13;border:1px solid #2a2a3a;color:#e8e8f0;font-size:12px;padding:4px 8px;border-radius:6px;outline:none"></select>
+        <span id="funnel-toggle-icon" style="color:#888;font-size:14px">▼</span>
+      </div>
+    </div>
+    <div id="funnel-body" style="padding:0 16px 16px">
+      <div id="funnel-loading" style="color:#888;font-size:13px;text-align:center;padding:20px">Carregando...</div>
+      <div id="funnel-grid" style="display:none">
+        <!-- linha do funil -->
+        <div style="display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;font-size:12px;color:#888;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #2a2a3a">
+          <span>Etapa</span><span style="text-align:right;min-width:40px">Qtd</span><span style="text-align:right;min-width:50px">Conv.</span>
+        </div>
+        <div id="funnel-rows"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="fbtn active" onclick="setFilter('all',this)">Todos</button>
+    <button class="fbtn" id="fbtn-hoje" onclick="setFilter('today',this)">📅 Hoje</button>
+    <button class="fbtn" onclick="setFilter('paid',this)">Pagos a entregar</button>
+    <button class="fbtn" onclick="setFilter('pending',this)">Pendentes</button>
+    <button class="fbtn" onclick="setFilter('delivered',this)">Entregues</button>
+    <input class="search-inp" type="text" id="srch" placeholder="Buscar nome, email..." oninput="renderTable()">
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th>Data e hora</th><th>Nome</th><th>E-mail</th><th>WhatsApp</th><th>Valor</th><th>Status</th><th>Entrega</th><th>Ações</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div id="tempty" class="empty" style="display:none">Nenhum pedido.</div>
+    <div id="tload" class="loading">Carregando...</div>
+  </div>
+</div>
+
+<!-- Modal Recuperar PIX -->
+<div class="overlay" id="recover-overlay" style="display:none" onclick="if(event.target===this)closeRecover()">
+  <div class="modal" style="max-width:480px;height:auto;max-height:90vh">
+    <div class="modal-head">
+      <h2>🔗 Recuperar Venda</h2>
+      <button class="close-btn" onclick="closeRecover()">&#x2715;</button>
+    </div>
+    <div style="padding:20px;overflow-y:auto">
+      <div id="recover-loading" style="text-align:center;padding:32px;color:#888">Gerando PIX...</div>
+      <div id="recover-content" style="display:none">
+        <div style="background:#1a1228;border:1px solid #7c5cbf;border-radius:10px;padding:14px;margin-bottom:14px">
+          <div style="font-size:12px;color:#888;margin-bottom:4px">Cliente</div>
+          <div style="font-weight:700;font-size:15px" id="rc-name">-</div>
+          <div style="font-size:13px;color:#a07ce8" id="rc-phone">-</div>
+          <div style="font-size:13px;color:#4ade80;margin-top:4px" id="rc-value">-</div>
+        </div>
+        <div style="font-size:12px;color:#888;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">PIX Copia e Cola</div>
+        <textarea id="rc-payload" readonly style="width:100%;background:#0f0f13;border:1px solid #2a2a3a;border-radius:8px;padding:10px;color:#e8e8f0;font-size:11px;font-family:monospace;resize:none;height:80px"></textarea>
+        <button class="btn-primary" style="margin-top:10px" onclick="copyRecoverPix()">&#128203; Copiar código PIX</button>
+        <a id="rc-whatsapp" href="#" target="_blank" style="display:block;margin-top:10px;padding:13px;background:#16a34a;color:#fff;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;text-align:center">
+          💬 Enviar no WhatsApp do cliente
+        </a>
+        <div id="rc-reused" style="display:none;font-size:11px;color:#f59e0b;margin-top:8px;text-align:center">⚠️ PIX original reaproveitado — verifique validade</div>
+      </div>
+      <div id="recover-error" style="display:none;text-align:center;padding:20px;color:#e55"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="overlay" id="overlay" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-head">
+      <h2 id="mtitle">Pedido</h2>
+      <button class="close-btn" onclick="closeModal()">&#x2715;</button>
+    </div>
+    <div class="tabs" id="tabs">
+      <button class="tab active" onclick="switchTab(0,this)">&#128100; Dados</button>
+      <button class="tab" onclick="switchTab(1,this)">&#128178; Pagamento</button>
+      <button class="tab" onclick="switchTab(2,this)">&#127925; Briefing</button>
+      <button class="tab" onclick="switchTab(3,this)">&#128214; Historia</button>
+      <button class="tab" onclick="switchTab(4,this)">&#127908; Letra</button>
+      <button class="tab" onclick="switchTab(5,this)">&#9881; Producao</button>
+    </div>
+    <div class="tab-content">
+      <!-- Tab 0: Dados -->
+      <div class="tab-pane active" id="tp0">
+        <div class="row2">
+          <div class="fld"><label><span class="ico">&#128100;</span> Nome</label><div class="fval" id="f-nome">-</div></div>
+          <div class="fld"><label><span class="ico">&#128222;</span> Telefone</label><div class="fval" id="f-phone">-</div></div>
+        </div>
+        <div class="fld"><label><span class="ico">&#128140;</span> Email</label><div class="fval" id="f-email">-</div></div>
+        <div class="fld"><label><span class="ico">&#128196;</span> ID do Pedido</label><div class="fval" id="f-pid" style="font-size:12px;color:#888">-</div></div>
+        <div class="fld"><label><span class="ico">&#128197;</span> Data do Pedido</label><div class="fval" id="f-date">-</div></div>
+        <div class="fld">
+          <label><span class="ico">&#128205;</span> Origem do Tráfego</label>
+          <div id="f-origem" style="margin-top:6px"></div>
+        </div>
+      </div>
+      <!-- Tab 1: Pagamento -->
+      <div class="tab-pane" id="tp1">
+        <div class="row2">
+          <div class="fld"><label><span class="ico">&#128178;</span> Valor</label><div class="fval" id="f-valor">-</div></div>
+          <div class="fld"><label><span class="ico">&#9989;</span> Status</label><div id="f-status-badge"></div></div>
+        </div>
+        <div class="fld">
+          <label>&#128230; O que precisa entregar</label>
+          <div id="f-bumps" style="display:flex;flex-direction:column;gap:8px;margin-top:6px"></div>
+        </div>
+      </div>
+      <!-- Tab 2: Briefing -->
+      <div class="tab-pane" id="tp2">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <span style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.4px">&#127873; Briefing do Cliente</span>
+          <button class="abtn" onclick="copyBriefing()">&#128203; Copiar</button>
+        </div>
+        <div id="f-briefing-block" style="background:#0f0f13;border:1px solid #2a2a3a;border-radius:10px;padding:16px 18px;font-size:13px;line-height:2;white-space:pre-wrap;color:#ccc;font-family:inherit">-</div>
+        <div id="f-correcoes-wrap" style="display:none;margin-top:12px">
+          <label style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.4px">&#9999; Correcoes solicitadas</label>
+          <div class="fval" id="f-correcoes" style="white-space:pre-wrap;margin-top:6px"></div>
+        </div>
+      </div>
+      <!-- Tab 3: Historia -->
+      <div class="tab-pane" id="tp3">
+        <div class="fld">
+          <label><span class="ico">&#128214;</span> Historia / Mensagem do cliente</label>
+          <div class="fval" id="f-historia" style="white-space:pre-wrap;min-height:80px;line-height:1.7">-</div>
+        </div>
+      </div>
+      <!-- Tab 4: Letra -->
+      <div class="tab-pane" id="tp4">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <span style="font-size:13px;color:#888">Letra gerada pelo sistema</span>
+          <div style="display:flex;gap:8px">
+            <button class="abtn" id="btn-copy-letra" onclick="copyLetra()">&#128203; Copiar</button>
+            <button class="abtn" id="btn-edit-letra" onclick="toggleEditLetra()">&#9999; Editar</button>
+          </div>
+        </div>
+        <div class="letra-box" id="f-letra-view">-</div>
+        <textarea class="fld" id="f-letra-edit" rows="14" style="display:none;margin-top:10px;font-size:13px;line-height:1.7;font-family:inherit"></textarea>
+      </div>
+      <!-- Tab 5: Producao -->
+      <div class="tab-pane" id="tp5">
+        <!-- Link de Entrega -->
+        <div id="delivery-link-box" style="background:#0d2218;border:1px solid #16a34a;border-radius:10px;padding:14px 16px;margin-bottom:16px">
+          <div style="font-size:11px;color:#4ade80;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">🔗 Link de Entrega do Cliente</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+            <div id="f-delivery-url" style="flex:1;font-size:12px;color:#a0e8a0;background:#0a1a10;border:1px solid #1a4a2a;border-radius:6px;padding:8px 12px;font-family:monospace;word-break:break-all">-</div>
+            <button class="abtn" style="border-color:#4caf82;color:#4caf82;flex-shrink:0" onclick="copyDeliveryLink()">📋 Copiar</button>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn-primary" style="flex:1;min-width:140px;background:#16a34a;font-size:13px;padding:10px 14px" onclick="sendDeliveryWhatsApp()">💬 Enviar no WhatsApp</button>
+            <a id="f-delivery-open" href="#" target="_blank" style="flex:1;min-width:120px;display:flex;align-items:center;justify-content:center;padding:10px 14px;border:1px solid #2a2a3a;border-radius:8px;color:#aaa;font-size:13px;text-decoration:none;text-align:center" onmouseover="this.style.borderColor='#7c5cbf';this.style.color='#a07ce8'" onmouseout="this.style.borderColor='#2a2a3a';this.style.color='#aaa'">🔗 Abrir página</a>
+          </div>
+        </div>
+        <div class="fld">
+          <label>Status de Producao</label>
+          <select id="f-prod-status" style="width:100%;padding:11px 14px;background:#0f0f13;border:1px solid #2a2a3a;border-radius:8px;color:#e8e8f0;font-size:14px;outline:none;min-height:44px">
+            <option value="briefing">Briefing</option>
+            <option value="gerando_letra">Gerando Letra</option>
+            <option value="letra_pronta">Letra Pronta</option>
+            <option value="gerando_musica">Gerando Musica</option>
+            <option value="pronto">Pronto</option>
+          </select>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+          <label style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.4px">&#127925; Prompt Suno Completo</label>
+          <button class="abtn" onclick="gerarPrompt()">&#9889; Gerar</button>
+        </div>
+        <div id="f-style" style="display:none"></div>
+        <div id="f-exclude" style="display:none"></div>
+        <div id="f-prompt-block" style="background:#0f0f13;border:1px solid #2a2a3a;border-radius:10px;padding:16px 18px;font-size:13px;line-height:1.8;white-space:pre-wrap;color:#ccc;font-family:inherit;min-height:60px;margin-bottom:12px">Clique em Gerar para montar o prompt.</div>
+        <button class="btn-primary" style="margin-bottom:14px" onclick="copyPromptCompleto()">&#128203; Copiar Prompt Completo</button>
+        <div class="fld">
+          <label>&#127925; Upload do MP3</label>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input type="file" id="f-mp3" accept="audio/*" style="display:none" onchange="uploadMp3()">
+            <button class="abtn" style="border-color:#a07ce8;color:#a07ce8" onclick="document.getElementById('f-mp3').click()">&#128229; Enviar MP3</button>
+            <span id="upload-status" style="font-size:12px;color:#888"></span>
+          </div>
+        </div>
+        <div class="fld">
+          <label>&#128279; Ou cole link externo (Suno, SoundCloud...)</label>
+          <input type="text" id="f-link" placeholder="https://..." oninput="updateQrBtn()">
+        </div>
+        <div id="qr-btn-wrap" style="display:none;margin-bottom:14px">
+          <button class="btn-primary" style="background:linear-gradient(135deg,#7c5cbf,#a07ce8)" onclick="abrirQrCard()">&#127381; Gerar Card QR Code para Entrega</button>
+        </div>
+        <div class="fld">
+          <label>&#128203; Observacoes internas</label>
+          <textarea id="f-notes" rows="3"></textarea>
+        </div>
+        <div class="fld">
+          <label style="cursor:pointer;display:flex;align-items:center;gap:8px;text-transform:none;letter-spacing:0;font-size:14px">
+            <input type="checkbox" id="f-delivered" style="width:auto;accent-color:#7c5cbf">
+            Marcar como entregue
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-primary" onclick="saveOrder()">&#128190; Salvar</button>
+      <button class="btn-sec" onclick="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- QR render oculto -->
+<div id="qr-hidden-render" style="position:absolute;left:-9999px;top:-9999px;width:200px;height:200px"></div>
+
+<!-- Modal QR Card -->
+<div class="overlay" id="qr-overlay" style="display:none" onclick="if(event.target===this)document.getElementById('qr-overlay').style.display='none'">
+  <div class="modal" style="max-width:520px;height:auto;max-height:95vh">
+    <div class="modal-head">
+      <h2>🎁 Card QR Code</h2>
+      <button class="close-btn" onclick="document.getElementById('qr-overlay').style.display='none'">&#x2715;</button>
+    </div>
+    <div style="padding:20px;overflow-y:auto">
+      <!-- Card imprimível — tema dinâmico -->
+      <div id="qr-card-print" style="border-radius:20px;text-align:center;font-family:'Sora',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:360px;margin:0 auto;overflow:hidden"></div>
+      <!-- Ações -->
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
+        <button class="btn-primary" style="background:linear-gradient(135deg,#7c5cbf,#a07ce8)" onclick="salvarPng()">🖼️ Salvar como imagem PNG</button>
+        <button class="btn-primary" onclick="imprimirQrCard()">🖨️ Imprimir / Salvar PDF</button>
+        <button class="btn-primary" style="background:#16a34a" onclick="compartilharQrCard()">💬 Enviar no WhatsApp</button>
+        <div style="font-size:11px;color:#666;text-align:center" id="qrc-link-txt"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style id="print-style">
+@media print {
+  body > *:not(#qr-print-frame) { display: none !important; }
+  #qr-print-frame { display: block !important; position: fixed; inset: 0; }
+}
+</style>
+
+<div id="toast"></div>
+
 <script>
-let auth='',orders=[],filter='all',current=null;
-const $=id=>document.getElementById(id), money=v=>Number(v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}), date=v=>v?new Date(v).toLocaleString('pt-BR'):'—', esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function toast(message){$('toast').textContent=message;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',2500)}
-async function request(path,options={}){options.headers={...(options.headers||{}),Authorization:auth};const r=await fetch(path,options);if(r.status===401)throw new Error('unauthorized');const d=await r.json();if(!r.ok)throw new Error(d.error||'request_failed');return d}
-async function login(){auth='Basic '+btoa(($('user').value||'admin')+':'+$('password').value);try{await load();sessionStorage.setItem('nailAdminAuth',auth);$('login').style.display='none';$('app').style.display='block'}catch{$('login-error').textContent='Usuário ou senha incorretos.'}}
-async function load(){const d=await request('/nail-admin-orders');orders=d.orders||[];render()}
-function localDay(v){return v?new Date(v).toLocaleDateString('en-CA'):''}function render(){const paid=orders.filter(o=>o.paid),delivered=orders.filter(o=>o.deliverySent),today=new Date().toLocaleDateString('en-CA'),todayPaid=paid.filter(o=>localDay(o.updated_at||o.created_at)===today);$('total').textContent=orders.length;$('paid').textContent=paid.length;$('pending').textContent=orders.length-paid.length;$('sent').textContent=delivered.length;$('revenue').textContent=money(paid.reduce((s,o)=>s+Number(o.value||0),0));$('today-revenue').textContent=money(todayPaid.reduce((s,o)=>s+Number(o.value||0),0));const q=$('search').value.toLowerCase();const visible=orders.filter(o=>{if(filter==='today'&&localDay(o.created_at)!==today)return false;if(filter==='paid'&&!o.paid)return false;if(filter==='pending'&&o.paid)return false;if(filter==='sent'&&!o.deliverySent)return false;return [o.name,o.email,o.phone,o.paymentId].join(' ').toLowerCase().includes(q)});$('empty').style.display=visible.length?'none':'block';$('empty').textContent='Nenhum pedido encontrado.';$('rows').innerHTML=visible.map(o=>`<tr><td>${esc(date(o.created_at))}</td><td><strong>${esc(o.name)}</strong></td><td>${esc(o.email)}</td><td>${esc(o.phone)}</td><td>${money(o.value)}</td><td><span class="badge ${o.paid?'paid':'pending'}">${o.paid?'Pago':'Pendente'}</span></td><td><span class="badge ${o.deliverySent?'sent':'failed'}">${o.deliverySent?'Enviado':'Não enviado'}</span></td><td><button class="mini" data-id="${esc(o.paymentId)}">Abrir</button></td></tr>`).join('');document.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>openOrder(b.dataset.id))}
-function phone(o){let p=String(o.phone||'').replace(/\D/g,'');return p.startsWith('55')?p:'55'+p}function openOrder(id){current=orders.find(o=>o.paymentId===id);if(!current)return;$('modal-id').textContent=current.paymentId;$('details').innerHTML=[['Nome completo',current.name],['E-mail',current.email],['WhatsApp',current.phone],['CPF',current.cpf],['Valor',money(current.value)],['Data e hora',date(current.created_at)],['Última atualização',date(current.updated_at)],['Pagamento',current.paid?'Confirmado':'Pendente'],['Entrega',current.deliverySent?'Enviada':'Não enviada'],['Origem',current.recovery?'Recuperação':'Compra original']].map(([k,v])=>`<div class="info"><small>${k}</small>${esc(v)}</div>`).join('');$('notes').value=current.notes||'';$('resend').disabled=!current.paid;$('recover').disabled=!!current.paid;$('contact').href='https://wa.me/'+phone(current);$('overlay').style.display='grid'}
-$('enter').onclick=login;$('password').onkeydown=e=>{if(e.key==='Enter')login()};$('refresh').onclick=()=>load().then(()=>toast('Atualizado'));$('logout').onclick=()=>{sessionStorage.removeItem('nailAdminAuth');location.reload()};$('search').oninput=render;$('export').onclick=()=>{const head=['Data','Nome','Email','WhatsApp','CPF','Valor','Pago','Entregue','Pedido'];const lines=[head,...orders.map(o=>[date(o.created_at),o.name,o.email,o.phone,o.cpf,o.value,o.paid?'Sim':'Não',o.deliverySent?'Sim':'Não',o.paymentId])];const csv=lines.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv'}));a.download='pedidos-nail.csv';a.click();URL.revokeObjectURL(a.href)};document.querySelectorAll('.filter').forEach(b=>b.onclick=()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');filter=b.dataset.filter;render()});$('close').onclick=()=>$('overlay').style.display='none';$('overlay').onclick=e=>{if(e.target===$('overlay'))$('overlay').style.display='none'};
-$('save').onclick=async()=>{await request('/nail-admin-orders?paymentId='+encodeURIComponent(current.paymentId),{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({notes:$('notes').value})});current.notes=$('notes').value;toast('Observações salvas.')};
-$('resend').onclick=async()=>{if(!confirm('Reenviar o link do Nail Collection para este cliente?'))return;$('resend').disabled=true;try{await request('/nail-admin-orders?paymentId='+encodeURIComponent(current.paymentId)+'&action=resend',{method:'POST'});current.deliverySent=true;toast('Mensagem enviada pelo WhatsApp.');render();openOrder(current.paymentId)}catch{toast('Não foi possível enviar.')}finally{$('resend').disabled=!current.paid}};
-$('recover').onclick=async()=>{if(!current||current.paid)return;$('recover').disabled=true;try{const d=await request('/nail-recover-pix?paymentId='+encodeURIComponent(current.paymentId),{method:'POST'});$('recover-customer').textContent=(d.name||'Cliente')+' · '+money(d.value);$('recover-code').value=d.payload||'';$('recover-qr').src=d.encodedImage?'data:image/png;base64,'+d.encodedImage:'';const msg='Olá, '+String(d.name||'').split(' ')[0]+'! Gere seu acesso ao Nail Collection concluindo o Pix de '+money(d.value)+':\n\n'+d.payload;$('send-pix').href='https://wa.me/'+phone({phone:d.phone})+'?text='+encodeURIComponent(msg);$('overlay').style.display='none';$('recover-overlay').style.display='grid';if(!d.reused)await load()}catch(e){toast(e.message==='already_paid'?'Este pedido já foi pago.':'Erro ao recuperar o Pix.')}finally{$('recover').disabled=false}};$('recover-close').onclick=()=>$('recover-overlay').style.display='none';$('recover-overlay').onclick=e=>{if(e.target===$('recover-overlay'))$('recover-overlay').style.display='none'};$('copy-pix').onclick=()=>navigator.clipboard.writeText($('recover-code').value).then(()=>toast('Código Pix copiado.'));
-auth=sessionStorage.getItem('nailAdminAuth')||'';if(auth){load().then(()=>{$('login').style.display='none';$('app').style.display='block'}).catch(()=>sessionStorage.removeItem('nailAdminAuth'))}
+var auth = '', allOrders = [], filteredRows = [], currentFilter = 'all', currentOrder = null, currentLetra = '', editingLetra = false;
+
+var STYLES = {
+  rap: {
+    style: "Racionais MC's, boom bap classico, beat narrativo pesado, versos longos densos, flow conversacional ritmado, storytelling tipo Diario de um Detento, Ainda Ha Tempo, Vida Loka, rimas internas sofisticadas, sintetizador sutil tom sombrio, baixo grave presente, kick e snare classicos, hi-hat constante, voz muito emotiva sincera, muito genuina, estudio profissional Racionais, tom serio profundo reflexivo",
+    exclude: "Funk, samba, trap, pop, eletronico, EDM, reggaeton, forro, sertanejo, brega, samba-enredo, funk carioca, beat moderno, autotune, vocoder, sintetizadores brilhantes, refrao pegajoso pop, elementos de danca, batidas dancaveis, vibe festiva, beat rapido demais, trap latino, cloud rap"
+  },
+  sertanejo: {
+    style: "Sertanejo romantico autentico, violao destaque, teclado suave, percussao discreta, voz natural emotiva, muito sincera, historia contada com poesia, rimas naturais, flow conversacional-musical, qualidade estudio, tom apaixonado profundo",
+    exclude: "Funk, samba, rap, trap, forro, brega, eletronico, pop, reggaeton, dance, batidas dancaveis, synth excessivo, vocoder, elementos de samba, axe"
+  },
+  pagode: {
+    style: "Pagode romantico brasileiro, cavaco destaque, pandeiro constante, violao base ritmado, voz natural apaixonada, rimas simples mas bonitas, ritmo alegre mas emotivo, qualidade estudio, tom dancavel mas profundo",
+    exclude: "Funk, samba puro, rap, trap, sertanejo, eletronico, pop, reggaeton, brega, synth moderno, vocoder, beat muito rapido, vibe festa sem emocao"
+  },
+  pop: {
+    style: "Pop romantico contemporaneo, melodia pegajosa, dinamico, ganchos cativantes, voz clara natural, rimas presentes mas nao obvias, qualidade estudio profissional, tom emotivo sincero, direto e moderno",
+    exclude: "Rap, samba, funk, sertanejo, eletronico puro, EDM, reggaeton, trap, vocoder excessivo, autotune artificial, brega, forro"
+  },
+  gospel: {
+    style: "Gospel leve, fe e esperanca presentes, gratidao e esperanca, tom emotivo sincero, voz natural muito emotiva, violao ou teclado destaque, qualidade estudio, mensagem de amor e superacao, sem ser pregacao",
+    exclude: "Funk gospel, samba, rap, eletronico, pop secular puro, brega, forro, trap, vocoder, tom muito pregador, vibe pesada"
+  },
+  soul: {
+    style: "Soul/R&B romantico, voz muito emotiva, melodia suave, teclado e baixo destaque, rimas sofisticadas, tom sensual mas sincero, qualidade estudio profissional, historia contada com profundidade",
+    exclude: "Funk, samba, rap, trap, eletronico puro, EDM, reggaeton, pop dancavel, brega, sertanejo, vocoder excessivo"
+  },
+  acustica: {
+    style: "Acustica sensitiva, violao acustico destaque, voz muito natural emotiva, minimalista, rimas naturais, tom introvertido profundo, qualidade estudio, poetica e sincera, sem instrumentacao excessiva",
+    exclude: "Funk, samba, rap, trap, eletronico, EDM, reggaeton, pop dancavel, brega, sertanejo, batidas pesadas, sintetizadores"
+  }
+};
+
+function detectStyle(estilo) {
+  var e = (estilo||'').toLowerCase();
+  if (e.includes('rap')) return 'rap';
+  if (e.includes('sertanejo')) return 'sertanejo';
+  if (e.includes('pagode')) return 'pagode';
+  if (e.includes('pop')) return 'pop';
+  if (e.includes('gospel')) return 'gospel';
+  if (e.includes('soul') || e.includes('r&b') || e.includes('rb')) return 'soul';
+  if (e.includes('acus') || e.includes('acoust')) return 'acustica';
+  return 'pop';
+}
+
+function toast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = type === 'err' ? '#3a1a1a' : '#1a3a2a';
+  t.style.borderColor = type === 'err' ? '#c86060' : '#4caf82';
+  t.style.color = type === 'err' ? '#e88080' : '#a0e8a0';
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2000);
+}
+
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function parseBrief(brief) {
+  var r = {}, keys = ['Para quem','Relacionamento','Ocasiao','Estilo','Voz','Historia','Letra gerada/editada','Correcoes'],
+      orig = ['Para quem','Relacionamento','Ocasião','Estilo','Voz','História','Letra gerada/editada','Correções'];
+  if (!brief) return r;
+  // Normalize: if no newlines before field labels, insert them (legacy single-line format)
+  var norm = brief;
+  orig.forEach(function(label) {
+    var re = new RegExp('(?<=[^ ]) (' + label.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ': )', 'g');
+    norm = norm.replace(re, '\n$1');
+  });
+  var lines = norm.split('\n'), ck = null, buf = [];
+  for (var i = 0; i < lines.length; i++) {
+    var l = lines[i].trim(), m = false;
+    for (var k = 0; k < orig.length; k++) {
+      if (l.indexOf(orig[k]+': ') === 0) {
+        if (ck) r[ck] = buf.join('\n').trim();
+        ck = keys[k]; buf = [l.slice(orig[k].length+2)]; m = true; break;
+      }
+    }
+    if (!m && ck) buf.push(l);
+  }
+  if (ck) r[ck] = buf.join('\n').trim();
+  return r;
+}
+
+function doLogin() {
+  var u = document.getElementById('lu').value.trim() || 'admin';
+  var p = document.getElementById('lp').value;
+  if (!p) { document.getElementById('lerr').textContent = 'Digite a senha.'; return; }
+  auth = 'Basic ' + btoa(u + ':' + p);
+  loadOrders();
+}
+
+function doLogout() {
+  auth = ''; allOrders = [];
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+}
+
+function loadOrders() {
+  document.getElementById('tload').style.display = 'block';
+  document.getElementById('tempty').style.display = 'none';
+  document.getElementById('tbody').innerHTML = '';
+  fetchAllOrders(null, []);
+}
+
+function fetchAllOrders(cursor, accumulated) {
+  var url = '/nail-admin-orders' + (cursor ? '?cursor=' + encodeURIComponent(cursor) : '');
+  fetch(url, { headers: { 'Authorization': auth } })
+    .then(function(r){
+      if (r.status === 401) return null;
+      return r.json().then(function(body){
+        if (!r.ok || body.ok === false) throw new Error(body.error || ('HTTP ' + r.status));
+        return body;
+      });
+    })
+    .then(function(d) {
+      if (!d) { document.getElementById('tload').style.display = 'none'; document.getElementById('lerr').textContent = 'Senha incorreta.'; return; }
+      var combined = accumulated.concat(d.orders || []);
+      if (d.cursor) {
+        fetchAllOrders(d.cursor, combined);
+      } else {
+        document.getElementById('tload').style.display = 'none';
+        allOrders = combined.sort(function(a,b){ return new Date(b.created_at||0)-new Date(a.created_at||0); });
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('app').style.display = 'flex';
+        updateStats(); updateTodayBar(); renderTable();
+      }
+    })
+    .catch(function(err){
+      document.getElementById('tload').style.display = 'none';
+      document.getElementById('lerr').textContent = 'Erro ao carregar pedidos: ' + (err && err.message ? err.message : 'verifique a conexão.');
+      document.getElementById('tempty').style.display = 'block';
+      document.getElementById('tempty').textContent = 'Não foi possível carregar os pedidos agora.';
+    });
+}
+
+function todayStr() {
+  return new Date().toLocaleDateString('pt-BR');
+}
+
+function isToday(o) {
+  if (!o.created_at) return false;
+  return new Date(o.created_at).toLocaleDateString('pt-BR') === todayStr();
+}
+
+function updateTodayBar() {
+  var today = allOrders.filter(isToday);
+  var paid = today.filter(function(o){ return o.paid; });
+  var pend = today.filter(function(o){ return !o.paid; });
+  var rev = paid.reduce(function(s,o){ return s+(Number(o.value)||0); }, 0);
+  document.getElementById('td-vendas').textContent = paid.length;
+  document.getElementById('td-receita').textContent = 'R$ ' + rev.toFixed(2).replace('.',',');
+  document.getElementById('td-pendente').textContent = pend.length;
+  document.getElementById('td-data').textContent = todayStr();
+  var bar = document.getElementById('today-bar');
+  bar.style.display = (currentFilter === 'today') ? 'block' : 'none';
+}
+
+function updateStats() {
+  var paid = allOrders.filter(function(o){ return o.paid; });
+  var del = allOrders.filter(function(o){ return o.delivered; });
+  var rev = paid.reduce(function(s,o){ return s+(Number(o.value)||0); }, 0);
+  document.getElementById('s-total').textContent = allOrders.length;
+  document.getElementById('s-paid').textContent = paid.length;
+  document.getElementById('s-delivered').textContent = del.length;
+  document.getElementById('s-revenue').textContent = 'R$'+rev.toFixed(2).replace('.',',');
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.fbtn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  updateTodayBar();
+  renderTable();
+}
+
+function getFiltered() {
+  var q = document.getElementById('srch').value.toLowerCase();
+  return allOrders.filter(function(o){
+    if (currentFilter==='paid' && (!o.paid || o.delivered)) return false;
+    if (currentFilter==='pending' && o.paid) return false;
+    if (currentFilter==='delivered' && !o.delivered) return false;
+    if (currentFilter==='today' && !isToday(o)) return false;
+    if (q && JSON.stringify(o).toLowerCase().indexOf(q)===-1) return false;
+    return true;
+  });
+}
+
+function renderTable() {
+  filteredRows = getFiltered();
+  var tb = document.getElementById('tbody');
+  document.getElementById('tempty').style.display = filteredRows.length ? 'none' : 'block';
+  var h = '';
+  for (var i = 0; i < filteredRows.length; i++) {
+    var o = filteredRows[i];
+    var d = o.created_at ? new Date(o.created_at).toLocaleString('pt-BR') : '-';
+    var bc = o.delivered ? 'bd' : o.paid ? 'bp' : 'bpend';
+    var bl = o.delivered ? 'Entregue' : o.paid ? 'Pago' : 'Pendente';
+    var ev = esc(o.name||'-'), ee = esc(o.email||'-');
+    var val = 'R$'+(Number(o.value)||0).toFixed(2).replace('.',',');
+    var eb = (!o.delivered && o.paid) ? ' <button class="abtn gn" data-pid="'+esc(o.paymentId)+'" onclick="markDelivered(this.dataset.pid)">Entregar</button>' : '';
+    var er = (!o.paid) ? ' <button class="abtn" style="border-color:#f59e0b;color:#f59e0b" data-pid="'+esc(o.paymentId)+'" data-name="'+ev+'" data-phone="'+esc(o.phone||'')+'" onclick="recoverPix(this.dataset.pid,this.dataset.name,this.dataset.phone)">&#128279; Recuperar</button>' : '';
+    h += '<tr><td style="color:#888;font-size:12px">'+d+'</td><td><strong>'+ev+'</strong></td><td style="color:#888">'+ee+'</td><td>'+val+'</td>'
+      +'<td><span class="badge '+bc+'">'+bl+'</span></td>'
+      +'<td>'+(o.delivered?'<span style="color:#4caf82">&#10003;</span>':'<span style="color:#444">-</span>')+'</td>'
+      +'<td><button class="abtn" data-idx="'+i+'" onclick="openOrder(Number(this.dataset.idx))">Ver</button>'+eb+er+'</td></tr>';
+  }
+  tb.innerHTML = h;
+}
+
+function switchTab(idx, btn) {
+  document.querySelectorAll('.tab').forEach(function(t,i){ t.classList.toggle('active', i===idx); });
+  document.querySelectorAll('.tab-pane').forEach(function(p,i){ p.classList.toggle('active', i===idx); });
+}
+
+function openOrder(idx) {
+  var o = filteredRows[idx];
+  if (!o) return;
+  currentOrder = o;
+  editingLetra = false;
+
+  var b = parseBrief(o.brief||'');
+  currentLetra = b['Letra gerada/editada'] || '';
+
+  document.getElementById('mtitle').textContent = o.name || o.paymentId;
+
+  // Tab 0 - Dados
+  document.getElementById('f-nome').textContent = o.name || '-';
+  document.getElementById('f-phone').textContent = o.phone || '-';
+  document.getElementById('f-email').textContent = o.email || '-';
+  document.getElementById('f-pid').textContent = o.paymentId || '-';
+  document.getElementById('f-date').textContent = o.created_at ? new Date(o.created_at).toLocaleString('pt-BR') : '-';
+  renderOrigem(o);
+
+  // Tab 1 - Pagamento
+  document.getElementById('f-valor').textContent = 'R$ '+(Number(o.value)||0).toFixed(2).replace('.',',');
+  var sb = document.getElementById('f-status-badge');
+  var bc = o.paid ? 'sb-letra' : 'sb-briefing';
+  sb.innerHTML = '<span class="status-badge '+bc+'">'+(o.paid?'Pago':'Pendente')+'</span>';
+  var bumps = [];
+  var bumpsEl = document.getElementById('f-bumps');
+  bumpsEl.innerHTML = '';
+  function bumpCard(icon, label, desc, active) {
+    var c = document.createElement('div');
+    c.style.cssText = 'display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid ' + (active ? '#16a34a' : '#2a2a3a') + ';background:' + (active ? '#0d2218' : '#0f0f13') + ';opacity:' + (active ? '1' : '0.4') + ';';
+    c.innerHTML = '<span style="font-size:22px">' + icon + '</span>'
+      + '<div><div style="font-size:13px;font-weight:700;color:' + (active ? '#4ade80' : '#666') + '">' + (active ? '✅ ' : '❌ ') + label + '</div>'
+      + '<div style="font-size:12px;color:#888;margin-top:2px">' + desc + '</div></div>';
+    bumpsEl.appendChild(c);
+  }
+  bumpCard('🎵', '1 música principal', 'MP3 via WhatsApp — sempre incluso', true);
+  bumpCard('🔁', '1 versão extra', 'Segunda versão da mesma música (estilo diferente)', !!o.orderBumpExtraVersion);
+  bumpCard('🎶', '2 músicas extras', 'Mais 2 versões adicionais', !!o.orderBumpExtraSongs);
+  bumpCard('🎬', 'Vídeo da música', 'Vídeo editado pronto pra postar', !!o.orderBumpVideo);
+  bumpCard('📱', 'QR Code personalizado', 'Arte imprimível com nome do homenageado', !!o.orderBumpQrCode);
+  if (o.orderBumpBackOffer) bumpCard('🔥', 'Oferta Back Redirect', 'Música + Vídeo por R$49,90 (oferta especial)', true);
+
+  // Tab 2 - Briefing
+  var briefLines = [];
+  briefLines.push('Cliente: ' + (o.name || '-'));
+  briefLines.push('Para Quem: ' + (b['Para quem'] || '-'));
+  briefLines.push('Relacionamento: ' + (b['Relacionamento'] || '-'));
+  briefLines.push('Ocasião: ' + (b['Ocasiao'] || '-'));
+  briefLines.push('Estilo: ' + (b['Estilo'] || '-'));
+  briefLines.push('Voz: ' + (b['Voz'] || '-'));
+  briefLines.push('História: ' + (b['Historia'] || '-'));
+  document.getElementById('f-briefing-block').textContent = briefLines.join('\n');
+  var corr = b['Correcoes'] || '';
+  document.getElementById('f-correcoes-wrap').style.display = (corr && corr !== '(nenhum)') ? 'block' : 'none';
+  document.getElementById('f-correcoes').textContent = corr;
+
+  // Tab 3 - Historia
+  document.getElementById('f-historia').textContent = b['Historia'] || '-';
+
+  // Tab 4 - Letra
+  var lv = document.getElementById('f-letra-view');
+  var le = document.getElementById('f-letra-edit');
+  lv.textContent = currentLetra || '(sem letra gerada)';
+  le.value = currentLetra;
+  lv.style.display = 'block'; le.style.display = 'none';
+  document.getElementById('btn-edit-letra').textContent = '✏ Editar';
+
+  // Tab 5 - Producao
+  var deliveryUrl = o.paymentId ? ('https://musiclovestudio.online/m/' + o.paymentId) : '';
+  document.getElementById('f-delivery-url').textContent = deliveryUrl || '(sem ID de pedido)';
+  var openLink = document.getElementById('f-delivery-open');
+  if (deliveryUrl) { openLink.href = deliveryUrl; openLink.style.opacity = '1'; openLink.style.pointerEvents = ''; }
+  else { openLink.href = '#'; openLink.style.opacity = '0.4'; openLink.style.pointerEvents = 'none'; }
+  document.getElementById('f-prod-status').value = o.prodStatus || 'briefing';
+  document.getElementById('f-style').textContent = '-';
+  document.getElementById('f-exclude').textContent = '-';
+  document.getElementById('f-link').value = o.musicLink || '';
+  // Limpar status de upload e file input ao trocar de pedido
+  var upStatus = document.getElementById('upload-status');
+  if (upStatus) { upStatus.textContent = o.musicLink ? '✅ Música salva' : ''; upStatus.style.color = '#4ade80'; }
+  var mp3Input = document.getElementById('f-mp3');
+  if (mp3Input) mp3Input.value = '';
+  updateQrBtn();
+  document.getElementById('f-notes').value = o.notes || '';
+  document.getElementById('f-delivered').checked = !!o.delivered;
+
+  // Gerar prompt automaticamente se tiver briefing
+  if (b['Estilo']) gerarPrompt();
+
+  // Reset to first tab
+  switchTab(0, document.querySelectorAll('.tab')[0]);
+  document.getElementById('overlay').style.display = 'flex';
+}
+
+function extractNomes(b, orderName) {
+  var nomes = [];
+  var firstName = function(n){ return (n||'').split(' ')[0].trim(); };
+  var cliente = firstName(orderName);
+  var paraquem = firstName(b['Para quem']);
+  if (cliente) nomes.push(cliente);
+  if (paraquem && paraquem !== cliente) nomes.push(paraquem);
+  // scan história for capitalized words not at sentence start
+  var hist = b['Historia'] || '';
+  var words = hist.match(/(?<=[,;]\s)[A-ZÁÉÍÓÚÀÂÊÔÃÕÇ][a-záéíóúàâêôãõç]{2,}/g) || [];
+  words.forEach(function(w){ if (!nomes.includes(w)) nomes.push(w); });
+  return nomes.join(', ') || '-';
+}
+
+function getPerspectiva(b, orderName) {
+  var voz = (b['Voz'] || '').toLowerCase();
+  var cliente = (orderName||'').split(' ')[0];
+  var paraquem = (b['Para quem']||'').split(' ')[0];
+  if (voz.includes('fem')) return 'Primeira pessoa feminina (' + cliente + ' cantando para ' + paraquem + ')';
+  if (voz.includes('masc')) return 'Primeira pessoa masculina (' + cliente + ' cantando para ' + paraquem + ')';
+  return 'Dueto casal (' + cliente + ' e ' + paraquem + ')';
+}
+
+function gerarPrompt() {
+  if (!currentOrder) return;
+  var b = parseBrief(currentOrder.brief||'');
+  var estilo = b['Estilo'] || '';
+  var key = detectStyle(estilo);
+  var profile = STYLES[key] || STYLES.pop;
+  document.getElementById('f-style').textContent = profile.style;
+  document.getElementById('f-exclude').textContent = profile.exclude;
+
+  var nomes = extractNomes(b, currentOrder.name);
+  var perspectiva = getPerspectiva(b, currentOrder.name);
+  var contexto = b['Ocasiao'] || '-';
+  var letra = currentLetra || '(sem letra)';
+
+  var prompt = 'STYLE: ' + profile.style + '\n\n'
+    + 'EXCLUDE STYLE: ' + profile.exclude + '\n\n'
+    + 'NOMES: ' + nomes + '\n'
+    + 'DURAÇÃO: MÁXIMO 3 MINUTOS\n'
+    + 'PERSPECTIVA: ' + perspectiva + '\n'
+    + 'CONTEXTO: ' + contexto + '\n'
+    + 'QUALIDADE: Estúdio profissional, muito limpo, pronto pra streaming\n\n'
+    + 'LETRA:\n' + letra;
+
+  document.getElementById('f-prompt-block').textContent = prompt;
+  toast('Prompt gerado!');
+}
+
+function copyLetra() {
+  var txt = editingLetra ? document.getElementById('f-letra-edit').value : currentLetra;
+  if (!txt) { toast('Sem letra para copiar', 'err'); return; }
+  navigator.clipboard.writeText(txt).then(function(){ toast('Letra copiada!'); });
+}
+
+function toggleEditLetra() {
+  editingLetra = !editingLetra;
+  var lv = document.getElementById('f-letra-view');
+  var le = document.getElementById('f-letra-edit');
+  var btn = document.getElementById('btn-edit-letra');
+  if (editingLetra) {
+    le.value = currentLetra;
+    lv.style.display = 'none'; le.style.display = 'block';
+    btn.textContent = '✓ Salvar';
+  } else {
+    currentLetra = le.value;
+    lv.textContent = currentLetra || '(sem letra)';
+    lv.style.display = 'block'; le.style.display = 'none';
+    btn.textContent = '✏ Editar';
+  }
+}
+
+function copyPromptCompleto() {
+  var txt = document.getElementById('f-prompt-block').textContent;
+  if (!txt || txt === 'Clique em Gerar para montar o prompt.') { toast('Gere o prompt primeiro', 'err'); return; }
+  navigator.clipboard.writeText(txt).then(function(){ toast('Prompt completo copiado!'); });
+}
+
+function renderOrigem(o) {
+  var el = document.getElementById('f-origem');
+  el.innerHTML = '';
+  var url = o.pageUrl || '';
+  var fbclid = o.fbclid || o.fbc || '';
+  var params = {};
+  try { params = Object.fromEntries(new URL(url).searchParams); } catch(e) {}
+
+  // Ler UTMs: prioridade para campos diretos do pedido, fallback para pageUrl
+  var utmSrc  = o.utmSource   || params.utm_source   || '';
+  var utmMed  = o.utmMedium   || params.utm_medium   || '';
+  var utmCamp = o.utmCampaign || params.utm_campaign || '';
+  var utmCont = o.utmContent  || params.utm_content  || '';
+  var utmTerm = o.utmTerm     || params.utm_term     || '';
+
+  // Detectar fonte
+  var source = utmSrc.toLowerCase();
+  var medium = utmMed.toLowerCase();
+  var hasFbclid = !!(fbclid || params.fbclid);
+  var hasGclid = !!(params.gclid);
+
+  var plataforma, cor, emoji;
+  if (hasFbclid || source === 'fb' || source === 'facebook' || source === 'instagram' || source === 'ig') {
+    plataforma = 'Facebook / Instagram Ads'; cor = '#1877f2'; emoji = '📘';
+  } else if (hasGclid || source === 'google' || source === 'cpc') {
+    plataforma = 'Google Ads'; cor = '#ea4335'; emoji = '🔴';
+  } else if (medium === 'organic' || source === 'organic') {
+    plataforma = 'Orgânico'; cor = '#16a34a'; emoji = '🌿';
+  } else if (source) {
+    plataforma = source + (medium ? ' / ' + medium : ''); cor = '#a07ce8'; emoji = '🔗';
+  } else {
+    plataforma = 'Direto / Desconhecido'; cor = '#888'; emoji = '❓';
+  }
+
+  // Badge principal
+  var badge = document.createElement('div');
+  badge.style.cssText = 'display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:8px;background:#1a1a24;border:1px solid ' + cor + ';margin-bottom:10px';
+  badge.innerHTML = '<span style="font-size:18px">' + emoji + '</span><span style="font-weight:700;color:' + cor + ';font-size:14px">' + plataforma + '</span>';
+  el.appendChild(badge);
+
+  // UTMs detalhados
+  var utmFields = [
+    ['📣 Campanha',        utmCamp],
+    ['🎨 Criativo (Ad)',   utmCont],
+    ['🗂 Conjunto (AdSet)', utmTerm],
+    ['📡 Mídia',            utmMed],
+    ['🔗 Fonte',            utmSrc],
+  ].filter(function(f){ return f[1]; });
+
+  if (utmFields.length) {
+    var grid = document.createElement('div');
+    grid.style.cssText = 'display:flex;flex-direction:column;gap:4px';
+    utmFields.forEach(function(f) {
+      var row = document.createElement('div');
+      row.style.cssText = 'display:flex;gap:8px;font-size:12px';
+      row.innerHTML = '<span style="color:#666;min-width:80px">' + f[0] + '</span><span style="color:#aaa;word-break:break-all">' + f[1] + '</span>';
+      grid.appendChild(row);
+    });
+    el.appendChild(grid);
+  }
+
+  if (!utmFields.length && !hasFbclid && !hasGclid) {
+    var note = document.createElement('div');
+    note.style.cssText = 'font-size:12px;color:#666';
+    note.textContent = 'Sem UTMs registrados';
+    el.appendChild(note);
+  }
+}
+
+function copyDeliveryLink() {
+  var url = document.getElementById('f-delivery-url').textContent.trim();
+  if (!url || url === '-' || url.includes('sem ID')) { toast('Sem link de entrega', 'err'); return; }
+  navigator.clipboard.writeText(url).then(function(){ toast('Link copiado!'); });
+}
+
+function sendDeliveryWhatsApp() {
+  if (!currentOrder) return;
+  var pid = currentOrder.paymentId || '';
+  var deliveryUrl = pid ? ('https://musiclovestudio.online/m/' + pid) : '';
+  if (!deliveryUrl) { toast('Sem ID de pedido', 'err'); return; }
+  var b = parseBrief(currentOrder.brief || '');
+  var nome = (currentOrder.name || '').split(' ')[0];
+  var para = b['Para quem'] || '';
+  var phone = (currentOrder.phone || '').replace(/\D/g, '');
+  if (phone && !phone.startsWith('55')) phone = '55' + phone;
+  var msg = 'Olá ' + nome + '! 🎵 Sua música personalizada está pronta!\n\nAcesse o link abaixo para ouvir e baixar:\n\n' + deliveryUrl + (para ? '\n\nCriada com muito carinho para ' + para + ' 💜' : '') + '\n\n— Nail Collection';
+  var wa = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
+  window.open(wa, '_blank');
+}
+
+function copyBriefing() {
+  var txt = document.getElementById('f-briefing-block').textContent;
+  if (!txt || txt === '-') { toast('Sem briefing', 'err'); return; }
+  navigator.clipboard.writeText(txt).then(function(){ toast('Briefing copiado!'); });
+}
+
+function recoverPix(pid, name, phone) {
+  var ov = document.getElementById('recover-overlay');
+  document.getElementById('recover-loading').style.display = 'block';
+  document.getElementById('recover-content').style.display = 'none';
+  document.getElementById('recover-error').style.display = 'none';
+  ov.style.display = 'flex';
+
+  fetch('/nail-recover-pix?paymentId=' + encodeURIComponent(pid), { headers: { 'Authorization': auth } })
+    .then(function(r){ return r.json(); })
+    .then(function(d) {
+      document.getElementById('recover-loading').style.display = 'none';
+      if (!d.ok) {
+        document.getElementById('recover-error').style.display = 'block';
+        document.getElementById('recover-error').textContent = 'Erro: ' + (d.error || 'desconhecido');
+        return;
+      }
+      document.getElementById('rc-name').textContent = d.name || name;
+      document.getElementById('rc-phone').textContent = d.phone ? '+55' + d.phone : phone;
+      document.getElementById('rc-value').textContent = 'R$ ' + Number(d.value||0).toFixed(2).replace('.',',');
+      document.getElementById('rc-payload').value = d.payload || '';
+      document.getElementById('rc-reused').style.display = d.reused ? 'block' : 'none';
+      var msg = 'Olá ' + (d.name||'').split(' ')[0] + '! Aqui está seu PIX da Nail Collection 🎵\n\nCopie o código abaixo e cole no seu banco:\n\n' + d.payload;
+      var waPhone = (d.phone||phone||'').replace(/\D/g,'');
+      if (waPhone && !waPhone.startsWith('55')) waPhone = '55' + waPhone;
+      document.getElementById('rc-whatsapp').href = 'https://wa.me/' + waPhone + '?text=' + encodeURIComponent(msg);
+      document.getElementById('recover-content').style.display = 'block';
+    })
+    .catch(function(){
+      document.getElementById('recover-loading').style.display = 'none';
+      document.getElementById('recover-error').style.display = 'block';
+      document.getElementById('recover-error').textContent = 'Erro ao conectar.';
+    });
+}
+
+function uploadMp3() {
+  var file = document.getElementById('f-mp3').files[0];
+  if (!file || !currentOrder) return;
+  var status = document.getElementById('upload-status');
+  status.textContent = 'Enviando...';
+  status.style.color = '#888';
+  var form = new FormData();
+  form.append('paymentId', currentOrder.paymentId);
+  form.append('file', file);
+  fetch('/upload-audio', { method: 'POST', headers: { 'Authorization': auth }, body: form })
+    .then(function(r){ return r.json(); })
+    .then(function(d) {
+      if (d.ok) {
+        document.getElementById('f-link').value = d.url;
+        updateQrBtn();
+        status.textContent = '✅ ' + file.name + ' enviado!';
+        status.style.color = '#4ade80';
+        // Atualizar order local
+        var idx = allOrders.findIndex(function(o){ return o.paymentId === currentOrder.paymentId; });
+        if (idx >= 0) allOrders[idx].musicLink = d.url;
+        currentOrder.musicLink = d.url;
+        toast('MP3 enviado e salvo!');
+      } else {
+        status.textContent = '❌ Erro: ' + (d.error || 'falha');
+        status.style.color = '#e55';
+      }
+    })
+    .catch(function(){
+      status.textContent = '❌ Erro ao enviar';
+      status.style.color = '#e55';
+    });
+}
+
+function updateQrBtn() {
+  var link = document.getElementById('f-link').value.trim();
+  document.getElementById('qr-btn-wrap').style.display = link ? 'block' : 'none';
+}
+
+var QR_TEMAS = {
+  amor: {
+    bg: 'linear-gradient(160deg,#1a0018 0%,#3d0030 50%,#1a0010 100%)',
+    accent: '#ff6b9d', accent2: '#ffb3d0',
+    qrDark: '#3d0030', qrLight: '#fff5f9',
+    emoji: '💕', emojiDec: '🌹 💕 🌹',
+    tagline: 'Uma canção feita com todo amor 💕',
+    sub: 'Escaneie e ouça sua música especial',
+    stars: '✨ ✨ ✨',
+  },
+  aniversario: {
+    bg: 'linear-gradient(160deg,#0d0820 0%,#1a1040 50%,#0a0518 100%)',
+    accent: '#ffd700', accent2: '#fff3b0',
+    qrDark: '#1a1040', qrLight: '#fffde8',
+    emoji: '🎂', emojiDec: '🎉 🎂 🎈',
+    tagline: 'Um presente especial feito só para você 🎉',
+    sub: 'Escaneie e ouça sua música de aniversário',
+    stars: '🎊 🎊 🎊',
+  },
+  amizade: {
+    bg: 'linear-gradient(160deg,#0a1a0a 0%,#0d2d1a 50%,#081408 100%)',
+    accent: '#4ade80', accent2: '#bbf7d0',
+    qrDark: '#0d2d1a', qrLight: '#f0fdf4',
+    emoji: '🤝', emojiDec: '💚 🎵 💚',
+    tagline: 'Uma homenagem especial para você 💚',
+    sub: 'Escaneie e ouça sua música personalizada',
+    stars: '✨ ✨ ✨',
+  },
+  default: {
+    bg: 'linear-gradient(160deg,#0a0818 0%,#1a0f35 50%,#0d0820 100%)',
+    accent: '#a07ce8', accent2: '#ddd0ff',
+    qrDark: '#1a0f35', qrLight: '#f5f0ff',
+    emoji: '🎵', emojiDec: '🎵 🎶 🎵',
+    tagline: 'Uma música criada só para você 💜',
+    sub: 'Escaneie e ouça sua música personalizada',
+    stars: '✨ ✨ ✨',
+  }
+};
+
+function detectarTema(brief) {
+  var motivo = (brief['Motivo'] || brief['Ocasião'] || brief['Ocasiao'] || brief['ocasiao'] || '').toLowerCase();
+  var estilo = (brief['Estilo'] || '').toLowerCase();
+  var txt = motivo + ' ' + estilo;
+  if (/namorad|amor|casament|noiv|romanc|valentine|paquera|crush|esposa|esposo|marido|mulher/i.test(txt)) return 'amor';
+  if (/aniversar|birthday|anos|parabens|celebra|festa/i.test(txt)) return 'aniversario';
+  if (/amig|amizade|colega|parceiro|parceira/i.test(txt)) return 'amizade';
+  return 'default';
+}
+
+function buildQrCard(para, de, tema, qrDataUrl) {
+  var t = QR_TEMAS[tema] || QR_TEMAS.default;
+  return '<div style="background:' + t.bg + ';padding:32px 24px 28px;position:relative">'
+    // Decoração topo
+    + '<div style="font-size:22px;letter-spacing:6px;margin-bottom:16px;opacity:.7">' + t.emojiDec + '</div>'
+    // Branding
+    + '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:' + t.accent + ';margin-bottom:14px;opacity:.9">🎵 Nail Collection</div>'
+    // Para quem
+    + '<div style="font-size:26px;font-weight:800;color:#fff;margin-bottom:4px;text-shadow:0 2px 12px rgba(0,0,0,.4)">Para ' + para + '</div>'
+    // De quem
+    + '<div style="font-size:14px;color:' + t.accent2 + ';margin-bottom:24px;font-style:italic">Com amor de ' + de + ' ' + t.emoji + '</div>'
+    // QR Code
+    + '<div style="background:#fff;border-radius:16px;padding:14px;display:inline-block;margin-bottom:20px;box-shadow:0 8px 32px rgba(0,0,0,.4)">'
+    + '<img src="' + qrDataUrl + '" style="width:200px;height:200px;display:block;border-radius:4px">'
+    + '</div>'
+    // Instrução
+    + '<div style="font-size:13px;color:#fff;margin-bottom:6px;opacity:.9">' + t.sub + '</div>'
+    // Tagline
+    + '<div style="font-size:12px;color:' + t.accent + ';font-weight:600;margin-bottom:20px">' + t.tagline + '</div>'
+    // Divisor
+    + '<div style="height:1px;background:rgba(255,255,255,.12);margin-bottom:14px"></div>'
+    // Footer
+    + '<div style="font-size:10px;color:rgba(255,255,255,.35);letter-spacing:2px;text-transform:uppercase">musiclovestudio.online</div>'
+    + '</div>';
+}
+
+function abrirQrCard() {
+  var link = document.getElementById('f-link').value.trim();
+  if (!link) { toast('Adicione o link da música primeiro', 'err'); return; }
+  var b = parseBrief(currentOrder ? currentOrder.brief||'' : '');
+  var para = b['Para quem'] || '-';
+  var de = (currentOrder && currentOrder.name) ? currentOrder.name.split(' ')[0] : '-';
+  var pid = currentOrder ? currentOrder.paymentId : '';
+  var playerUrl = pid ? ('https://musiclovestudio.online/m/' + pid) : link;
+  var tema = detectarTema(b);
+
+  document.getElementById('qrc-link-txt').textContent = playerUrl;
+
+  // Gera QR Code em canvas oculto
+  var hidden = document.getElementById('qr-hidden-render');
+  hidden.innerHTML = '';
+  var t = QR_TEMAS[tema] || QR_TEMAS.default;
+  new QRCode(hidden, {
+    text: playerUrl,
+    width: 400, height: 400,
+    colorDark: t.qrDark,
+    colorLight: t.qrLight,
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
+  setTimeout(function() {
+    var canvas = hidden.querySelector('canvas');
+    var img = hidden.querySelector('img');
+    var qrDataUrl = canvas ? canvas.toDataURL('image/png') : (img ? img.src : '');
+    document.getElementById('qr-card-print').innerHTML = buildQrCard(para, de, tema, qrDataUrl);
+  }, 150);
+
+  document.getElementById('qr-overlay').style.display = 'flex';
+}
+
+function salvarPng() {
+  var card = document.getElementById('qr-card-print');
+  var btn = event.currentTarget;
+  btn.textContent = '⏳ Gerando imagem...';
+  btn.disabled = true;
+
+  var b = parseBrief(currentOrder ? currentOrder.brief||'' : '');
+  var para = (b['Para quem'] || 'voce').replace(/[^a-zA-Z0-9]/g,'_');
+
+  setTimeout(function() {
+  html2canvas(card, {
+    scale: 3,
+    useCORS: false,
+    allowTaint: true,
+    backgroundColor: '#ffffff',
+    logging: false,
+  }).then(function(canvas) {
+    var link = document.createElement('a');
+    link.download = 'musiclove-qrcode-' + para + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    btn.textContent = '🖼️ Salvar como imagem PNG';
+    btn.disabled = false;
+    toast('Imagem salva!');
+  }).catch(function(){
+    btn.textContent = '🖼️ Salvar como imagem PNG';
+    btn.disabled = false;
+    toast('Erro ao gerar imagem', 'err');
+  });
+  }, 300);
+}
+
+function imprimirQrCard() {
+  var card = document.getElementById('qr-card-print').outerHTML;
+  var w = window.open('', '_blank');
+  w.document.write('<html><head><title>QR Code – Nail Collection</title><style>body{margin:0;display:flex;align-items:center;justify-content:center;min-height:100vh;background:#fff}</style></head><body>' + card + '</body></html>');
+  w.document.close();
+  w.focus();
+  setTimeout(function(){ w.print(); }, 600);
+}
+
+function compartilharQrCard() {
+  var b = parseBrief(currentOrder ? currentOrder.brief||'' : '');
+  var para = b['Para quem'] || '';
+  var nome = (currentOrder && currentOrder.name) ? currentOrder.name.split(' ')[0] : '';
+  var phone = currentOrder ? (currentOrder.phone||'').replace(/\D/g,'') : '';
+  if (phone && !phone.startsWith('55')) phone = '55' + phone;
+  var pid = currentOrder ? currentOrder.paymentId : '';
+  var playerUrl = pid ? ('https://musiclovestudio.online/m/' + pid) : document.getElementById('f-link').value.trim();
+  var msg = 'Olá ' + nome + '! 🎵 Sua música personalizada está pronta!\n\nAbra o link abaixo para ouvir:\n\n' + playerUrl + '\n\nFoi criada com muito carinho para ' + para + ' 💜\n\n— Nail Collection';
+  var wa = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
+  window.open(wa, '_blank');
+}
+
+function closeRecover() {
+  document.getElementById('recover-overlay').style.display = 'none';
+}
+
+function copyRecoverPix() {
+  var txt = document.getElementById('rc-payload').value;
+  if (!txt) return;
+  navigator.clipboard.writeText(txt).then(function(){ toast('PIX copiado!'); });
+}
+
+function closeModal() {
+  document.getElementById('overlay').style.display = 'none';
+  currentOrder = null; editingLetra = false;
+}
+
+function saveOrder() {
+  if (!currentOrder) return;
+  var letra = editingLetra ? document.getElementById('f-letra-edit').value : currentLetra;
+  var body = {
+    notes: document.getElementById('f-notes').value,
+    delivered: document.getElementById('f-delivered').checked,
+    prodStatus: document.getElementById('f-prod-status').value,
+    musicLink: document.getElementById('f-link').value,
+    savedLetra: letra
+  };
+  fetch('/nail-admin-orders?paymentId=' + encodeURIComponent(currentOrder.paymentId), {
+    method: 'PATCH',
+    headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  }).then(function(r){
+    if (r.ok) {
+      var idx = allOrders.findIndex(function(o){ return o.paymentId === currentOrder.paymentId; });
+      if (idx >= 0) Object.assign(allOrders[idx], body);
+      updateStats(); renderTable(); closeModal(); toast('Salvo!');
+    } else { toast('Erro ao salvar', 'err'); }
+  });
+}
+
+function markDelivered(pid) {
+  fetch('/nail-admin-orders?paymentId=' + encodeURIComponent(pid), {
+    method: 'PATCH',
+    headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ delivered: true })
+  }).then(function(r){
+    if (r.ok) {
+      var idx = allOrders.findIndex(function(o){ return o.paymentId === pid; });
+      if (idx >= 0) allOrders[idx].delivered = true;
+      updateStats(); renderTable(); toast('Marcado como entregue!');
+    }
+  });
+}
+
+document.getElementById('lp').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+
+// ── PWA + PUSH NOTIFICATIONS ────────────────────────────────────────────────
+
+// Registrar service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/admin/sw.js').catch(function(){});
+  }
+
+// VAPID public key (lida do meta ou hardcoded via env — usamos endpoint para pegar)
+var VAPID_PUBLIC_KEY = '';
+
+async function getVapidKey() {
+  if (VAPID_PUBLIC_KEY) return VAPID_PUBLIC_KEY;
+  try {
+    const r = await fetch('/push-vapid-key', { headers: { 'Authorization': auth } });
+    if (r.ok) { const d = await r.json(); VAPID_PUBLIC_KEY = d.key || ''; }
+  } catch {}
+  return VAPID_PUBLIC_KEY;
+}
+
+function urlB64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  const raw = atob(base64);
+  return Uint8Array.from({ length: raw.length }, (_, i) => raw.charCodeAt(i));
+}
+
+function showToast(msg) {
+  var t = document.createElement('div');
+  t.textContent = msg;
+  t.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#7c5cbf;color:#fff;padding:10px 20px;border-radius:20px;font-size:14px;z-index:9999;pointer-events:none;opacity:1;transition:opacity .4s';
+  document.body.appendChild(t);
+  setTimeout(function(){ t.style.opacity='0'; setTimeout(function(){ t.remove(); }, 400); }, 2500);
+}
+
+async function initPushBtn() {
+  var btn = document.getElementById('push-btn');
+  if (!btn || !('PushManager' in window)) return;
+  btn.style.display = '';
+  const reg = await navigator.serviceWorker.ready;
+  const sub = await reg.pushManager.getSubscription();
+  btn.textContent = sub ? '🔔 On' : '🔕';
+  btn.style.color  = sub ? '#4ade80' : '#aaa';
+}
+
+async function togglePush() {
+  if (!('PushManager' in window)) { alert('Notificações não suportadas neste navegador.'); return; }
+  const reg = await navigator.serviceWorker.ready;
+  const existing = await reg.pushManager.getSubscription();
+
+  if (existing) {
+    // Desativar
+    await existing.unsubscribe();
+    await fetch('/push-subscribe', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json', 'Authorization': auth },
+      body: JSON.stringify({ endpoint: existing.endpoint })
+    });
+    showToast('🔕 Notificações desativadas');
+    initPushBtn();
+    return;
+  }
+
+  // Ativar — pedir permissão
+  const perm = await Notification.requestPermission();
+  if (perm !== 'granted') { alert('Permissão negada. Ative nas configurações do navegador.'); return; }
+
+  const vapidKey = await getVapidKey();
+  if (!vapidKey) { alert('Chave VAPID não configurada no servidor.'); return; }
+
+  try {
+    const sub = await reg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlB64ToUint8Array(vapidKey)
+    });
+    await fetch('/push-subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': auth },
+      body: JSON.stringify(sub.toJSON())
+    });
+    showToast('🔔 Notificações ativadas!');
+    initPushBtn();
+  } catch(err) {
+    alert('Erro ao ativar notificações: ' + err.message);
+  }
+}
+
+// Inicializar push btn após login
+var _origLoadOrders = loadOrders;
+loadOrders = async function() {
+  _origLoadOrders();
+  setTimeout(initPushBtn, 500);
+  loadFunnel();
+};
+
+// ── Funil de conversão ──────────────────────────────────────
+var funnelData = null;
+var funnelOpen = true;
+
+var FUNNEL_STEPS = [
+  { key: 'funnel_open',       label: '🖱️ Abriu o funil' },
+  { key: 'lyrics_generated',  label: '✍️ Letra gerada' },
+  { key: 'preview_played',    label: '▶️ Ouviu a prévia' },
+  { key: 'preview_ended',     label: '🔇 Esgotou as prévias' },
+  { key: 'checkout_reached',  label: '💳 Chegou ao checkout' },
+  { key: 'pix_generated',     label: '📲 PIX gerado' },
+  { key: 'paid',              label: '✅ Pagou' },
+];
+
+function toggleFunnel() {
+  funnelOpen = !funnelOpen;
+  document.getElementById('funnel-body').style.display = funnelOpen ? '' : 'none';
+  document.getElementById('funnel-toggle-icon').textContent = funnelOpen ? '▼' : '▶';
+}
+
+async function loadFunnel() {
+  try {
+    var r = await fetch('/analytics', { headers: { 'Authorization': auth } });
+    if (!r.ok) return;
+    var d = await r.json();
+    if (!d.ok) return;
+    funnelData = d.days;
+    populateFunnelSelect();
+    renderFunnelDay();
+  } catch(e) {
+    document.getElementById('funnel-loading').textContent = 'Erro ao carregar funil.';
+  }
+}
+
+function populateFunnelSelect() {
+  var sel = document.getElementById('funnel-day-select');
+  sel.innerHTML = '';
+  funnelData.forEach(function(day) {
+    var opt = document.createElement('option');
+    opt.value = day.date;
+    var parts = day.date.split('-');
+    opt.textContent = parts[2] + '/' + parts[1] + '/' + parts[0];
+    sel.appendChild(opt);
+  });
+}
+
+function renderFunnelDay() {
+  if (!funnelData) return;
+  var sel = document.getElementById('funnel-day-select');
+  var selected = sel.value;
+  var dayObj = funnelData.find(function(d){ return d.date === selected; }) || funnelData[0];
+  var data = dayObj ? dayObj.data : {};
+
+  // "paid" vem dos orders (contar do allOrders para o dia)
+  var dayOrders = allOrders.filter(function(o) {
+    return o.created_at && o.created_at.slice(0,10) === selected;
+  });
+  var paidCount = dayOrders.filter(function(o){ return o.paid; }).length;
+  data['paid'] = paidCount;
+
+  var top = data['funnel_open'] || 0;
+  var rows = document.getElementById('funnel-rows');
+  rows.innerHTML = '';
+
+  FUNNEL_STEPS.forEach(function(step) {
+    var count = data[step.key] || 0;
+    var pct = top > 0 ? Math.round((count / top) * 100) : (count > 0 ? 100 : 0);
+    var barColor = pct >= 50 ? '#4ade80' : pct >= 20 ? '#f59e0b' : '#e55';
+    var row = document.createElement('div');
+    row.style.cssText = 'display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;margin-bottom:10px';
+    row.innerHTML = '<div>' +
+      '<div style="font-size:13px;color:#e8e8f0;margin-bottom:3px">' + step.label + '</div>' +
+      '<div style="height:5px;background:#2a2a3a;border-radius:4px;overflow:hidden">' +
+        '<div style="height:100%;width:' + pct + '%;background:' + barColor + ';border-radius:4px;transition:width .4s"></div>' +
+      '</div>' +
+    '</div>' +
+    '<div style="text-align:right;font-size:14px;font-weight:700;color:#e8e8f0;min-width:40px">' + count + '</div>' +
+    '<div style="text-align:right;font-size:12px;color:' + barColor + ';min-width:48px">' + (top > 0 ? pct + '%' : '—') + '</div>';
+    rows.appendChild(row);
+  });
+
+  document.getElementById('funnel-loading').style.display = 'none';
+  document.getElementById('funnel-grid').style.display = 'block';
+}
+
 </script>
-</body></html>
+<script src="/nail/admin/overrides.js"></script></body>
+</html>
