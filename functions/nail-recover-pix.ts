@@ -1,9 +1,13 @@
 import { asaas } from './_shared/asaas';
+import { sendEvolutionText } from './_shared/evolution';
 
 interface Env {
   ORDERS_KV: KVNamespace;
   ASAAS_API_KEY: string;
   ADMIN_PASSWORD: string;
+  EVOLUTION_API_URL: string;
+  EVOLUTION_API_KEY: string;
+  EVOLUTION_INSTANCE: string;
 }
 
 function json(data: unknown, status = 200): Response {
@@ -15,6 +19,25 @@ function authorized(request: Request, password: string): boolean {
   if (!encoded || !password) return false;
   try { return atob(encoded).split(':').slice(1).join(':') === password; }
   catch { return false; }
+}
+
+async function sendRecovery(
+  env: Env,
+  order: Record<string, unknown>,
+  payload: string,
+): Promise<{ messageSent: boolean; pixSent: boolean }> {
+  const firstName = String(order.name || 'Cliente').trim().split(/\s+/)[0];
+  const config = {
+    apiUrl: env.EVOLUTION_API_URL,
+    apiKey: env.EVOLUTION_API_KEY,
+    instance: env.EVOLUTION_INSTANCE,
+  };
+  const message = `Olá, ${firstName}! Tudo bem? 💅\n\nVi que você iniciou a compra do Nail Collection, mas o pagamento ainda não foi concluído.\n\nVou enviar o código Pix em uma mensagem separada logo abaixo. Assim que o pagamento for confirmado, você receberá o acesso automaticamente pelo WhatsApp.`;
+  const messageSent = await sendEvolutionText(config, String(order.phone || ''), message);
+  const pixSent = messageSent
+    ? await sendEvolutionText(config, String(order.phone || ''), payload)
+    : false;
+  return { messageSent, pixSent };
 }
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
@@ -32,6 +55,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
   const existing = await asaas(env.ASAAS_API_KEY, 'GET', `/payments/${encodeURIComponent(paymentId)}/pixQrCode`);
   if (existing.ok && existing.data.payload) {
+    const delivery = await sendRecovery(env, order, String(existing.data.payload));
     return json({
       ok: true,
       reused: true,
@@ -41,6 +65,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       name: order.name,
       phone: order.phone,
       value: order.value,
+      ...delivery,
     });
   }
 
@@ -77,6 +102,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     env.ORDERS_KV.put(originalKey, JSON.stringify(order), { expirationTtl: 86400 * 365 }),
     env.ORDERS_KV.put(`order:${newPaymentId}`, JSON.stringify(recoveredOrder), { expirationTtl: 86400 * 365 }),
   ]);
+  const delivery = await sendRecovery(env, recoveredOrder, String(qr.data.payload));
 
   return json({
     ok: true,
@@ -87,5 +113,6 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     name: recoveredOrder.name,
     phone: recoveredOrder.phone,
     value: recoveredOrder.value,
+    ...delivery,
   });
 };

@@ -51,7 +51,7 @@
       var deliver = order.paid && !order.deliverySent
         ? ' <button class="abtn gn" data-pid="' + esc(order.paymentId) + '" onclick="markDelivered(this.dataset.pid)">Entregar</button>' : '';
       var recover = !order.paid
-        ? ' <button class="abtn" style="border-color:#f59e0b;color:#f59e0b" data-pid="' + esc(order.paymentId) + '" data-name="' + esc(order.name || '') + '" data-phone="' + esc(order.phone || '') + '" onclick="recoverPix(this.dataset.pid,this.dataset.name,this.dataset.phone)">&#128279; Recuperar</button>' : '';
+        ? ' <button class="abtn" style="border-color:#f59e0b;color:#f59e0b" data-pid="' + esc(order.paymentId) + '" data-name="' + esc(order.name || '') + '" data-phone="' + esc(order.phone || '') + '" onclick="recoverPix(this.dataset.pid,this.dataset.name,this.dataset.phone)">&#128279; Recuperar e enviar</button>' : '';
       return '<tr><td style="color:#888;font-size:12px">' + created + '</td>'
         + '<td><strong>' + esc(order.name || '-') + '</strong></td>'
         + '<td style="color:#aaa">' + esc(order.email || '-') + '</td>'
@@ -141,6 +141,11 @@
       if (phone && !phone.startsWith('55')) phone = '55' + phone;
       var message = 'Olá, ' + String(data.name || 'Cliente').split(' ')[0] + '! Tudo bem? 💅\n\nVi que você iniciou a compra do Nail Collection, mas o pagamento ainda não foi concluído.\n\nVou enviar o código Pix em uma mensagem separada logo abaixo. Assim que o pagamento for confirmado, você receberá o acesso automaticamente pelo WhatsApp.';
       document.getElementById('rc-whatsapp').href = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message);
+      document.getElementById('rc-whatsapp').innerHTML = data.messageSent && data.pixSent
+        ? 'Mensagens enviadas automaticamente ✓'
+        : 'Falhou: enviar mensagem manualmente';
+      if (data.messageSent && data.pixSent) toast('Mensagem e Pix enviados pela Evolution!');
+      else toast('Envio automático falhou. Use os botões manuais.', 'err');
       if (!data.reused) loadOrders();
     }).catch(function (error) {
       document.getElementById('recover-loading').style.display = 'none';
