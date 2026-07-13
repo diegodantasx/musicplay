@@ -50,7 +50,7 @@ export const onRequest: PagesFunction<Env> = async ({ request, env }) => {
         catch { return null; }
       }));
       for (const order of values) {
-        if (order?.product === 'nail-collection') orders.push(order);
+        if (order?.product === 'nail-collection' && order.archived !== true) orders.push(order);
       }
       cursor = page.list_complete ? undefined : page.cursor;
     } while (cursor);
