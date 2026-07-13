@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿﻿﻿<!doctype html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -10,12 +10,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="MusicLove Admin">
 <link rel="apple-touch-icon" href="/admin/icon-192.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Sora',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f0f13;color:#e8e8f0;min-height:100vh;font-size:15px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0f0f13;color:#e8e8f0;min-height:100vh;font-size:15px}
 a{color:inherit}
 /* Login */
 #login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px}
@@ -35,8 +32,14 @@ header h1{font-size:17px;font-weight:700}header h1 span{color:#a07ce8}
 /* Stats */
 .stats{display:flex;gap:10px;padding:16px 20px 0;overflow-x:auto}
 .stat{background:#1a1a24;border:1px solid #2a2a3a;border-radius:10px;padding:14px 18px;flex:1;min-width:110px}
-.stat .sv{font-size:24px;font-weight:700;color:#a07ce8}
+.stat .sv{font-size:24px;font-weight:700;color:#a07ce8;white-space:nowrap}
 .stat .sl{font-size:11px;color:#888;margin-top:3px}
+@media(max-width:560px){
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 14px 0;overflow-x:visible}
+  .stat{min-width:0;padding:12px 12px}
+  .stat .sv{font-size:18px}
+  .stat .sl{font-size:10px}
+}
 /* Controls */
 .controls{padding:14px 20px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .fbtn{padding:7px 14px;border-radius:20px;border:1px solid #2a2a3a;background:transparent;color:#aaa;cursor:pointer;font-size:12px;min-height:34px}
@@ -50,7 +53,7 @@ th{text-align:left;padding:9px 12px;font-size:11px;color:#888;border-bottom:1px 
 td{padding:11px 12px;border-bottom:1px solid #1a1a24;font-size:13px;vertical-align:middle}
 tr:hover td{background:#1a1a24}
 .badge{display:inline-block;padding:3px 8px;border-radius:10px;font-size:11px;font-weight:600}
-.bp{background:#1a3a2a;color:#4caf82}.bpend{background:#2a2a1a;color:#c8a84b}.bd{background:#1a2a3a;color:#4c8ec8}
+.bp{background:#1a3a2a;color:#4caf82}.bpend{background:#2a2a1a;color:#c8a84b}.bd{background:#1a2a3a;color:#4c8ec8}.bref{background:#3a1a1a;color:#ef4444}.bprod{background:#1a1a3a;color:#a07ce8}.bnote{background:#2a2010;color:#f59e0b}
 .abtn{padding:5px 11px;border-radius:6px;border:1px solid #2a2a3a;background:transparent;color:#aaa;cursor:pointer;font-size:12px;min-height:30px}
 .abtn:hover{border-color:#7c5cbf;color:#a07ce8}
 .abtn.gn:hover{border-color:#4caf82;color:#4caf82}
@@ -101,6 +104,10 @@ tr:hover td{background:#1a1a24}
 .modal-foot .btn-primary{width:auto;padding:10px 22px;min-height:44px}
 .btn-sec{padding:10px 18px;border-radius:8px;border:1px solid #2a2a3a;background:transparent;color:#aaa;cursor:pointer;font-size:14px;min-height:44px}
 .btn-sec:hover{border-color:#7c5cbf;color:#a07ce8}
+/* Revenue tabs */
+.rev-tab{padding:5px 12px;border-radius:16px;border:1px solid #2a2a3a;background:transparent;color:#666;cursor:pointer;font-size:12px;min-height:28px;transition:all .15s}
+.rev-tab:hover{border-color:#a07ce8;color:#a07ce8}
+.rev-tab.active{background:#a07ce8;border-color:#a07ce8;color:#fff;font-weight:600}
 /* Toast */
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#2a3a2a;border:1px solid #4caf82;color:#a0e8a0;padding:10px 20px;border-radius:8px;font-size:13px;z-index:999;opacity:0;pointer-events:none;transition:opacity .2s;white-space:nowrap}
 #toast.show{opacity:1}
@@ -112,6 +119,16 @@ tr:hover td{background:#1a1a24}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XLLSQGPFP6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XLLSQGPFP6');
+</script>
+
 </head>
 <body>
 
@@ -131,6 +148,7 @@ tr:hover td{background:#1a1a24}
     <h1>MusicLove <span>Admin</span></h1>
     <div class="hdr-right">
       <button class="abtn" id="push-btn" onclick="togglePush()" title="Notificações" style="display:none">🔔</button>
+      <button class="abtn" onclick="runRecovery()" title="Disparar recuperação no WhatsApp para todos os pendentes do dia">📧 Recuperação</button>
       <button class="abtn" onclick="loadOrders()">&#8635; Atualizar</button>
       <button class="abtn" onclick="doLogout()">Sair</button>
     </div>
@@ -143,16 +161,75 @@ tr:hover td{background:#1a1a24}
     <div class="stat"><div class="sv" id="s-revenue">-</div><div class="sl">Receita total</div></div>
   </div>
 
-  <div id="today-bar" style="display:none;margin:10px 20px 0;background:#0d2218;border:1px solid #16a34a;border-radius:10px;padding:12px 16px;display:none">
-    <div style="font-size:11px;color:#4ade80;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">📅 Faturamento de hoje</div>
-    <div style="display:flex;gap:20px;flex-wrap:wrap">
-      <div><div style="font-size:22px;font-weight:700;color:#4ade80" id="td-vendas">0</div><div style="font-size:11px;color:#888">Vendas pagas</div></div>
-      <div><div style="font-size:22px;font-weight:700;color:#4ade80" id="td-receita">R$ 0,00</div><div style="font-size:11px;color:#888">Faturamento</div></div>
-      <div><div style="font-size:22px;font-weight:700;color:#a07ce8" id="td-pendente">0</div><div style="font-size:11px;color:#888">Pendentes</div></div>
-      <div><div style="font-size:22px;font-weight:700;color:#888" id="td-data">-</div><div style="font-size:11px;color:#888">Data</div></div>
+  <!-- Painel de Faturamento por Período -->
+  <div style="margin:10px 20px 0;background:#0f0f18;border:1px solid #2a2a3a;border-radius:12px;padding:12px 16px">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+        <button class="rev-tab active" id="rtab-hoje"   onclick="setRevPeriod('hoje')"   >Hoje</button>
+        <button class="rev-tab"        id="rtab-ontem"  onclick="setRevPeriod('ontem')"  >Ontem</button>
+        <input type="date" id="rev-date" onchange="setRevDate(this.value)" style="height:28px;background:#11111a;border:1px solid #2a2a3a;border-radius:999px;color:#e8e8f0;padding:0 12px;font-size:12px;outline:none">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-left:6px">
+          <div style="font-size:12px;font-weight:700;color:#a07ce8;text-transform:uppercase;letter-spacing:.5px">
+            Atualizado: <span id="rev-last-update" style="color:#e8e8f0;font-weight:700">--:--:--</span>
+          </div>
+          <div style="font-size:12px;font-weight:700;color:#a07ce8;text-transform:uppercase;letter-spacing:.5px">
+            Atualiza em: <span id="rev-refresh-countdown" style="color:#e8e8f0;font-weight:700">30s</span>
+          </div>
+          <div style="font-size:12px;font-weight:700;color:#a07ce8;text-transform:uppercase;letter-spacing:.5px">
+            Manaus: <span id="manaus-clock" style="color:#e8e8f0;font-weight:700">--:--:--</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end">
+        <div style="display:flex;align-items:stretch;gap:10px;flex-wrap:wrap">
+        <div style="min-width:160px;text-align:right">
+          <div style="font-size:11px;color:#4ade80;font-weight:800;text-transform:uppercase;letter-spacing:.4px">Pagos</div>
+          <div style="font-size:28px;font-weight:800;color:#4ade80" id="rev-valor">R$ 0,00</div>
+          <div style="font-size:13px;color:#666" id="rev-qtd">0 cobranças</div>
+        </div>
+        <div style="min-width:150px;text-align:right;border-left:1px solid #2a2a3a;padding-left:12px">
+          <div style="font-size:11px;color:#f59e0b;font-weight:800;text-transform:uppercase;letter-spacing:.4px">Pendentes</div>
+          <div style="font-size:22px;font-weight:800;color:#f59e0b" id="rev-pending-valor">R$ 0,00</div>
+          <div style="font-size:12px;color:#666" id="rev-pending-qtd">0 cobranças</div>
+        </div>
+        </div>
+      </div>
     </div>
   </div>
 
+  <div id="profit-section" style="margin:12px 20px 0;background:#0f0f18;border:1px solid #2a2a3a;border-radius:12px;padding:14px 16px">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+      <div>
+        <div style="font-size:12px;color:#a07ce8;font-weight:800;text-transform:uppercase;letter-spacing:.4px">Lucro real automático</div>
+        <div style="font-size:11px;color:#777;margin-top:3px">Asaas - gasto Face - gasto Asaas</div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+        <button class="rev-tab active" id="ptab-hoje" onclick="setProfitPeriod('hoje')">Hoje</button>
+        <button class="rev-tab" id="ptab-ontem" onclick="setProfitPeriod('ontem')">Ontem</button>
+        <input type="date" id="profit-date" onchange="setProfitDate(this.value)" style="height:28px;background:#11111a;border:1px solid #2a2a3a;border-radius:999px;color:#e8e8f0;padding:0 12px;font-size:12px;outline:none">
+        <button class="abtn" onclick="loadProfit(false)">Atualizar lucro</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(5,minmax(130px,1fr));gap:10px" id="profit-cards">
+      <div class="stat" style="min-width:0"><div class="sv" id="p-gross">R$ 0,00</div><div class="sl">Asaas</div></div>
+      <div class="stat" style="min-width:0"><div class="sv" id="p-ads" style="color:#ef4444">R$ 0,00</div><div class="sl">Gasto Face</div></div>
+      <div class="stat" style="min-width:0"><div class="sv" id="p-face-tax" style="color:#f59e0b">R$ 0,00</div><div class="sl">Imposto 13,9% Face</div></div>
+      <div class="stat" style="min-width:0"><div class="sv" id="p-asaas-fee" style="color:#f97316">R$ 0,00</div><div class="sl">Gasto Asaas</div></div>
+      <div class="stat" style="min-width:0"><div class="sv" id="p-profit" style="color:#4ade80">R$ 0,00</div><div class="sl">Lucro real</div></div>
+    </div>
+    <div id="profit-note" style="font-size:11px;color:#777;flex:1;min-width:320px;margin-top:10px">Carregando dados financeiros...</div>
+    <div id="meta-config-row" style="display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:10px;align-items:center;margin-top:10px">
+      <div></div>
+      <div style="grid-column:2 / span 2;display:flex;gap:8px;align-items:center;min-width:0">
+        <input id="meta-token-input" type="password" placeholder="Cole aqui o token Meta com ads_read" style="flex:1;min-width:220px;background:#0f0f13;border:1px solid #2a2a3a;border-radius:8px;color:#e8e8f0;padding:10px 12px;font-size:12px;outline:none">
+        <input id="meta-account-input" type="text" value="1899992777442340" placeholder="Ad account ID" style="width:170px;max-width:100%;background:#0f0f13;border:1px solid #2a2a3a;border-radius:8px;color:#e8e8f0;padding:9px 10px;font-size:12px;outline:none">
+        <button class="abtn" onclick="saveMetaAdsToken()">Conectar Meta</button>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:flex-start;min-width:0">
+        <span id="meta-token-status" style="font-size:11px;color:#777;min-width:140px"></span>
+      </div>
+    </div>
+  </div>
   <!-- Funil de Conversão -->
   <div id="funnel-section" style="margin:12px 20px 0;background:#1a1a24;border:1px solid #2a2a3a;border-radius:12px;overflow:hidden">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;cursor:pointer;user-select:none" onclick="toggleFunnel()">
@@ -165,28 +242,54 @@ tr:hover td{background:#1a1a24}
     <div id="funnel-body" style="padding:0 16px 16px">
       <div id="funnel-loading" style="color:#888;font-size:13px;text-align:center;padding:20px">Carregando...</div>
       <div id="funnel-grid" style="display:none">
-        <!-- linha do funil -->
-        <div style="display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;font-size:12px;color:#888;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #2a2a3a">
-          <span>Etapa</span><span style="text-align:right;min-width:40px">Qtd</span><span style="text-align:right;min-width:50px">Conv.</span>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 12px">
+          <div style="background:#111827;border:1px solid #1f3b7a;border-radius:10px;padding:10px 12px">
+            <div style="font-size:11px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.4px">Facebook</div>
+            <div id="funnel-facebook-count" style="margin-top:4px;font-size:22px;font-weight:800;color:#e8e8f0">0</div>
+            <div style="margin-top:2px;font-size:11px;color:#7c8aa5">Entradas no funil</div>
+          </div>
+          <div style="background:#1a1526;border:1px solid #5b21b6;border-radius:10px;padding:10px 12px">
+            <div style="font-size:11px;font-weight:700;color:#c084fc;text-transform:uppercase;letter-spacing:.4px">Kwai</div>
+            <div id="funnel-kwai-count" style="margin-top:4px;font-size:22px;font-weight:800;color:#e8e8f0">0</div>
+            <div style="margin-top:2px;font-size:11px;color:#9d8bb5">Entradas no funil</div>
+          </div>
         </div>
-        <div id="funnel-rows"></div>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px">
+          <div style="background:#101521;border:1px solid #1f3b7a;border-radius:10px;padding:10px 12px">
+            <div style="font-size:11px;font-weight:700;color:#60a5fa;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Facebook</div>
+            <div style="display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;font-size:12px;color:#888;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #2a2a3a">
+              <span>Etapa</span><span style="text-align:right;min-width:40px">Qtd</span><span style="text-align:right;min-width:50px">Conv.</span>
+            </div>
+            <div id="funnel-facebook-rows"></div>
+          </div>
+          <div style="background:#181222;border:1px solid #5b21b6;border-radius:10px;padding:10px 12px">
+            <div style="font-size:11px;font-weight:700;color:#c084fc;text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px">Kwai</div>
+            <div style="display:grid;grid-template-columns:1fr auto auto;gap:6px;align-items:center;font-size:12px;color:#888;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #2a2a3a">
+              <span>Etapa</span><span style="text-align:right;min-width:40px">Qtd</span><span style="text-align:right;min-width:50px">Conv.</span>
+            </div>
+            <div id="funnel-kwai-rows"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- Campanhas (UTM) -->
   <div class="controls">
     <button class="fbtn active" onclick="setFilter('all',this)">Todos</button>
     <button class="fbtn" id="fbtn-hoje" onclick="setFilter('today',this)">📅 Hoje</button>
-    <button class="fbtn" onclick="setFilter('paid',this)">Pagos a entregar</button>
+    <button class="fbtn" id="fbtn-pagohoje" onclick="setFilter('paidtoday',this)">💰 Pagos hoje</button>
+    <button class="fbtn" onclick="setFilter('paid',this)">Pagos</button>
+    <button class="fbtn" id="fbtn-entregar" onclick="setFilter('todeliver',this)">A Entregar</button>
     <button class="fbtn" onclick="setFilter('pending',this)">Pendentes</button>
     <button class="fbtn" onclick="setFilter('delivered',this)">Entregues</button>
-    <input class="search-inp" type="text" id="srch" placeholder="Buscar nome, email..." oninput="renderTable()">
+    <input class="search-inp" type="text" id="srch" placeholder="Buscar nome, email, WhatsApp, nº do pedido..." oninput="renderTable()">
   </div>
 
   <div class="table-wrap">
     <table>
       <thead><tr>
-        <th>Data</th><th>Nome</th><th>Email</th><th>Valor</th><th>Status</th><th>Entregue</th><th>Acoes</th>
+        <th>Data</th><th>Nome</th><th>Email</th><th>Valor</th><th>Status</th><th>Origem</th><th>WhatsApp</th><th>Entregue</th><th>Ações</th>
       </tr></thead>
       <tbody id="tbody"></tbody>
     </table>
@@ -203,21 +306,19 @@ tr:hover td{background:#1a1a24}
       <button class="close-btn" onclick="closeRecover()">&#x2715;</button>
     </div>
     <div style="padding:20px;overflow-y:auto">
-      <div id="recover-loading" style="text-align:center;padding:32px;color:#888">Gerando PIX...</div>
-      <div id="recover-content" style="display:none">
-        <div style="background:#1a1228;border:1px solid #7c5cbf;border-radius:10px;padding:14px;margin-bottom:14px">
-          <div style="font-size:12px;color:#888;margin-bottom:4px">Cliente</div>
-          <div style="font-weight:700;font-size:15px" id="rc-name">-</div>
-          <div style="font-size:13px;color:#a07ce8" id="rc-phone">-</div>
-          <div style="font-size:13px;color:#4ade80;margin-top:4px" id="rc-value">-</div>
+      <div id="recover-loading" style="text-align:center;padding:32px;color:#888">Enviando mensagem...</div>
+      <div id="recover-success" style="display:none;text-align:center;padding:28px 18px">
+        <div style="font-size:42px;margin-bottom:12px">✅</div>
+        <div style="font-size:20px;font-weight:800;color:#4ade80;margin-bottom:8px">Mensagem enviada ao destinatário</div>
+        <div style="font-size:13px;color:#aaa;line-height:1.6;margin-bottom:18px">
+          A recuperação e a chave Pix foram disparadas automaticamente para o WhatsApp do cliente.
         </div>
-        <div style="font-size:12px;color:#888;margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px">PIX Copia e Cola</div>
-        <textarea id="rc-payload" readonly style="width:100%;background:#0f0f13;border:1px solid #2a2a3a;border-radius:8px;padding:10px;color:#e8e8f0;font-size:11px;font-family:monospace;resize:none;height:80px"></textarea>
-        <button class="btn-primary" style="margin-top:10px" onclick="copyRecoverPix()">&#128203; Copiar código PIX</button>
-        <a id="rc-whatsapp" href="#" target="_blank" style="display:block;margin-top:10px;padding:13px;background:#16a34a;color:#fff;border-radius:8px;font-weight:600;font-size:14px;text-decoration:none;text-align:center">
-          💬 Enviar no WhatsApp do cliente
-        </a>
-        <div id="rc-reused" style="display:none;font-size:11px;color:#f59e0b;margin-top:8px;text-align:center">⚠️ PIX original reaproveitado — verifique validade</div>
+        <div style="background:#1a1228;border:1px solid #2a2a3a;border-radius:10px;padding:12px;margin-bottom:16px;text-align:left">
+          <div style="font-size:12px;color:#888;margin-bottom:4px">Cliente</div>
+          <div style="font-weight:700;font-size:15px" id="rc-success-name">-</div>
+          <div style="font-size:13px;color:#a07ce8" id="rc-success-phone">-</div>
+        </div>
+        <button class="btn-primary" onclick="closeRecover()">Fechar</button>
       </div>
       <div id="recover-error" style="display:none;text-align:center;padding:20px;color:#e55"></div>
     </div>
@@ -231,13 +332,19 @@ tr:hover td{background:#1a1a24}
       <h2 id="mtitle">Pedido</h2>
       <button class="close-btn" onclick="closeModal()">&#x2715;</button>
     </div>
+    <!-- Banner música pronta (só aparece para pedidos auto com mp3_url) -->
+    <div id="music-ready-banner" style="display:none;background:#0d2218;border-bottom:1px solid #16a34a;padding:10px 16px;display:none;gap:8px;flex-wrap:wrap;align-items:center">
+      <span style="font-size:13px;color:#4ade80;flex:1;min-width:120px">🎵 Música gerada — pronta para entrega</span>
+      <a id="banner-dl-btn" href="#" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#16a34a;color:#fff;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">⬇Baixar MP3</a>
+      <a id="banner-dl-btn2" href="#" target="_blank" style="display:none;align-items:center;gap:6px;padding:8px 14px;background:#7c3aed;color:#fff;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">⬇Versão 2</a>
+    </div>
     <div class="tabs" id="tabs">
       <button class="tab active" onclick="switchTab(0,this)">&#128100; Dados</button>
       <button class="tab" onclick="switchTab(1,this)">&#128178; Pagamento</button>
       <button class="tab" onclick="switchTab(2,this)">&#127925; Briefing</button>
       <button class="tab" onclick="switchTab(3,this)">&#128214; Historia</button>
       <button class="tab" onclick="switchTab(4,this)">&#127908; Letra</button>
-      <button class="tab" onclick="switchTab(5,this)">&#9881; Producao</button>
+      <button class="tab" onclick="switchTab(5,this)">&#9881; Produção</button>
     </div>
     <div class="tab-content">
       <!-- Tab 0: Dados -->
@@ -249,6 +356,7 @@ tr:hover td{background:#1a1a24}
         <div class="fld"><label><span class="ico">&#128140;</span> Email</label><div class="fval" id="f-email">-</div></div>
         <div class="fld"><label><span class="ico">&#128196;</span> ID do Pedido</label><div class="fval" id="f-pid" style="font-size:12px;color:#888">-</div></div>
         <div class="fld"><label><span class="ico">&#128197;</span> Data do Pedido</label><div class="fval" id="f-date">-</div></div>
+        <div class="fld"><label><span class="ico">&#128179;</span> Checkout</label><div class="fval" id="f-provider">-</div></div>
         <div class="fld">
           <label><span class="ico">&#128205;</span> Origem do Tráfego</label>
           <div id="f-origem" style="margin-top:6px"></div>
@@ -260,9 +368,49 @@ tr:hover td{background:#1a1a24}
           <div class="fld"><label><span class="ico">&#128178;</span> Valor</label><div class="fval" id="f-valor">-</div></div>
           <div class="fld"><label><span class="ico">&#9989;</span> Status</label><div id="f-status-badge"></div></div>
         </div>
+        <div class="fld"><label><span class="ico">💳</span> Método de pagamento</label><div class="fval" id="f-payment-method">-</div></div>
+        <div class="fld" id="f-send-recovery-wrap" style="display:none">
+          <button class="abtn" style="border-color:#f59e0b;color:#f59e0b;width:100%;justify-content:center;font-size:13px" onclick="sendRecoveryEmail()">📧 Enviar email de recuperação de PIX</button>
+        </div>
+        <div class="fld" id="f-mark-paid-wrap" style="display:none">
+          <button class="abtn" style="border-color:#4caf82;color:#4caf82;width:100%;justify-content:center;font-size:13px" onclick="markPaid()">&#9989; Marcar como Pago manualmente</button>
+        </div>
+        <div class="fld" id="f-mark-producing-wrap" style="display:none">
+          <button class="abtn" style="border-color:#a07ce8;color:#a07ce8;width:100%;justify-content:center;font-size:13px" onclick="markProducing()">🎵 Marcar como Em Produção</button>
+        </div>
+        <div class="fld">
+          <label>👤 Atendente responsável</label>
+          <select id="f-responsavel" onchange="saveResponsavel()" style="width:100%;padding:11px 14px;background:#0f0f13;border:1px solid #2a2a3a;border-radius:8px;color:#e8e8f0;font-size:14px;outline:none;min-height:44px">
+            <option value="">— Não atribuído —</option>
+            <option value="Thiago">Thiago</option>
+            <option value="Owen">Owen</option>
+            <option value="Marcos">Marcos</option>
+          </select>
+        </div>
+        <div class="fld" id="f-mark-refunded-wrap">
+          <button class="abtn" style="border-color:#ef4444;color:#ef4444;width:100%;justify-content:center;font-size:13px" onclick="markRefunded()">&#128260; Marcar como Reembolsado</button>
+        </div>
         <div class="fld">
           <label>&#128230; O que precisa entregar</label>
           <div id="f-bumps" style="display:flex;flex-direction:column;gap:8px;margin-top:6px"></div>
+        </div>
+        <div class="fld" style="border-top:1px solid #1a1a2a;padding-top:14px;margin-top:4px">
+          <label>&#128241; WhatsApp do cliente</label>
+          <div style="display:flex;gap:8px">
+            <input type="text" id="f-edit-phone" placeholder="Ex: 41999999999" style="flex:1">
+            <button class="abtn" style="border-color:#4caf82;color:#4caf82;white-space:nowrap" onclick="savePhone()">&#10003; Salvar</button>
+          </div>
+        </div>
+        <div class="fld">
+          <label>&#128203; Observação rápida</label>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px">
+            <button class="abtn" style="font-size:11px" onclick="quickNote('WhatsApp incorreto — aguardando correção do cliente')">📵 WA incorreto</button>
+            <button class="abtn" style="font-size:11px" onclick="quickNote('Aguardando envio das fotos pelo cliente')">🖼Aguardando fotos</button>
+            <button class="abtn" style="font-size:11px" onclick="quickNote('Reembolso solicitado pelo cliente')">💸 Reembolso</button>
+            <button class="abtn" style="font-size:11px" onclick="quickNote('Cliente não responde no WhatsApp')">🔇 Sem resposta</button>
+          </div>
+          <textarea id="f-quick-notes" rows="2" placeholder="Digite ou use os atalhos acima..."></textarea>
+          <button class="abtn" style="margin-top:6px;border-color:#a07ce8;color:#a07ce8;width:100%;justify-content:center" onclick="saveQuickNote()">&#128190; Salvar observação</button>
         </div>
       </div>
       <!-- Tab 2: Briefing -->
@@ -273,14 +421,14 @@ tr:hover td{background:#1a1a24}
         </div>
         <div id="f-briefing-block" style="background:#0f0f13;border:1px solid #2a2a3a;border-radius:10px;padding:16px 18px;font-size:13px;line-height:2;white-space:pre-wrap;color:#ccc;font-family:inherit">-</div>
         <div id="f-correcoes-wrap" style="display:none;margin-top:12px">
-          <label style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.4px">&#9999; Correcoes solicitadas</label>
+          <label style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.4px">&#9999; Correções solicitadas</label>
           <div class="fval" id="f-correcoes" style="white-space:pre-wrap;margin-top:6px"></div>
         </div>
       </div>
       <!-- Tab 3: Historia -->
       <div class="tab-pane" id="tp3">
         <div class="fld">
-          <label><span class="ico">&#128214;</span> Historia / Mensagem do cliente</label>
+          <label><span class="ico">&#128214;</span> História / Mensagem do cliente</label>
           <div class="fval" id="f-historia" style="white-space:pre-wrap;min-height:80px;line-height:1.7">-</div>
         </div>
       </div>
@@ -296,7 +444,7 @@ tr:hover td{background:#1a1a24}
         <div class="letra-box" id="f-letra-view">-</div>
         <textarea class="fld" id="f-letra-edit" rows="14" style="display:none;margin-top:10px;font-size:13px;line-height:1.7;font-family:inherit"></textarea>
       </div>
-      <!-- Tab 5: Producao -->
+      <!-- Tab 5: Produção -->
       <div class="tab-pane" id="tp5">
         <!-- Link de Entrega -->
         <div id="delivery-link-box" style="background:#0d2218;border:1px solid #16a34a;border-radius:10px;padding:14px 16px;margin-bottom:16px">
@@ -309,13 +457,60 @@ tr:hover td{background:#1a1a24}
             <button class="btn-primary" style="flex:1;min-width:140px;background:#16a34a;font-size:13px;padding:10px 14px" onclick="sendDeliveryWhatsApp()">💬 Enviar no WhatsApp</button>
             <a id="f-delivery-open" href="#" target="_blank" style="flex:1;min-width:120px;display:flex;align-items:center;justify-content:center;padding:10px 14px;border:1px solid #2a2a3a;border-radius:8px;color:#aaa;font-size:13px;text-decoration:none;text-align:center" onmouseover="this.style.borderColor='#7c5cbf';this.style.color='#a07ce8'" onmouseout="this.style.borderColor='#2a2a3a';this.style.color='#aaa'">🔗 Abrir página</a>
           </div>
+          <div style="margin-top:8px">
+            <button class="abtn" style="width:100%;border-color:#6366f1;color:#818cf8;font-size:13px;padding:10px 14px;justify-content:center" onclick="sendMusicEmail()">📧 Enviar link da música por email</button>
+          </div>
+        </div>
+        <!-- Geração Automática (só aparece para pedidos auto) -->
+        <div id="auto-gen-box" style="display:none;background:#0d1a2e;border:1px solid #1e3a5f;border-radius:10px;padding:14px 16px;margin-bottom:16px">
+          <div style="font-size:11px;color:#60a5fa;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">🤖 Geração Automática (Sunor/KIE)</div>
+          <!-- Status de geração em tempo real -->
+          <div style="margin-bottom:12px;padding:10px 12px;background:#071120;border:1px solid #1e3a5f;border-radius:8px">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+              <div style="font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.4px">Status atual</div>
+              <button class="abtn" style="border-color:#3b82f6;color:#60a5fa;font-size:11px;padding:3px 8px;min-height:24px" onclick="checkGenStatus()">🔄 Atualizar</button>
+            </div>
+            <div id="f-gen-status-badge" style="font-size:13px;font-weight:700;padding:5px 12px;border-radius:8px;background:#1a1a2e;color:#555;border:1px solid #2a2a3a;display:inline-block">— não verificado</div>
+            <div id="f-gen-status-detail" style="font-size:11px;color:#666;margin-top:5px"></div>
+          </div>
+          <div style="margin-bottom:8px">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">Task ID (Sunor / KIE)</div>
+            <div style="display:flex;gap:6px;align-items:center">
+              <div id="f-sunor-task-id" style="flex:1;font-size:12px;color:#93c5fd;background:#071120;border:1px solid #1e3a5f;border-radius:6px;padding:7px 10px;font-family:monospace;word-break:break-all">-</div>
+              <button class="abtn" style="border-color:#3b82f6;color:#60a5fa;flex-shrink:0" onclick="copyText('f-sunor-task-id')">📋</button>
+            </div>
+          </div>
+          <div style="margin-bottom:8px">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">MP3 URL direta</div>
+            <div style="display:flex;gap:6px;align-items:center">
+              <div id="f-auto-mp3-url" style="flex:1;font-size:11px;color:#93c5fd;background:#071120;border:1px solid #1e3a5f;border-radius:6px;padding:7px 10px;font-family:monospace;word-break:break-all;max-height:48px;overflow:hidden">-</div>
+              <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0">
+                <button class="abtn" style="border-color:#3b82f6;color:#60a5fa" onclick="copyText('f-auto-mp3-url')">📋</button>
+                <a id="f-auto-mp3-dl" href="#" target="_blank" class="abtn" style="border-color:#16a34a;color:#4ade80;text-decoration:none;text-align:center">⬇</a>
+              </div>
+            </div>
+          </div>
+          <div id="auto-mp3-2-wrap" style="display:none;margin-bottom:4px">
+            <div style="font-size:11px;color:#888;margin-bottom:4px">MP3 URL versão 2</div>
+            <div style="display:flex;gap:6px;align-items:center">
+              <div id="f-auto-mp3-url-2" style="flex:1;font-size:11px;color:#93c5fd;background:#071120;border:1px solid #1e3a5f;border-radius:6px;padding:7px 10px;font-family:monospace;word-break:break-all;max-height:48px;overflow:hidden">-</div>
+              <div style="display:flex;flex-direction:column;gap:4px;flex-shrink:0">
+                <button class="abtn" style="border-color:#3b82f6;color:#60a5fa" onclick="copyText('f-auto-mp3-url-2')">📋</button>
+                <a id="f-auto-mp3-dl-2" href="#" target="_blank" class="abtn" style="border-color:#16a34a;color:#4ade80;text-decoration:none;text-align:center">⬇</a>
+              </div>
+            </div>
+          </div>
+          <div id="force-gen-wrap" style="display:none;margin-top:10px">
+            <button id="btn-force-gen" class="abtn" style="width:100%;border-color:#f59e0b;color:#fbbf24;padding:10px;font-size:13px" onclick="forceGenerate()">⚡ Forçar geração de música</button>
+            <div id="force-gen-msg" style="font-size:12px;margin-top:6px;color:#4ade80;display:none"></div>
+          </div>
         </div>
         <div class="fld">
-          <label>Status de Producao</label>
+          <label>Status de Produção</label>
           <select id="f-prod-status" style="width:100%;padding:11px 14px;background:#0f0f13;border:1px solid #2a2a3a;border-radius:8px;color:#e8e8f0;font-size:14px;outline:none;min-height:44px">
             <option value="briefing">Briefing</option>
-            <option value="gerando_letra">Gerando Letra</option>
-            <option value="letra_pronta">Letra Pronta</option>
+            <option value="gerando_letra">Gerando letra</option>
+            <option value="letra_pronta">Letra pronta</option>
             <option value="gerando_musica">Gerando Musica</option>
             <option value="pronto">Pronto</option>
           </select>
@@ -344,7 +539,7 @@ tr:hover td{background:#1a1a24}
           <button class="btn-primary" style="background:linear-gradient(135deg,#7c5cbf,#a07ce8)" onclick="abrirQrCard()">&#127381; Gerar Card QR Code para Entrega</button>
         </div>
         <div class="fld">
-          <label>&#128203; Observacoes internas</label>
+          <label>&#128203; Observações internas</label>
           <textarea id="f-notes" rows="3"></textarea>
         </div>
         <div class="fld">
@@ -369,16 +564,27 @@ tr:hover td{background:#1a1a24}
 <div class="overlay" id="qr-overlay" style="display:none" onclick="if(event.target===this)document.getElementById('qr-overlay').style.display='none'">
   <div class="modal" style="max-width:520px;height:auto;max-height:95vh">
     <div class="modal-head">
-      <h2>🎁 Card QR Code</h2>
+      <h2>Card QR Code</h2>
       <button class="close-btn" onclick="document.getElementById('qr-overlay').style.display='none'">&#x2715;</button>
     </div>
     <div style="padding:20px;overflow-y:auto">
+      <!-- Campos editáveis -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+        <div>
+          <div style="font-size:11px;color:#888;margin-bottom:4px">Para quem</div>
+          <input id="qrc-edit-para" class="inp" style="margin:0;padding:8px 10px;font-size:13px" oninput="atualizarQrCard()" placeholder="Nome">
+        </div>
+        <div>
+          <div style="font-size:11px;color:#888;margin-bottom:4px">De quem</div>
+          <input id="qrc-edit-de" class="inp" style="margin:0;padding:8px 10px;font-size:13px" oninput="atualizarQrCard()" placeholder="Nome">
+        </div>
+      </div>
       <!-- Card imprimível — tema dinâmico -->
-      <div id="qr-card-print" style="border-radius:20px;text-align:center;font-family:'Sora',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:360px;margin:0 auto;overflow:hidden"></div>
+      <div id="qr-card-print" style="border-radius:20px;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;max-width:360px;margin:0 auto;overflow:hidden"></div>
       <!-- Ações -->
       <div style="display:flex;flex-direction:column;gap:10px;margin-top:16px">
-        <button class="btn-primary" style="background:linear-gradient(135deg,#7c5cbf,#a07ce8)" onclick="salvarPng()">🖼️ Salvar como imagem PNG</button>
-        <button class="btn-primary" onclick="imprimirQrCard()">🖨️ Imprimir / Salvar PDF</button>
+        <button class="btn-primary" style="background:linear-gradient(135deg,#7c5cbf,#a07ce8)" onclick="salvarPng()">🖼Salvar como imagem PNG</button>
+        <button class="btn-primary" onclick="imprimirQrCard()">🖨Imprimir / Salvar PDF</button>
         <button class="btn-primary" style="background:#16a34a" onclick="compartilharQrCard()">💬 Enviar no WhatsApp</button>
         <div style="font-size:11px;color:#666;text-align:center" id="qrc-link-txt"></div>
       </div>
@@ -396,7 +602,10 @@ tr:hover td{background:#1a1a24}
 <div id="toast"></div>
 
 <script>
-var auth = '', allOrders = [], filteredRows = [], currentFilter = 'all', currentOrder = null, currentLetra = '', editingLetra = false;
+var auth = localStorage.getItem('musiclove_auth') || '', allOrders = [], filteredRows = [], currentFilter = 'all', currentOrder = null, currentLetra = '', editingLetra = false;
+var adminRefreshTimer = null, adminRefreshBusy = false;
+var manausClockTimer = null;
+var adminRefreshNextAt = 0;
 
 var STYLES = {
   rap: {
@@ -454,7 +663,7 @@ function toast(msg, type) {
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 function parseBrief(brief) {
-  var r = {}, keys = ['Para quem','Relacionamento','Ocasiao','Estilo','Voz','Historia','Letra gerada/editada','Correcoes'],
+  var r = {}, keys = ['Para quem','Relacionamento','Ocasiao','Estilo','Voz','Historia','Letra gerada/editada','Correções','Correcoes'],
       orig = ['Para quem','Relacionamento','Ocasião','Estilo','Voz','História','Letra gerada/editada','Correções'];
   if (!brief) return r;
   // Normalize: if no newlines before field labels, insert them (legacy single-line format)
@@ -483,83 +692,473 @@ function doLogin() {
   var p = document.getElementById('lp').value;
   if (!p) { document.getElementById('lerr').textContent = 'Digite a senha.'; return; }
   auth = 'Basic ' + btoa(u + ':' + p);
+  localStorage.setItem('musiclove_auth', auth);
   loadOrders();
+  startAdminAutoRefresh();
 }
 
 function doLogout() {
+  stopAdminAutoRefresh();
   auth = ''; allOrders = [];
+  localStorage.removeItem('musiclove_auth');
   document.getElementById('app').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
 }
 
-function loadOrders() {
-  document.getElementById('tload').style.display = 'block';
-  document.getElementById('tempty').style.display = 'none';
-  document.getElementById('tbody').innerHTML = '';
-  fetchAllOrders(null, []);
+function loadOrders(silent) {
+  if (adminRefreshBusy) return;
+  adminRefreshBusy = true;
+  if (!silent) {
+    prodStatusCache = {}; prodPolling = {};
+    document.getElementById('tload').style.display = 'block';
+    document.getElementById('tempty').style.display = 'none';
+    document.getElementById('tbody').innerHTML = '';
+  }
+  fetchAllOrders(null, [], !!silent);
 }
 
-function fetchAllOrders(cursor, accumulated) {
+function fetchAllOrders(cursor, accumulated, silent) {
   var url = '/admin-orders' + (cursor ? '?cursor=' + encodeURIComponent(cursor) : '');
   fetch(url, { headers: { 'Authorization': auth } })
-    .then(function(r){
-      if (r.status === 401) return null;
-      return r.json().then(function(body){
-        if (!r.ok || body.ok === false) throw new Error(body.error || ('HTTP ' + r.status));
-        return body;
-      });
-    })
+    .then(function(r){ return r.status === 401 ? null : r.json(); })
     .then(function(d) {
-      if (!d) { document.getElementById('tload').style.display = 'none'; document.getElementById('lerr').textContent = 'Senha incorreta.'; return; }
+      if (!d) {
+        adminRefreshBusy = false;
+        if (!silent) document.getElementById('tload').style.display = 'none';
+        document.getElementById('lerr').textContent = 'Senha incorreta.';
+        localStorage.removeItem('musiclove_auth'); auth = '';
+        stopAdminAutoRefresh();
+        return;
+      }
       var combined = accumulated.concat(d.orders || []);
       if (d.cursor) {
-        fetchAllOrders(d.cursor, combined);
+        fetchAllOrders(d.cursor, combined, silent);
       } else {
         document.getElementById('tload').style.display = 'none';
-        allOrders = combined.sort(function(a,b){ return new Date(b.created_at||0)-new Date(a.created_at||0); });
+        // Merge: preservar mudanças locais não propagadas ao KV ainda
+        var prevMap = {};
+        allOrders.forEach(function(o){ if(o.paymentId) prevMap[o.paymentId] = o; });
+        var prevSig = ordersSignature(allOrders);
+        var merged = combined.map(function(remote) {
+          var local = prevMap[remote.paymentId];
+          if (!local) return remote;
+          if (local.delivered  && !remote.delivered)  remote.delivered  = true;
+          if (local.refunded   && !remote.refunded)   remote.refunded   = true;
+          if (local.responsavel && !remote.responsavel) remote.responsavel = local.responsavel;
+          return remote;
+        });
+        allOrders = merged.sort(function(a,b){ return new Date(b.created_at||0)-new Date(a.created_at||0); });
         document.getElementById('login-screen').style.display = 'none';
         document.getElementById('app').style.display = 'flex';
+        var nextSig = ordersSignature(allOrders);
         updateStats(); updateTodayBar(); renderTable();
+        setLastUpdateTime(new Date());
+        if (auth && adminRefreshTimer) adminRefreshNextAt = Date.now() + 30000;
+        if (typeof campOpen !== 'undefined' && campOpen) renderCampaigns();
+        if (typeof funnelOpen !== 'undefined' && funnelOpen) loadFunnel();
+        loadProfit(true, !silent || (prevSig && prevSig !== nextSig));
+        adminRefreshBusy = false;
+        if (silent && prevSig && prevSig !== nextSig) toast('Painel atualizado');
       }
     })
-    .catch(function(err){
-      document.getElementById('tload').style.display = 'none';
-      document.getElementById('lerr').textContent = 'Erro ao carregar pedidos: ' + (err && err.message ? err.message : 'verifique a conexão.');
-      document.getElementById('tempty').style.display = 'block';
-      document.getElementById('tempty').textContent = 'Não foi possível carregar os pedidos agora.';
+    .catch(function(){
+      adminRefreshBusy = false;
+      if (!silent) {
+        document.getElementById('tload').style.display = 'none';
+        document.getElementById('lerr').textContent = 'Erro ao conectar.';
+      }
     });
 }
 
-function todayStr() {
-  return new Date().toLocaleDateString('pt-BR');
+function ordersSignature(list) {
+  return (list || []).map(function(o){
+    return [
+      o.paymentId || '',
+      o.created_at || '',
+      o.status || '',
+      o.paid ? 1 : 0,
+      o.delivered ? 1 : 0,
+      o.refunded ? 1 : 0,
+      o.prodStatus || '',
+      o.musicLink || '',
+      o.value || 0
+    ].join('|');
+  }).join('~');
 }
 
-function isToday(o) {
-  if (!o.created_at) return false;
-  return new Date(o.created_at).toLocaleDateString('pt-BR') === todayStr();
+function startAdminAutoRefresh() {
+  stopAdminAutoRefresh();
+  adminRefreshNextAt = Date.now() + 30000;
+  adminRefreshTimer = setInterval(function(){
+    if (!auth || document.getElementById('app').style.display === 'none') return;
+    adminRefreshNextAt = Date.now() + 30000;
+    loadOrders(true);
+    loadProfit(true, false);
+  }, 30000);
+}
+
+function stopAdminAutoRefresh() {
+  if (adminRefreshTimer) clearInterval(adminRefreshTimer);
+  adminRefreshTimer = null;
+  adminRefreshNextAt = 0;
+}
+
+function fmtManausTime(value) {
+  return new Intl.DateTimeFormat('pt-BR', {
+    timeZone: 'America/Manaus',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  }).format(new Date(value));
+}
+
+function setLastUpdateTime(value) {
+  var el = document.getElementById('rev-last-update');
+  if (el) el.textContent = fmtManausTime(value);
+}
+
+function updateManausClock() {
+  var el = document.getElementById('manaus-clock');
+  if (el) el.textContent = fmtManausTime(new Date());
+  var countdownEl = document.getElementById('rev-refresh-countdown');
+  if (countdownEl) {
+    if (!adminRefreshNextAt || !auth || document.getElementById('app').style.display === 'none') {
+      countdownEl.textContent = '--';
+    } else {
+      var secs = Math.max(0, Math.ceil((adminRefreshNextAt - Date.now()) / 1000));
+      countdownEl.textContent = secs + 's';
+    }
+  }
+}
+
+function startManausClock() {
+  if (manausClockTimer) clearInterval(manausClockTimer);
+  updateManausClock();
+  manausClockTimer = setInterval(updateManausClock, 1000);
+}
+
+// Retorna YYYY-MM-DD sempre no fuso de Manaus.
+function brDateStr(d) {
+  return new Intl.DateTimeFormat('sv', { timeZone: 'America/Manaus' }).format(new Date(d));
+}
+
+function brDateTimeParts(value) {
+  var parts = new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'America/Manaus',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  }).formatToParts(new Date(value)).reduce(function(acc, p) {
+    if (p.type !== 'literal') acc[p.type] = p.value;
+    return acc;
+  }, {});
+  return {
+    date: parts.year + '-' + parts.month + '-' + parts.day,
+    seconds: Number(parts.hour) * 3600 + Number(parts.minute) * 60 + Number(parts.second)
+  };
+}
+
+function isWithinBrDay(value, day) {
+  if (!value || !day) return false;
+  var parsed = Date.parse(value);
+  if (!Number.isFinite(parsed)) return false;
+  var p = brDateTimeParts(parsed);
+  return p.date === day && p.seconds >= 0 && p.seconds <= 86399;
+}
+
+function currentFilterDay() {
+  return brDateStr(new Date());
+}
+
+function isCreatedOnDay(o, day) {
+  return isWithinBrDay(o.created_at, day);
+}
+
+function isPaidOnDay(o, day) {
+  return isWithinBrDay(o.paidConfirmedAt || o.updated_at || o.created_at, day);
+}
+
+function paidDateObj(o) {
+  var raw = o.paidConfirmedAt || o.updated_at || o.created_at;
+  if (!raw) return null;
+  var parsed = new Date(raw);
+  return Number.isFinite(parsed.getTime()) ? parsed : null;
+}
+
+function fmtBRL(v) {
+  return 'R$ ' + v.toFixed(2).replace('.',',');
+}
+
+function fmtBRDateTime(value) {
+  if (!value) return '-';
+  return new Date(value).toLocaleString('pt-BR', { timeZone: 'America/Manaus' });
+}
+
+function dateStrOf(d) {
+  return brDateStr(d);
+}
+
+var revPeriod = 'hoje';
+var revData = {};
+var revSelectedDate = '';
+
+function setRevPeriod(p) {
+  revPeriod = p;
+  document.querySelectorAll('.rev-tab').forEach(function(b){ b.classList.remove('active'); });
+  var tab = document.getElementById('rtab-' + p);
+  if (tab) tab.classList.add('active');
+  var dateInput = document.getElementById('rev-date');
+  if (dateInput) dateInput.value = revData[p] ? revData[p].date : '';
+  var d = revData[p] || { rev: 0, n: 0 };
+  var pending = d.pending || { rev: 0, n: 0 };
+  document.getElementById('rev-valor').textContent = fmtBRL(d.rev);
+  document.getElementById('rev-valor').style.color = d.rev > 0 ? '#4ade80' : '#555';
+  document.getElementById('rev-qtd').textContent = d.n + (d.n === 1 ? ' cobrança' : ' cobranças');
+  document.getElementById('rev-pending-valor').textContent = fmtBRL(pending.rev || 0);
+  document.getElementById('rev-pending-qtd').textContent = (pending.n || 0) + ((pending.n || 0) === 1 ? ' cobrança' : ' cobranças');
+  syncProfitPeriodFromRevenue();
+  loadProfit(false, true);
+}
+
+function setRevDate(value) {
+  if (!value) return;
+  revPeriod = 'custom';
+  revSelectedDate = value;
+  document.querySelectorAll('.rev-tab').forEach(function(b){ b.classList.remove('active'); });
+  syncProfitPeriodFromRevenue();
+  loadProfit(false, true);
+}
+
+function orderDay(o) {
+  return o.created_at ? dateStrOf(new Date(o.created_at)) : '';
+}
+
+function paidOrderDay(o) {
+  var raw = o.paidConfirmedAt || o.updated_at || o.created_at;
+  return raw ? dateStrOf(new Date(raw)) : '';
 }
 
 function updateTodayBar() {
-  var today = allOrders.filter(isToday);
-  var paid = today.filter(function(o){ return o.paid; });
-  var pend = today.filter(function(o){ return !o.paid; });
-  var rev = paid.reduce(function(s,o){ return s+(Number(o.value)||0); }, 0);
-  document.getElementById('td-vendas').textContent = paid.length;
-  document.getElementById('td-receita').textContent = 'R$ ' + rev.toFixed(2).replace('.',',');
-  document.getElementById('td-pendente').textContent = pend.length;
-  document.getElementById('td-data').textContent = todayStr();
-  var bar = document.getElementById('today-bar');
-  bar.style.display = (currentFilter === 'today') ? 'block' : 'none';
+  var now = new Date();
+  var d0 = brDateStr(now);
+  var d1 = brDateStr(new Date(now - 86400000));
+  revData = {
+    hoje:  Object.assign(revData.hoje  || { rev: 0, n: 0 }, { date: d0 }),
+    ontem: Object.assign(revData.ontem || { rev: 0, n: 0 }, { date: d1 }),
+  };
+  if (!profitBusy) {
+    if (revPeriod === 'custom' && revSelectedDate) syncProfitPeriodFromRevenue();
+    else syncProfitPeriodFromRevenue();
+    loadProfit(true, false);
+  }
 }
 
+function syncProfitPeriodFromRevenue() {
+  profitPeriod = revPeriod;
+  profitSelectedDate = revSelectedDate;
+  var range = getProfitRange();
+  var input = document.getElementById('profit-date');
+  if (input) input.value = range.from;
+  document.querySelectorAll('[id^="ptab-"]').forEach(function(b){ b.classList.remove('active'); });
+  var tab = document.getElementById('ptab-' + (profitPeriod === 'custom' ? '' : profitPeriod));
+  if (tab) tab.classList.add('active');
+}
+
+var profitPeriod = 'hoje';
+var profitSelectedDate = '';
+var profitBusy = false;
+var lastProfitLoadAt = 0;
+
+function profitDay(offset) {
+  return brDateStr(new Date(Date.now() - offset * 86400000));
+}
+
+function getProfitRange() {
+  if (profitPeriod === 'ontem') return { from: profitDay(1), to: profitDay(1) };
+  if (profitPeriod === 'custom' && profitSelectedDate) return { from: profitSelectedDate, to: profitSelectedDate };
+  return { from: profitDay(0), to: profitDay(0) };
+}
+
+function setProfitPeriod(p) {
+  profitPeriod = p;
+  revPeriod = p;
+  if (p !== 'custom') profitSelectedDate = '';
+  if (p !== 'custom') revSelectedDate = '';
+  document.querySelectorAll('[id^="ptab-"]').forEach(function(b){ b.classList.remove('active'); });
+  var tab = document.getElementById('ptab-' + p);
+  if (tab) tab.classList.add('active');
+  document.querySelectorAll('[id^="rtab-"]').forEach(function(b){ b.classList.remove('active'); });
+  var revTab = document.getElementById('rtab-' + p);
+  if (revTab) revTab.classList.add('active');
+  var input = document.getElementById('profit-date');
+  if (input) input.value = p === 'ontem' ? profitDay(1) : profitDay(0);
+  var revInput = document.getElementById('rev-date');
+  if (revInput) revInput.value = input ? input.value : '';
+  loadProfit(false, true);
+}
+
+function setProfitDate(value) {
+  if (!value) return;
+  profitPeriod = 'custom';
+  revPeriod = 'custom';
+  profitSelectedDate = value;
+  revSelectedDate = value;
+  document.querySelectorAll('[id^="ptab-"]').forEach(function(b){ b.classList.remove('active'); });
+  document.querySelectorAll('[id^="rtab-"]').forEach(function(b){ b.classList.remove('active'); });
+  var revInput = document.getElementById('rev-date');
+  if (revInput) revInput.value = value;
+  loadProfit(false, true);
+}
+
+function setProfitLoading(text) {
+  var note = document.getElementById('profit-note');
+  if (note) note.textContent = text;
+}
+
+function updateRevenueFromAsaas(data) {
+  var asaas = data.asaas || {};
+  var range = getProfitRange();
+  var key = profitPeriod === 'custom' ? 'custom' : profitPeriod;
+  revData[key] = {
+    rev: Number((data.totals || {}).gross || 0),
+    n: Number(asaas.count || 0),
+    pending: {
+      rev: Number(asaas.pendingGross || 0),
+      n: Number(asaas.pendingCount || 0)
+    },
+    date: range.from
+  };
+  document.getElementById('rev-valor').textContent = fmtBRL(revData[key].rev);
+  document.getElementById('rev-valor').style.color = revData[key].rev > 0 ? '#4ade80' : '#555';
+  document.getElementById('rev-qtd').textContent = revData[key].n + (revData[key].n === 1 ? ' cobrança' : ' cobranças');
+  document.getElementById('rev-pending-valor').textContent = fmtBRL(revData[key].pending.rev);
+  document.getElementById('rev-pending-qtd').textContent = revData[key].pending.n + (revData[key].pending.n === 1 ? ' cobrança' : ' cobranças');
+  var dateInput = document.getElementById('rev-date');
+  if (dateInput && !dateInput.value) dateInput.value = range.from;
+}
+
+function renderProfit(data) {
+  var totals = data.totals || {};
+  var asaas = data.asaas || {};
+  var meta = data.meta || {};
+  var metaOk = !!meta.ok;
+  var metaSource = String(meta.tokenSource || 'none');
+  var profit = Number(totals.profit || 0);
+  var adSpend = Number(totals.adSpend || 0);
+  var faceTax = adSpend * 0.139;
+  updateRevenueFromAsaas(data);
+  document.getElementById('p-gross').textContent = fmtBRL(Number(totals.gross || 0));
+  document.getElementById('p-asaas-fee').textContent = fmtBRL(Number(totals.asaasFee || asaas.fee || 0));
+  document.getElementById('p-ads').textContent = metaOk ? fmtBRL(adSpend) : 'Conectar Meta';
+  document.getElementById('p-ads').style.fontSize = metaOk ? '' : '18px';
+  document.getElementById('p-ads').style.color = metaOk ? '#ef4444' : '#f59e0b';
+  document.getElementById('p-face-tax').textContent = metaOk ? fmtBRL(faceTax) : '--';
+  document.getElementById('p-face-tax').style.fontSize = metaOk ? '' : '18px';
+  document.getElementById('p-face-tax').style.color = metaOk ? '#f59e0b' : '#666';
+  document.getElementById('p-profit').textContent = metaOk ? fmtBRL(profit) : 'Aguardando Meta';
+  document.getElementById('p-profit').style.fontSize = metaOk ? '' : '18px';
+  document.getElementById('p-profit').style.color = metaOk ? (profit >= 0 ? '#4ade80' : '#ef4444') : '#f59e0b';
+  var parts = [
+    'Período: ' + (data.from || '-') + (data.to && data.to !== data.from ? ' até ' + data.to : ''),
+    'Clientes Asaas: ' + (asaas.customers || 0),
+    'Cobranças Asaas: ' + (asaas.count || 0),
+    'Pendentes: ' + (asaas.pendingCount || 0) + ' / ' + fmtBRL(Number(asaas.pendingGross || 0)),
+    'Gasto Asaas: ' + fmtBRL(Number(totals.asaasFee || asaas.fee || 0)) + (asaas.feePerOrder ? ' (' + fmtBRL(Number(asaas.feePerOrder)) + ' por cobrança)' : ''),
+    'Meta Ads: ' + (metaOk ? 'conectado' : (meta.error || 'token ads_read ausente'))
+  ];
+  setProfitLoading(parts.join(' | '));
+  var status = document.getElementById('meta-token-status');
+  var row = document.getElementById('meta-config-row');
+  var tokenInput = document.getElementById('meta-token-input');
+  if (row) row.style.display = '';
+  if (tokenInput) tokenInput.placeholder = 'Cole aqui o token Meta com ads_read';
+  if (status) {
+    if (metaSource === 'server') {
+      if (tokenInput) tokenInput.placeholder = 'Token vindo do servidor (modo profissional)';
+      status.textContent = metaOk
+        ? 'Token do servidor ativo'
+        : ('Token do servidor recusado pela Meta: ' + (meta.error || 'sem permissão ads_read'));
+    } else {
+      status.textContent = metaOk
+        ? 'Meta conectada'
+        : (meta.savedToken ? ('Token salvo, mas a Meta recusou: ' + (meta.error || 'sem permissão ads_read')) : '');
+    }
+    status.style.color = metaOk ? '#4ade80' : '#f59e0b';
+  }
+}
+
+function saveMetaAdsToken() {
+  var tokenInput = document.getElementById('meta-token-input');
+  var accountInput = document.getElementById('meta-account-input');
+  var status = document.getElementById('meta-token-status');
+  var token = tokenInput ? tokenInput.value.trim() : '';
+  var accountId = accountInput ? accountInput.value.trim() : '1899992777442340';
+  if (!token || token.length < 20) { toast('Cole um token Meta valido', 'err'); return; }
+  if (status) { status.textContent = 'Conectando...'; status.style.color = '#a07ce8'; }
+  fetch('/admin-profit', {
+    method: 'POST',
+    headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ type: 'meta-token', token: token, accountId: accountId })
+  }).then(function(r){
+    if (r.status === 401) throw new Error('unauthorized');
+    return r.json();
+  }).then(function(d){
+    if (!d || !d.ok) throw new Error(d && d.error ? d.error : 'erro');
+    if (tokenInput) tokenInput.value = '';
+    toast('Token Meta salvo');
+    if (status) { status.textContent = 'Token salvo. Validando gasto...'; status.style.color = '#4ade80'; }
+    loadProfit(false, true);
+  }).catch(function(e){
+    toast('Erro ao conectar Meta', 'err');
+    if (status) { status.textContent = 'Erro: ' + String(e && e.message ? e.message : e); status.style.color = '#ef4444'; }
+  });
+}
+
+function loadProfit(silent, force) {
+  if (profitBusy || !auth) return;
+  var now = Date.now();
+  if (!force && silent && now - lastProfitLoadAt < 30000) return;
+  profitBusy = true;
+  lastProfitLoadAt = now;
+  if (!silent) setProfitLoading('Atualizando dados financeiros...');
+  var range = getProfitRange();
+  var input = document.getElementById('profit-date');
+  if (input && !input.value) input.value = range.from;
+  fetch('/admin-profit?from=' + encodeURIComponent(range.from) + '&to=' + encodeURIComponent(range.to), {
+    headers: { 'Authorization': auth }
+  }).then(function(r){
+    if (r.status === 401) throw new Error('unauthorized');
+    return r.json();
+  }).then(function(d){
+    if (!d || !d.ok) throw new Error(d && d.error ? d.error : 'erro');
+    renderProfit(d);
+  }).catch(function(e){
+    if (!silent) toast('Erro ao carregar lucro', 'err');
+    setProfitLoading('Lucro indispon?vel: ' + String(e && e.message ? e.message : e));
+  }).finally(function(){
+    profitBusy = false;
+  });
+}
+
+function isBrOrder(o) { return o.source !== 'esp' && o.provider !== 'hotmart'; }
+
 function updateStats() {
-  var paid = allOrders.filter(function(o){ return o.paid; });
-  var del = allOrders.filter(function(o){ return o.delivered; });
+  var brOrders = allOrders.filter(isBrOrder);
+  var paid = brOrders.filter(function(o){ return o.paid; });
+  var del = brOrders.filter(function(o){ return o.delivered; });
+  var toDeliver = brOrders.filter(function(o){ return o.paid && !o.delivered; });
   var rev = paid.reduce(function(s,o){ return s+(Number(o.value)||0); }, 0);
-  document.getElementById('s-total').textContent = allOrders.length;
+  document.getElementById('s-total').textContent = brOrders.length;
   document.getElementById('s-paid').textContent = paid.length;
   document.getElementById('s-delivered').textContent = del.length;
   document.getElementById('s-revenue').textContent = 'R$'+rev.toFixed(2).replace('.',',');
+  var fb = document.getElementById('fbtn-entregar');
+  if (fb) fb.textContent = ' A Entregar' + (toDeliver.length ? ' ('+toDeliver.length+')' : '');
 }
 
 function setFilter(f, btn) {
@@ -571,37 +1170,217 @@ function setFilter(f, btn) {
 }
 
 function getFiltered() {
-  var q = document.getElementById('srch').value.toLowerCase();
+  var q = document.getElementById('srch').value.toLowerCase().trim();
+  var qDigits = q.replace(/\D/g, ''); // só dígitos para busca por telefone
+  var today = currentFilterDay();
   return allOrders.filter(function(o){
-    if (currentFilter==='paid' && (!o.paid || o.delivered)) return false;
+    if (currentFilter==='paid' && !o.paid) return false;
     if (currentFilter==='pending' && o.paid) return false;
     if (currentFilter==='delivered' && !o.delivered) return false;
-    if (currentFilter==='today' && !isToday(o)) return false;
-    if (q && JSON.stringify(o).toLowerCase().indexOf(q)===-1) return false;
-    return true;
+    if (currentFilter==='todeliver' && (!o.paid || o.delivered)) return false;
+    if (currentFilter==='todeliver' && o.source === 'auto' && o.mp3_url) return false;
+    if (currentFilter==='today' && !isCreatedOnDay(o, today)) return false;
+    if (currentFilter==='paidtoday' && (!o.paid || !isPaidOnDay(o, today))) return false;
+    if (!q) return true;
+    // Busca direta por paymentId (ex: music-1781273219865-44curp5u)
+    if (String(o.paymentId || '').toLowerCase().indexOf(q) !== -1) return true;
+    // Busca por dígitos no campo phone (aceita formatos com parênteses, hífens, espaços)
+    if (qDigits.length >= 4) {
+      var phone = String(o.phone || '').replace(/\D/g, '');
+      if (phone.indexOf(qDigits) !== -1) return true;
+    }
+    if (JSON.stringify(o).toLowerCase().indexOf(q) !== -1) return true;
+    return false;
   });
 }
 
 function renderTable() {
   filteredRows = getFiltered();
   var tb = document.getElementById('tbody');
+  var q = document.getElementById('srch').value.trim();
+  // Busca direta por paymentId quando não há resultados e a query parece um ID de pedido
+  if (filteredRows.length === 0 && q.length >= 10 && q.indexOf('-') !== -1) {
+    var pid = q.replace(/[^a-zA-Z0-9_.-]/g, '');
+    document.getElementById('tempty').textContent = 'Buscando pedido...';
+    document.getElementById('tempty').style.display = 'block';
+    fetch('/admin-orders?paymentId=' + encodeURIComponent(pid), { headers: { 'Authorization': auth } })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (d.ok && d.order) {
+          var o = d.order;
+          var exists = allOrders.findIndex(function(x){ return x.paymentId === o.paymentId; });
+          if (exists < 0) allOrders.push(o); else allOrders[exists] = o;
+          // Renderizar diretamente sem re-filtrar (paymentId pode diferir do termo buscado)
+          filteredRows = [o];
+          renderRows(filteredRows);
+          document.getElementById('tempty').style.display = 'none';
+        } else {
+          document.getElementById('tempty').textContent = 'Nenhum pedido encontrado.';
+        }
+      }).catch(function(){ document.getElementById('tempty').textContent = 'Nenhum pedido.'; });
+    return;
+  }
   document.getElementById('tempty').style.display = filteredRows.length ? 'none' : 'block';
+  document.getElementById('tempty').textContent = 'Nenhum pedido.';
+  renderRows(filteredRows);
+}
+
+var prodStatusCache = {}, prodPolling = {};
+
+function getTrafficSourceInfo(o) {
+  var params = {};
+  try { params = Object.fromEntries(new URL(o.pageUrl || '').searchParams); } catch(e) {}
+
+  var rawSource = String(o.utmSource || params.utm_source || '').trim().toLowerCase();
+  var rawMedium = String(o.utmMedium || params.utm_medium || '').trim().toLowerCase();
+  var rawCampaign = String(o.utmCampaign || params.utm_campaign || '').trim();
+  var hasFbclid = !!(o.hasFbclid || o.fbclid || o.fbc || params.fbclid);
+  var hasGclid = !!params.gclid;
+  var hasKwai = rawSource.indexOf('kwai') >= 0 || rawMedium.indexOf('kwai') >= 0 || rawCampaign.toLowerCase().indexOf('kwai') >= 0;
+
+  if (hasFbclid || rawSource === 'fb' || rawSource === 'facebook' || rawSource === 'instagram' || rawSource === 'ig') {
+    return {
+      key: 'facebook',
+      label: 'Facebook',
+      badge: '<span class="badge" style="background:#0f2f63;color:#93c5fd">Facebook</span>'
+    };
+  }
+  if (hasKwai) {
+    return {
+      key: 'kwai',
+      label: 'Kwai',
+      badge: '<span class="badge" style="background:#3a1f0d;color:#fdba74">Kwai</span>'
+    };
+  }
+  if (hasGclid || rawSource === 'google' || rawSource === 'cpc') {
+    return {
+      key: 'google',
+      label: 'Google',
+      badge: '<span class="badge" style="background:#3b1212;color:#fca5a5">Google</span>'
+    };
+  }
+  if (rawSource || rawMedium) {
+    return {
+      key: 'other',
+      label: rawSource || rawMedium || 'Outro',
+      badge: '<span class="badge" style="background:#252538;color:#c4b5fd">' + esc(rawSource || rawMedium || 'Outro') + '</span>'
+    };
+  }
+  return {
+    key: 'direct',
+    label: 'Direto',
+    badge: '<span class="badge" style="background:#20202a;color:#a1a1aa">Direto</span>'
+  };
+}
+
+function renderRows(rows) {
+  var tb = document.getElementById('tbody');
   var h = '';
-  for (var i = 0; i < filteredRows.length; i++) {
-    var o = filteredRows[i];
-    var d = o.created_at ? new Date(o.created_at).toLocaleString('pt-BR') : '-';
-    var bc = o.delivered ? 'bd' : o.paid ? 'bp' : 'bpend';
-    var bl = o.delivered ? 'Entregue' : o.paid ? 'Pago' : 'Pendente';
+  var liveProdIds = [];
+  for (var i = 0; i < rows.length; i++) {
+    var o = rows[i];
+    var d = fmtBRDateTime(o.created_at);
+    var sourceInfo = getTrafficSourceInfo(o);
+    var statusBadges = '';
+    if (o.refunded) {
+      statusBadges = '<span class="badge bref">💸 Reembolsado</span>';
+    } else if (o.delivered) {
+      statusBadges = '<span class="badge bd">✅ Entregue</span>';
+    } else if (o.paid) {
+      statusBadges = '<span class="badge bp">💰 Pago</span> ';
+      if (o.source === 'auto' && !o.delivered && o.prodStatus !== 'pronto') {
+        // Status de produção AO VIVO (via /auto-status) — só enquanto NÃO está pronto.
+        // (Se prodStatus já é 'pronto', mostra direto abaixo — evita badge "Falhou" velho.)
+        var c = prodStatusCache[o.paymentId];
+        var lbl = c ? c.label : ' Verificando...';
+        var stl = c ? c.style : 'background:#1a1a2e;color:#888';
+        statusBadges += '<span class="badge prodlive" id="prodbadge-'+esc(o.paymentId)+'" style="'+stl+'">'+lbl+'</span>';
+        if (!c && liveProdIds.indexOf(o.paymentId) === -1) liveProdIds.push(o.paymentId);
+      } else {
+        var prodLabel = {briefing:'📋 Briefing',gerando_letra:'Gerando letra',letra_pronta:'Letra pronta',gerando_musica:'🎵 Produzindo',pronto:'🎧 Pronto'}[o.prodStatus||'briefing'] || '💰 Pago';
+        statusBadges += '<span class="badge bprod">'+prodLabel+'</span>';
+      }
+    } else {
+      statusBadges = '<span class="badge bpend"> Pendente</span>';
+    }
+    if (o.notes && !o.refunded) statusBadges += ' <span class="badge bnote">📌 Obs</span>';
+    var respColors = {Thiago:'#1a3a1a;color:#4caf82',Owen:'#1a1a3a;color:#a07ce8',Marcos:'#2a1a10;color:#f97316'};
+    if (o.responsavel && respColors[o.responsavel]) statusBadges += ' <span class="badge" style="background:#'+respColors[o.responsavel]+'">👤 '+o.responsavel+'</span>';
     var ev = esc(o.name||'-'), ee = esc(o.email||'-');
-    var val = 'R$'+(Number(o.value)||0).toFixed(2).replace('.',',');
+    // Cenário ES (espanhol / LatAm) — valor em USD, checkout Hotmart
+    var isEs = (o.source === 'esp') || (o.provider === 'hotmart');
+    if (isEs) statusBadges = '<span class="badge" style="background:#13243a;color:#60a5fa">🌎 ES</span> ' + statusBadges;
+    var val = (isEs ? 'US$ ' : 'R$')+(Number(o.value)||0).toFixed(2).replace('.',',');
     var eb = (!o.delivered && o.paid) ? ' <button class="abtn gn" data-pid="'+esc(o.paymentId)+'" onclick="markDelivered(this.dataset.pid)">Entregar</button>' : '';
     var er = (!o.paid) ? ' <button class="abtn" style="border-color:#f59e0b;color:#f59e0b" data-pid="'+esc(o.paymentId)+'" data-name="'+ev+'" data-phone="'+esc(o.phone||'')+'" onclick="recoverPix(this.dataset.pid,this.dataset.name,this.dataset.phone)">&#128279; Recuperar</button>' : '';
-    h += '<tr><td style="color:#888;font-size:12px">'+d+'</td><td><strong>'+ev+'</strong></td><td style="color:#888">'+ee+'</td><td>'+val+'</td>'
-      +'<td><span class="badge '+bc+'">'+bl+'</span></td>'
+    var waStatus = renderWhatsappStatus(o);
+    var artBadge = o.artPaid ? ' <span style="background:#7c3aed;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;vertical-align:middle">Arte</span>' : '';
+    var providerBadge = o.provider === 'kiwify'
+      ? ' <span style="background:#0a8f4d;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;vertical-align:middle">Kiwify</span>'
+      : (o.provider === 'mercadopago'
+        ? ' <span style="background:#009ee3;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;vertical-align:middle">MP</span>'
+          : (o.provider === 'hotmart'
+          ? ' <span style="background:#f04e23;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;vertical-align:middle">Hotmart</span>'
+          : ''));
+    h += '<tr><td style="color:#888;font-size:12px">'+d+'</td><td><strong>'+ev+'</strong>'+artBadge+providerBadge+'</td><td style="color:#888">'+ee+'</td><td>'+val+'</td>'
+      +'<td>'+statusBadges+'</td>'
+      +'<td>'+sourceInfo.badge+'</td>'
+      +'<td>'+waStatus+'</td>'
       +'<td>'+(o.delivered?'<span style="color:#4caf82">&#10003;</span>':'<span style="color:#444">-</span>')+'</td>'
       +'<td><button class="abtn" data-idx="'+i+'" onclick="openOrder(Number(this.dataset.idx))">Ver</button>'+eb+er+'</td></tr>';
   }
   tb.innerHTML = h;
+  pollProdLive(liveProdIds);
+}
+
+function renderWhatsappStatus(o) {
+  var status = String(o.whatsappLastStatus || '').trim().toLowerCase();
+  var context = String(o.whatsappLastContext || '').trim().toLowerCase();
+  var error = String(o.whatsappLastError || '').trim();
+
+  if (!status && o.deliveryWhatsappSent) {
+    status = 'sent';
+    context = 'delivery';
+  }
+
+  if (status === 'error') {
+    var title = error ? ' title="' + esc(error) + '"' : '';
+    return '<span class="badge" style="background:#3a1616;color:#fca5a5"' + title + '>Erro</span>';
+  }
+
+  if (status === 'sent') {
+    if (context === 'recovery') {
+      return '<span class="badge" style="background:#24163a;color:#c4b5fd">Recuperação OK</span>';
+    }
+    return '<span class="badge" style="background:#163225;color:#86efac">Entrega OK</span>';
+  }
+
+  return '<span style="color:#444">-</span>';
+}
+
+// Busca o status real de produção (via /auto-status) para os pedidos auto visíveis
+function pollProdLive(ids) {
+  var PROD_MAP = {
+    generating:      { label: '🎵 Gerando música', style: 'background:#2a2410;color:#fbbf24' },
+    success:         { label: '🎧 Música pronta',   style: 'background:#1a3a2a;color:#4ade80' },
+    failed:          { label: ' Falhou',          style: 'background:#3a1a1a;color:#ef4444' },
+    queued:          { label: '📋 Na fila',         style: 'background:#1a1a3a;color:#818cf8' },
+    waiting_payment: { label: ' Aguardando pagamento',    style: 'background:#2a2a1a;color:#c8a84b' },
+  };
+  ids.slice(0, 40).forEach(function(pid) {
+    if (prodPolling[pid]) return;
+    prodPolling[pid] = true;
+    fetch('/auto-status?paymentId=' + encodeURIComponent(pid))
+      .then(function(r){ return r.json(); })
+      .then(function(dd) {
+        var info = PROD_MAP[dd.status] || { label: ' ' + (dd.status || '?'), style: 'background:#1a1a2e;color:#888' };
+        prodStatusCache[pid] = info;
+        var el = document.getElementById('prodbadge-' + pid);
+        if (el) { el.textContent = info.label; el.setAttribute('style', info.style); }
+      })
+      .catch(function(){})
+      .then(function(){ prodPolling[pid] = false; });
+  });
 }
 
 function switchTab(idx, btn) {
@@ -610,14 +1389,41 @@ function switchTab(idx, btn) {
 }
 
 function openOrder(idx) {
-  var o = filteredRows[idx];
-  if (!o) return;
+  var summary = filteredRows[idx];
+  if (!summary) return;
+  var pid = summary.paymentId;
+
+  // Abre modal imediatamente com dados do resumo (metadata), depois carrega detalhes completos
+  populateModal(summary);
+
+  // Carrega dados completos do pedido em background (briefing, letra, etc.)
+  fetch('/admin-orders?paymentId=' + encodeURIComponent(pid), { headers: { 'Authorization': auth } })
+    .then(function(r){ return r.ok ? r.json() : null; })
+    .then(function(d) {
+      if (!d || !d.ok || !d.order) return;
+      var o = d.order;
+      // Preservar mudanças locais que o KV pode ainda não ter propagado
+      var idx2 = allOrders.findIndex(function(x){ return x.paymentId === pid; });
+      if (idx2 >= 0) {
+        var local = allOrders[idx2];
+        if (local.delivered  && !o.delivered)  o.delivered  = true;
+        if (local.refunded   && !o.refunded)   o.refunded   = true;
+        if (local.responsavel && !o.responsavel) o.responsavel = local.responsavel;
+        allOrders[idx2] = o;
+      }
+      var fi = filteredRows.findIndex(function(x){ return x.paymentId === pid; });
+      if (fi >= 0) filteredRows[fi] = o;
+      // Re-popula modal só se ainda estiver no mesmo pedido
+      if (currentOrder && currentOrder.paymentId === pid) populateModal(o);
+    })
+    .catch(function(){});
+}
+
+function populateModal(o) {
   currentOrder = o;
   editingLetra = false;
-
   var b = parseBrief(o.brief||'');
-  currentLetra = b['Letra gerada/editada'] || '';
-
+  currentLetra = b['Letra gerada/editada'] || o.savedLetra || '';
   document.getElementById('mtitle').textContent = o.name || o.paymentId;
 
   // Tab 0 - Dados
@@ -625,43 +1431,91 @@ function openOrder(idx) {
   document.getElementById('f-phone').textContent = o.phone || '-';
   document.getElementById('f-email').textContent = o.email || '-';
   document.getElementById('f-pid').textContent = o.paymentId || '-';
-  document.getElementById('f-date').textContent = o.created_at ? new Date(o.created_at).toLocaleString('pt-BR') : '-';
+  document.getElementById('f-date').textContent = fmtBRDateTime(o.created_at);
+  // Cenário ES (espanhol / LatAm): valor em USD, checkout Hotmart
+  var isEs = (o.source === 'esp') || (o.provider === 'hotmart');
+  var esBanner = document.getElementById('f-es-banner');
+  if (!esBanner) {
+    esBanner = document.createElement('div');
+    esBanner.id = 'f-es-banner';
+    esBanner.style.cssText = 'margin:0 0 12px;padding:10px 14px;border-radius:10px;background:#13243a;border:1px solid #1d3a5c;color:#93c5fd;font-size:13px;font-weight:700;display:none';
+    var anchor = document.getElementById('f-nome').closest('.fld') || document.getElementById('f-nome');
+    anchor.parentNode.insertBefore(esBanner, anchor);
+  }
+  if (isEs) {
+    esBanner.innerHTML = '🌎 Pedido do cenário ESPANHOL (LatAm) · 💵 valores em <b>USD (dólar)</b>, não em reais · checkout <b>Hotmart</b>';
+    esBanner.style.display = 'block';
+  } else {
+    esBanner.style.display = 'none';
+  }
+
+  var provEl = document.getElementById('f-provider');
+  if (o.provider === 'hotmart') {
+    provEl.innerHTML = '<span style="background:#f04e23;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px">🔥 Hotmart</span>';
+  } else if (o.provider === 'kiwify') {
+    provEl.innerHTML = '<span style="background:#0a8f4d;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px">Kiwify</span>';
+  } else if (o.provider === 'mercadopago') {
+    provEl.innerHTML = '<span style="background:#009ee3;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px">Mercado Pago</span>';
+  } else {
+    provEl.innerHTML = '<span style="background:#5b4f8a;color:#fff;font-size:11px;font-weight:700;padding:3px 10px;border-radius:10px">Asaas</span>';
+  }
   renderOrigem(o);
 
   // Tab 1 - Pagamento
-  document.getElementById('f-valor').textContent = 'R$ '+(Number(o.value)||0).toFixed(2).replace('.',',');
+  document.getElementById('f-valor').textContent = (isEs ? 'US$ ' : 'R$ ')+(Number(o.value)||0).toFixed(2).replace('.',',');
+  var pmEl = document.getElementById('f-payment-method');
+  if (o.provider === 'hotmart') { pmEl.innerHTML = '🔥 Checkout Hotmart (USD)'; }
+  else if (o.paymentMethod === 'credit_card') { pmEl.innerHTML = '💳 Cartão de crédito'; }
+  else if (o.provider === 'kiwify') { pmEl.innerHTML = '🔑 PIX (Kiwify)'; }
+  else if (o.provider === 'mercadopago') { pmEl.innerHTML = '🔑 PIX (Mercado Pago)'; }
+  else { pmEl.innerHTML = '🔑 PIX (Asaas)'; }
   var sb = document.getElementById('f-status-badge');
-  var bc = o.paid ? 'sb-letra' : 'sb-briefing';
-  sb.innerHTML = '<span class="status-badge '+bc+'">'+(o.paid?'Pago':'Pendente')+'</span>';
+  var bc = o.refunded ? 'sb-briefing' : (o.paid ? 'sb-letra' : 'sb-briefing');
+  var statusLabel = o.refunded ? '? Reembolsado' : (o.paid ? 'Pago' : 'Pendente');
+  sb.innerHTML = '<span class="status-badge '+bc+'" style="'+(o.refunded?'background:#ef444422;color:#ef4444;border:1px solid #ef444444':'')+'">' + statusLabel + '</span>';
+  document.getElementById('f-mark-paid-wrap').style.display = (o.paid || o.refunded) ? 'none' : '';
+  document.getElementById('f-mark-refunded-wrap').style.display = o.refunded ? 'none' : '';
+  document.getElementById('f-send-recovery-wrap').style.display = (!o.paid && o.email) ? '' : 'none';
+  document.getElementById('f-mark-producing-wrap').style.display = (o.paid && !o.refunded && o.prodStatus !== 'gerando_musica' && o.prodStatus !== 'pronto') ? '' : 'none';
   var bumps = [];
   var bumpsEl = document.getElementById('f-bumps');
   bumpsEl.innerHTML = '';
-  function bumpCard(icon, label, desc, active) {
+  function bumpCard(icon, label, desc, active, price) {
     var c = document.createElement('div');
     c.style.cssText = 'display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:8px;border:1px solid ' + (active ? '#16a34a' : '#2a2a3a') + ';background:' + (active ? '#0d2218' : '#0f0f13') + ';opacity:' + (active ? '1' : '0.4') + ';';
+    var priceTag = price ? '<span style="margin-left:auto;font-size:12px;font-weight:700;color:' + (active ? '#4ade80' : '#666') + ';white-space:nowrap;padding-left:8px">' + price + '</span>' : '';
     c.innerHTML = '<span style="font-size:22px">' + icon + '</span>'
-      + '<div><div style="font-size:13px;font-weight:700;color:' + (active ? '#4ade80' : '#666') + '">' + (active ? '✅ ' : '❌ ') + label + '</div>'
-      + '<div style="font-size:12px;color:#888;margin-top:2px">' + desc + '</div></div>';
+      + '<div style="flex:1"><div style="font-size:13px;font-weight:700;color:' + (active ? '#4ade80' : '#666') + '">' + (active ? '✅ ' : ' ') + label + '</div>'
+      + '<div style="font-size:12px;color:#888;margin-top:2px">' + desc + '</div></div>'
+      + priceTag;
     bumpsEl.appendChild(c);
   }
-  bumpCard('🎵', '1 música principal', 'MP3 via WhatsApp — sempre incluso', true);
-  bumpCard('🔁', '1 versão extra', 'Segunda versão da mesma música (estilo diferente)', !!o.orderBumpExtraVersion);
-  bumpCard('🎶', '2 músicas extras', 'Mais 2 versões adicionais', !!o.orderBumpExtraSongs);
-  bumpCard('🎬', 'Vídeo da música', 'Vídeo editado pronto pra postar', !!o.orderBumpVideo);
-  bumpCard('📱', 'QR Code personalizado', 'Arte imprimível com nome do homenageado', !!o.orderBumpQrCode);
-  if (o.orderBumpBackOffer) bumpCard('🔥', 'Oferta Back Redirect', 'Música + Vídeo por R$49,90 (oferta especial)', true);
+  bumpCard('🎵', '1 música principal', 'MP3 via WhatsApp — sempre incluso', true, 'R$ 39,90');
+  bumpCard('', '1 versão extra', 'Segunda versão da mesma música (estilo diferente)', !!o.orderBumpExtraVersion, 'R$ 19,90');
+  bumpCard('🎶', '2 músicas extras', 'Mais 2 versões adicionais', !!o.orderBumpExtraSongs, 'R$ 29,90');
+  bumpCard('🎬', 'Vídeo da música', 'Vídeo editado pronto pra postar', !!o.orderBumpVideo, 'R$ 32,89');
+  bumpCard('📱', 'QR Code personalizado', 'Arte imprimível com nome do homenageado', !!o.orderBumpQrCode, 'R$ 14,90');
+  if (o.orderBumpBackOffer) bumpCard('🔥', 'Oferta Back Redirect', 'Música + Vídeo por R$49,90 (oferta especial)', true, 'R$ 49,90');
+  bumpCard('?', 'Arte da letra', o.artPaid ? 'Pago  entregar arte personalizada' : 'Não adquirido', !!o.artPaid, 'R$ 9,00');
 
   // Tab 2 - Briefing
+  // fallback para pedidos ES antigos que não têm o campo `brief` formatado
+  var bParaQuem   = b['Para quem']     || o.destinatario || '-';
+  var bRelacao    = b['Relacionamento']|| o.relacao       || '-';
+  var bOcasiao    = b['Ocasiao']       || o.ocasiao       || '-';
+  var bEstilo     = b['Estilo']        || o.estilo        || '-';
+  var bVoz        = b['Voz']           || o.voz           || '-';
+  var bHistoria   = b['Historia']      || o.lyricsTitle   || '-';
   var briefLines = [];
   briefLines.push('Cliente: ' + (o.name || '-'));
-  briefLines.push('Para Quem: ' + (b['Para quem'] || '-'));
-  briefLines.push('Relacionamento: ' + (b['Relacionamento'] || '-'));
-  briefLines.push('Ocasião: ' + (b['Ocasiao'] || '-'));
-  briefLines.push('Estilo: ' + (b['Estilo'] || '-'));
-  briefLines.push('Voz: ' + (b['Voz'] || '-'));
-  briefLines.push('História: ' + (b['Historia'] || '-'));
+  briefLines.push('Para Quem: ' + bParaQuem);
+  briefLines.push('Relacionamento: ' + bRelacao);
+  briefLines.push('Ocasião: ' + bOcasiao);
+  briefLines.push('Estilo: ' + bEstilo);
+  briefLines.push('Voz: ' + bVoz);
+  briefLines.push('História: ' + bHistoria);
   document.getElementById('f-briefing-block').textContent = briefLines.join('\n');
-  var corr = b['Correcoes'] || '';
+  var corr = b['Correções'] || b['Correcoes'] || '';
   document.getElementById('f-correcoes-wrap').style.display = (corr && corr !== '(nenhum)') ? 'block' : 'none';
   document.getElementById('f-correcoes').textContent = corr;
 
@@ -674,26 +1528,106 @@ function openOrder(idx) {
   lv.textContent = currentLetra || '(sem letra gerada)';
   le.value = currentLetra;
   lv.style.display = 'block'; le.style.display = 'none';
-  document.getElementById('btn-edit-letra').textContent = '✏ Editar';
+  document.getElementById('btn-edit-letra').textContent = 'Editar';
 
-  // Tab 5 - Producao
-  var deliveryUrl = o.paymentId ? ('https://musiclovestudio.online/m/' + o.paymentId) : '';
+  // Tab 5 - Produção
+  var deliveryUrl = o.paymentId ? ('https://musiclovestudio.online/pronto/?id=' + o.paymentId) : '';
   document.getElementById('f-delivery-url').textContent = deliveryUrl || '(sem ID de pedido)';
   var openLink = document.getElementById('f-delivery-open');
   if (deliveryUrl) { openLink.href = deliveryUrl; openLink.style.opacity = '1'; openLink.style.pointerEvents = ''; }
   else { openLink.href = '#'; openLink.style.opacity = '0.4'; openLink.style.pointerEvents = 'none'; }
   document.getElementById('f-prod-status').value = o.prodStatus || 'briefing';
+  document.getElementById('f-responsavel').value = o.responsavel || '';
   document.getElementById('f-style').textContent = '-';
   document.getElementById('f-exclude').textContent = '-';
   document.getElementById('f-link').value = o.musicLink || '';
   // Limpar status de upload e file input ao trocar de pedido
   var upStatus = document.getElementById('upload-status');
-  if (upStatus) { upStatus.textContent = o.musicLink ? '✅ Música salva' : ''; upStatus.style.color = '#4ade80'; }
+  if (upStatus) { upStatus.textContent = o.musicLink ? 'Música salva' : ''; upStatus.style.color = '#4ade80'; }
   var mp3Input = document.getElementById('f-mp3');
   if (mp3Input) mp3Input.value = '';
   updateQrBtn();
   document.getElementById('f-notes').value = o.notes || '';
   document.getElementById('f-delivered').checked = !!o.delivered;
+
+  // Banner música pronta
+  var banner = document.getElementById('music-ready-banner');
+  var bannerDl = document.getElementById('banner-dl-btn');
+  var bannerDl2 = document.getElementById('banner-dl-btn2');
+  // Remove botões extras (v3/v4) de uma renderização anterior
+  banner.querySelectorAll('.banner-dl-extra').forEach(function(el){ el.remove(); });
+  if (o.source === 'auto' && o.mp3_url) {
+    var bfname = (o.lyricsTitle || o.destinatario || 'musica').replace(/[^a-zA-Z0-9 ]/g, '').trim();
+    bannerDl.href = '/download?url=' + encodeURIComponent(o.mp3_url) + '&title=' + encodeURIComponent(bfname);
+    banner.style.display = 'flex';
+    var bumpVersions = Math.min(1 + (o.orderBumpExtraVersion?1:0) + (o.orderBumpExtraSongs?2:0), 4);
+    if (o.mp3_url_2 && bumpVersions >= 2) {
+      bannerDl2.href = '/download?url=' + encodeURIComponent(o.mp3_url_2) + '&title=' + encodeURIComponent(bfname + '-v2');
+      bannerDl2.style.display = 'inline-flex';
+    } else {
+      bannerDl2.style.display = 'none';
+    }
+    // Versões 3 e 4 (se compradas e geradas)
+    [o.mp3_url_3, o.mp3_url_4].forEach(function(u, idx){
+      var v = idx + 3;
+      if (u && bumpVersions >= v) {
+        var a = document.createElement('a');
+        a.className = 'banner-dl-extra';
+        a.target = '_blank';
+        a.href = '/download?url=' + encodeURIComponent(u) + '&title=' + encodeURIComponent(bfname + '-v' + v);
+        a.style.cssText = 'display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#7c3aed;color:#fff;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none';
+        a.textContent = '⬇Versão ' + v;
+        banner.appendChild(a);
+      }
+    });
+  } else {
+    banner.style.display = 'none';
+  }
+
+  // Auto-gen info
+  var autoBox = document.getElementById('auto-gen-box');
+  if (o.source === 'auto') {
+    autoBox.style.display = 'block';
+    document.getElementById('f-sunor-task-id').textContent = o.sunor_task_id || o.kie_task_id || '(sem task ID)';
+    // Botão forçar geração: visível se pago mas sem música
+    var fgWrap = document.getElementById('force-gen-wrap');
+    fgWrap.style.display = (o.paid && !o.mp3_url) ? 'block' : 'none';
+    document.getElementById('force-gen-msg').style.display = 'none';
+    var mp3 = o.mp3_url || '';
+    document.getElementById('f-auto-mp3-url').textContent = mp3 || '(ainda não gerada)';
+    var dlLink = document.getElementById('f-auto-mp3-dl');
+    dlLink.href = mp3 ? ('/download?url=' + encodeURIComponent(mp3) + '&title=' + encodeURIComponent((o.lyricsTitle || o.destinatario || 'musica').replace(/[^a-zA-Z0-9 ]/g,''))) : '#';
+    dlLink.style.pointerEvents = mp3 ? '' : 'none'; dlLink.style.opacity = mp3 ? '1' : '0.3';
+    var mp3_2 = o.mp3_url_2 || '';
+    var wrap2 = document.getElementById('auto-mp3-2-wrap');
+    wrap2.style.display = mp3_2 ? 'block' : 'none';
+    if (mp3_2) {
+      document.getElementById('f-auto-mp3-url-2').textContent = mp3_2;
+      var dl2 = document.getElementById('f-auto-mp3-dl-2');
+      dl2.href = '/download?url=' + encodeURIComponent(mp3_2) + '&title=' + encodeURIComponent((o.lyricsTitle || o.destinatario || 'musica').replace(/[^a-zA-Z0-9 ]/g,'') + '-v2');
+    }
+    // Auto-verificar status se pago e sem música ainda
+    if (o.paid && !o.mp3_url) {
+      setTimeout(checkGenStatus, 300);
+    } else {
+      // Reset badge se já tiver música
+      var badge0 = document.getElementById('f-gen-status-badge');
+      var det0 = document.getElementById('f-gen-status-detail');
+      if (o.mp3_url) {
+        badge0.textContent = '✅ Música pronta';
+        badge0.style.background = '#0d2218'; badge0.style.color = '#4ade80'; badge0.style.borderColor = '#16a34a';
+        det0.textContent = 'Provedor: ' + (o.kie_task_id ? 'KIE.ai' : 'Sunor');
+      } else {
+        badge0.textContent = '— não verificado';
+        badge0.style.background = '#1a1a2e'; badge0.style.color = '#555'; badge0.style.borderColor = '#2a2a3a';
+        det0.textContent = '';
+      }
+    }
+  } else {
+    autoBox.style.display = 'none';
+  }
+  document.getElementById('f-edit-phone').value = o.phone || '';
+  document.getElementById('f-quick-notes').value = o.notes || '';
 
   // Gerar prompt automaticamente se tiver briefing
   if (b['Estilo']) gerarPrompt();
@@ -712,7 +1646,7 @@ function extractNomes(b, orderName) {
   if (paraquem && paraquem !== cliente) nomes.push(paraquem);
   // scan história for capitalized words not at sentence start
   var hist = b['Historia'] || '';
-  var words = hist.match(/(?<=[,;]\s)[A-ZÁÉÍÓÚÀÂÊÔÃÕÇ][a-záéíóúàâêôãõç]{2,}/g) || [];
+  var words = hist.match(/(?<=[,;]\s)[A-ZÉÓÚÀÂÊÔÃÕÇ][a-záéíóúàâêôãõç]{2,}/g) || [];
   words.forEach(function(w){ if (!nomes.includes(w)) nomes.push(w); });
   return nomes.join(', ') || '-';
 }
@@ -729,6 +1663,17 @@ function getPerspectiva(b, orderName) {
 function gerarPrompt() {
   if (!currentOrder) return;
   var b = parseBrief(currentOrder.brief||'');
+  var letra = currentLetra || '(sem letra)';
+
+  // Pedidos ES já têm sunorStyle gerado no briefing — usar direto
+  if (currentOrder.source === 'esp' && currentOrder.sunorStyle) {
+    var prompt = 'STYLE: ' + currentOrder.sunorStyle + '\n\n'
+      + 'LETRA:\n' + letra;
+    document.getElementById('f-prompt-block').textContent = prompt;
+    toast('Prompt gerado!');
+    return;
+  }
+
   var estilo = b['Estilo'] || '';
   var key = detectStyle(estilo);
   var profile = STYLES[key] || STYLES.pop;
@@ -738,7 +1683,6 @@ function gerarPrompt() {
   var nomes = extractNomes(b, currentOrder.name);
   var perspectiva = getPerspectiva(b, currentOrder.name);
   var contexto = b['Ocasiao'] || '-';
-  var letra = currentLetra || '(sem letra)';
 
   var prompt = 'STYLE: ' + profile.style + '\n\n'
     + 'EXCLUDE STYLE: ' + profile.exclude + '\n\n'
@@ -772,7 +1716,7 @@ function toggleEditLetra() {
     currentLetra = le.value;
     lv.textContent = currentLetra || '(sem letra)';
     lv.style.display = 'block'; le.style.display = 'none';
-    btn.textContent = '✏ Editar';
+    btn.textContent = 'Editar';
   }
 }
 
@@ -811,9 +1755,9 @@ function renderOrigem(o) {
   } else if (medium === 'organic' || source === 'organic') {
     plataforma = 'Orgânico'; cor = '#16a34a'; emoji = '🌿';
   } else if (source) {
-    plataforma = source + (medium ? ' / ' + medium : ''); cor = '#a07ce8'; emoji = '🔗';
+    plataforma = source + (medium ? ' / ' + medium : ''); cor = '#a07ce8'; emoji = '?';
   } else {
-    plataforma = 'Direto / Desconhecido'; cor = '#888'; emoji = '❓';
+    plataforma = 'Direto / Desconhecido'; cor = '#888'; emoji = '';
   }
 
   // Badge principal
@@ -851,23 +1795,131 @@ function renderOrigem(o) {
   }
 }
 
+function forceGenerate() {
+  var pid = currentOrder && currentOrder.paymentId;
+  if (!pid) return;
+  var btn = document.getElementById('btn-force-gen');
+  var msg = document.getElementById('force-gen-msg');
+  btn.disabled = true;
+  btn.textContent = 'Gerando...';
+  msg.style.display = 'none';
+  fetch('/admin-orders?action=force-generate&paymentId=' + encodeURIComponent(pid), { method: 'POST', headers: { 'Authorization': auth } })
+    .then(function(r){ return r.json(); })
+    .then(function(d) {
+      if (d.ok) {
+        msg.textContent = 'Gerao iniciada! Task ID: ' + (d.sunor_task_id || d.kie_task_id || '?') + (d.kie_task_id ? ' (KIE)' : '');
+        msg.style.color = '#4ade80';
+        msg.style.display = 'block';
+        btn.textContent = '✅ Geração iniciada';
+      } else {
+        msg.textContent = 'Erro: ' + (d.error || 'falha');
+        msg.style.color = '#f87171';
+        msg.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = '⚡ Forçar geração de música';
+      }
+    })
+    .catch(function(e) {
+      msg.textContent = 'Erro de rede: ' + String(e);
+      msg.style.color = '#f87171';
+      msg.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = '⚡ Forçar geração de música';
+    });
+}
+
+function checkGenStatus() {
+  if (!currentOrder || !currentOrder.paymentId) return;
+  var badge = document.getElementById('f-gen-status-badge');
+  var detail = document.getElementById('f-gen-status-detail');
+  badge.textContent = ' Verificando...';
+  badge.style.background = '#1a1a2e'; badge.style.color = '#888'; badge.style.borderColor = '#2a2a3a';
+  fetch('/auto-status?paymentId=' + encodeURIComponent(currentOrder.paymentId))
+    .then(function(r){ return r.json(); })
+    .then(function(d) {
+      var status = d.status || 'unknown';
+      var cfgs = {
+        generating:       { bg:'#1a2a10', color:'#fbbf24', border:'#a16207', label:'⚙Gerando música...' },
+        success:          { bg:'#0d2218', color:'#4ade80', border:'#16a34a', label:'✅ Música pronta!' },
+        failed:           { bg:'#2a1a1a', color:'#ef4444', border:'#dc2626', label:' Falhou — verificar' },
+        queued:           { bg:'#1a1a2e', color:'#818cf8', border:'#4f46e5', label:'📋 Na fila (sem task ID)' },
+        waiting_payment:  { bg:'#2a2a1a', color:'#c8a84b', border:'#b45309', label:' Aguardando pagamento' },
+      };
+      var cfg = cfgs[status] || { bg:'#1a1a2e', color:'#888', border:'#2a2a3a', label:' ' + status };
+      badge.textContent = cfg.label;
+      badge.style.background = cfg.bg; badge.style.color = cfg.color; badge.style.borderColor = cfg.border;
+      var provider = currentOrder.kie_task_id ? 'KIE.ai' : (currentOrder.sunor_task_id ? 'Sunor' : '');
+      detail.textContent = 'Provedor: ' + provider;
+      if (status === 'success' && d.mp3_url && !currentOrder.mp3_url) {
+        currentOrder.mp3_url = d.mp3_url;
+        if (d.mp3_url_2) currentOrder.mp3_url_2 = d.mp3_url_2;
+        populateModal(currentOrder);
+      }
+    })
+    .catch(function() {
+      badge.textContent = '⚠Erro ao verificar';
+      badge.style.color = '#f59e0b'; badge.style.borderColor = '#b45309';
+    });
+}
+
+function copyText(elId) {
+  var el = document.getElementById(elId);
+  if (!el) return;
+  var txt = el.textContent.trim();
+  if (!txt || txt === '-') return;
+  navigator.clipboard.writeText(txt).then(function(){ toast('Copiado!'); }).catch(function(){ toast('Erro ao copiar', 'err'); });
+}
+
 function copyDeliveryLink() {
   var url = document.getElementById('f-delivery-url').textContent.trim();
   if (!url || url === '-' || url.includes('sem ID')) { toast('Sem link de entrega', 'err'); return; }
   navigator.clipboard.writeText(url).then(function(){ toast('Link copiado!'); });
 }
 
+function saveResponsavel() {
+  if (!currentOrder) return;
+  var val = document.getElementById('f-responsavel').value;
+  fetch('/admin-orders?paymentId=' + encodeURIComponent(currentOrder.paymentId), {
+    method: 'PATCH',
+    headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ responsavel: val })
+  }).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+    if (d && d.ok) {
+      currentOrder.responsavel = val;
+      var idx = allOrders.findIndex(function(o){ return o.paymentId === currentOrder.paymentId; });
+      if (idx >= 0) allOrders[idx].responsavel = val;
+      renderTable();
+      toast(val ? ('Atribudo a ' + val) : 'Atribuio removida');
+    }
+  }).catch(function(){ toast('Erro ao salvar', 'err'); });
+}
+
+function sendMusicEmail() {
+  if (!currentOrder) return;
+  var link = (document.getElementById('f-link').value || '').trim() || (currentOrder.musicLink || '');
+  if (!link) { toast('Salve primeiro o link da música antes de enviar', 'err'); return; }
+  if (!currentOrder.email) { toast('Pedido sem email cadastrado', 'err'); return; }
+  if (!confirm('Enviar link da música para ' + currentOrder.email + '?')) return;
+  fetch('/admin-orders?action=send-music-email&paymentId=' + encodeURIComponent(currentOrder.paymentId), {
+    method: 'POST',
+    headers: { 'Authorization': auth }
+  }).then(function(r){ return r.json(); }).then(function(d){
+    if (d.ok) toast('Email enviado para ' + currentOrder.email + '!');
+    else toast('Erro: ' + (d.error || 'falhou'), 'err');
+  }).catch(function(){ toast('Erro de rede', 'err'); });
+}
+
 function sendDeliveryWhatsApp() {
   if (!currentOrder) return;
   var pid = currentOrder.paymentId || '';
-  var deliveryUrl = pid ? ('https://musiclovestudio.online/m/' + pid) : '';
+  var deliveryUrl = pid ? ('https://musiclovestudio.online/pronto/?id=' + pid) : '';
   if (!deliveryUrl) { toast('Sem ID de pedido', 'err'); return; }
   var b = parseBrief(currentOrder.brief || '');
   var nome = (currentOrder.name || '').split(' ')[0];
   var para = b['Para quem'] || '';
   var phone = (currentOrder.phone || '').replace(/\D/g, '');
   if (phone && !phone.startsWith('55')) phone = '55' + phone;
-  var msg = 'Olá ' + nome + '! 🎵 Sua música personalizada está pronta!\n\nAcesse o link abaixo para ouvir e baixar:\n\n' + deliveryUrl + (para ? '\n\nCriada com muito carinho para ' + para + ' 💜' : '') + '\n\n— MusicLove Studio';
+  var msg = 'Olá ' + nome + '! Sua música personalizada está pronta!\n\nAcesse o link abaixo para ouvir e baixar:\n\n' + deliveryUrl + (para ? '\n\nCriada com muito carinho para ' + para + '.' : '') + '\n\nMusicLove Studio';
   var wa = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
   window.open(wa, '_blank');
 }
@@ -876,12 +1928,29 @@ function copyBriefing() {
   var txt = document.getElementById('f-briefing-block').textContent;
   if (!txt || txt === '-') { toast('Sem briefing', 'err'); return; }
   navigator.clipboard.writeText(txt).then(function(){ toast('Briefing copiado!'); });
+  if (!currentOrder || !currentOrder.paid || currentOrder.prodStatus === 'gerando_musica' || currentOrder.prodStatus === 'pronto') return;
+  var pid = currentOrder.paymentId;
+  fetch('/admin-orders?paymentId=' + encodeURIComponent(pid), {
+    method: 'PATCH',
+    headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prodStatus: 'gerando_musica' })
+  }).then(function(r){
+    if (r.ok) {
+      var idx = allOrders.findIndex(function(o){ return o.paymentId === pid; });
+      if (idx >= 0) allOrders[idx].prodStatus = 'gerando_musica';
+      if (currentOrder) currentOrder.prodStatus = 'gerando_musica';
+      document.getElementById('f-prod-status').value = 'gerando_musica';
+      populateModal(currentOrder);
+      renderTable();
+    }
+  }).catch(function(){});
 }
 
 function recoverPix(pid, name, phone) {
   var ov = document.getElementById('recover-overlay');
+  document.getElementById('recover-loading').textContent = 'Enviando mensagem...';
   document.getElementById('recover-loading').style.display = 'block';
-  document.getElementById('recover-content').style.display = 'none';
+  document.getElementById('recover-success').style.display = 'none';
   document.getElementById('recover-error').style.display = 'none';
   ov.style.display = 'flex';
 
@@ -890,20 +1959,40 @@ function recoverPix(pid, name, phone) {
     .then(function(d) {
       document.getElementById('recover-loading').style.display = 'none';
       if (!d.ok) {
+        var msg = 'Erro: ' + (d.error || 'desconhecido');
+        if (d.error === 'missing_phone') msg = 'Esse pedido está sem WhatsApp válido salvo no painel.';
+        else if (d.error === 'already_paid') msg = 'Esse pedido já está pago, então a recuperação não é necessária.';
+        else if (d.error === 'order_not_found') msg = 'Não encontrei esse pedido no sistema.';
+        else if (d.error === 'unauthorized') msg = 'Sessão do admin expirada. Faça login de novo.';
+        else if (d.error === 'evolution_not_configured') msg = 'A Evolution não está configurada no servidor.';
+        else if (d.error === 'qr_not_ready') msg = 'O novo PIX foi criado, mas o QR Code ainda não ficou pronto no Asaas.';
+        else if (d.error === 'asaas_error') msg = 'O Asaas recusou a geração do PIX de recuperação.';
         document.getElementById('recover-error').style.display = 'block';
-        document.getElementById('recover-error').textContent = 'Erro: ' + (d.error || 'desconhecido');
+        document.getElementById('recover-error').textContent = msg;
+        toast(msg, 'err');
         return;
       }
-      document.getElementById('rc-name').textContent = d.name || name;
-      document.getElementById('rc-phone').textContent = d.phone ? '+55' + d.phone : phone;
-      document.getElementById('rc-value').textContent = 'R$ ' + Number(d.value||0).toFixed(2).replace('.',',');
-      document.getElementById('rc-payload').value = d.payload || '';
-      document.getElementById('rc-reused').style.display = d.reused ? 'block' : 'none';
-      var msg = 'Olá ' + (d.name||'').split(' ')[0] + '! Aqui está seu PIX da MusicLove Studio 🎵\n\nCopie o código abaixo e cole no seu banco:\n\n' + d.payload;
-      var waPhone = (d.phone||phone||'').replace(/\D/g,'');
-      if (waPhone && !waPhone.startsWith('55')) waPhone = '55' + waPhone;
-      document.getElementById('rc-whatsapp').href = 'https://wa.me/' + waPhone + '?text=' + encodeURIComponent(msg);
-      document.getElementById('recover-content').style.display = 'block';
+      if (d.whatsapp && d.whatsapp.sent) {
+        document.getElementById('rc-success-name').textContent = d.name || name || '-';
+        document.getElementById('rc-success-phone').textContent = d.phone ? '+55' + d.phone : (phone || '-');
+        document.getElementById('recover-success').style.display = 'block';
+        toast('Mensagem enviada ao destinatário!');
+      } else if (d.whatsapp && d.whatsapp.error) {
+        var wmsg = d.whatsapp.error;
+        if (wmsg === 'missing_phone') wmsg = 'pedido sem WhatsApp válido';
+        else if (wmsg === 'evolution_not_configured') wmsg = 'Evolution não configurada no servidor';
+        else if (String(wmsg).indexOf('evolution_') === 0) {
+          wmsg = String(wmsg)
+            .replace(/^evolution_/, 'Evolution ')
+            .replace(/^Evolution (\d+)/, 'Evolution respondeu $1');
+        }
+        document.getElementById('recover-error').style.display = 'block';
+        document.getElementById('recover-error').textContent = 'Não foi possível confirmar o envio no WhatsApp: ' + wmsg;
+        toast('WhatsApp automático falhou: ' + wmsg, 'err');
+      } else {
+        document.getElementById('recover-error').style.display = 'block';
+        document.getElementById('recover-error').textContent = 'Não foi possível confirmar o envio no WhatsApp.';
+      }
     })
     .catch(function(){
       document.getElementById('recover-loading').style.display = 'none';
@@ -933,14 +2022,30 @@ function uploadMp3() {
         var idx = allOrders.findIndex(function(o){ return o.paymentId === currentOrder.paymentId; });
         if (idx >= 0) allOrders[idx].musicLink = d.url;
         currentOrder.musicLink = d.url;
+        // Marcar como pronto automaticamente
+        if (currentOrder.paid && currentOrder.prodStatus !== 'pronto') {
+          fetch('/admin-orders?paymentId=' + encodeURIComponent(currentOrder.paymentId), {
+            method: 'PATCH',
+            headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prodStatus: 'pronto' })
+          }).then(function(r2){
+            if (r2.ok) {
+              if (idx >= 0) allOrders[idx].prodStatus = 'pronto';
+              currentOrder.prodStatus = 'pronto';
+              document.getElementById('f-prod-status').value = 'pronto';
+              populateModal(currentOrder);
+              renderTable();
+            }
+          }).catch(function(){});
+        }
         toast('MP3 enviado e salvo!');
       } else {
-        status.textContent = '❌ Erro: ' + (d.error || 'falha');
+        status.textContent = ' Erro: ' + (d.error || 'falha') + (d.detail ? ' — ' + d.detail : '');
         status.style.color = '#e55';
       }
     })
-    .catch(function(){
-      status.textContent = '❌ Erro ao enviar';
+    .catch(function(err){
+      status.textContent = ' Erro: ' + (err && err.message ? err.message : 'falha de rede');
       status.style.color = '#e55';
     });
 }
@@ -954,11 +2059,12 @@ var QR_TEMAS = {
   amor: {
     bg: 'linear-gradient(160deg,#1a0018 0%,#3d0030 50%,#1a0010 100%)',
     accent: '#ff6b9d', accent2: '#ffb3d0',
-    qrDark: '#3d0030', qrLight: '#fff5f9',
+    qrDark: '#6b1a1a', qrLight: '#ffffff',
     emoji: '💕', emojiDec: '🌹 💕 🌹',
     tagline: 'Uma canção feita com todo amor 💕',
     sub: 'Escaneie e ouça sua música especial',
     stars: '✨ ✨ ✨',
+    template: '/admin/qr-template-amor.jpg',
   },
   aniversario: {
     bg: 'linear-gradient(160deg,#0d0820 0%,#1a1040 50%,#0a0518 100%)',
@@ -973,7 +2079,7 @@ var QR_TEMAS = {
     bg: 'linear-gradient(160deg,#0a1a0a 0%,#0d2d1a 50%,#081408 100%)',
     accent: '#4ade80', accent2: '#bbf7d0',
     qrDark: '#0d2d1a', qrLight: '#f0fdf4',
-    emoji: '🤝', emojiDec: '💚 🎵 💚',
+    emoji: '', emojiDec: '💚 🎵 💚',
     tagline: 'Uma homenagem especial para você 💚',
     sub: 'Escaneie e ouça sua música personalizada',
     stars: '✨ ✨ ✨',
@@ -1005,14 +2111,14 @@ function buildQrCard(para, de, tema, qrDataUrl) {
     // Decoração topo
     + '<div style="font-size:22px;letter-spacing:6px;margin-bottom:16px;opacity:.7">' + t.emojiDec + '</div>'
     // Branding
-    + '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:' + t.accent + ';margin-bottom:14px;opacity:.9">🎵 MusicLove Studio</div>'
+    + '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:' + t.accent + ';margin-bottom:14px;opacity:.9">🎵 MUSICLOVE STUDIO</div>'
     // Para quem
     + '<div style="font-size:26px;font-weight:800;color:#fff;margin-bottom:4px;text-shadow:0 2px 12px rgba(0,0,0,.4)">Para ' + para + '</div>'
     // De quem
     + '<div style="font-size:14px;color:' + t.accent2 + ';margin-bottom:24px;font-style:italic">Com amor de ' + de + ' ' + t.emoji + '</div>'
     // QR Code
     + '<div style="background:#fff;border-radius:16px;padding:14px;display:inline-block;margin-bottom:20px;box-shadow:0 8px 32px rgba(0,0,0,.4)">'
-    + '<img src="' + qrDataUrl + '" style="width:200px;height:200px;display:block;border-radius:4px">'
+    + '<img data-qr="1" src="' + qrDataUrl + '" style="width:200px;height:200px;display:block;border-radius:4px">'
     + '</div>'
     // Instrução
     + '<div style="font-size:13px;color:#fff;margin-bottom:6px;opacity:.9">' + t.sub + '</div>'
@@ -1025,6 +2131,8 @@ function buildQrCard(para, de, tema, qrDataUrl) {
     + '</div>';
 }
 
+var _qrDataUrl = '', _qrTema = 'default';
+
 function abrirQrCard() {
   var link = document.getElementById('f-link').value.trim();
   if (!link) { toast('Adicione o link da música primeiro', 'err'); return; }
@@ -1032,62 +2140,104 @@ function abrirQrCard() {
   var para = b['Para quem'] || '-';
   var de = (currentOrder && currentOrder.name) ? currentOrder.name.split(' ')[0] : '-';
   var pid = currentOrder ? currentOrder.paymentId : '';
-  var playerUrl = pid ? ('https://musiclovestudio.online/m/' + pid) : link;
-  var tema = detectarTema(b);
+  var playerUrl = pid ? ('https://musiclovestudio.online/pronto/?id=' + pid) : link;
+  _qrTema = detectarTema(b);
 
+  // Preenche campos editáveis
+  document.getElementById('qrc-edit-para').value = para;
+  document.getElementById('qrc-edit-de').value = de;
   document.getElementById('qrc-link-txt').textContent = playerUrl;
 
-  // Gera QR Code em canvas oculto
+  // Gera QR Code
   var hidden = document.getElementById('qr-hidden-render');
   hidden.innerHTML = '';
-  var t = QR_TEMAS[tema] || QR_TEMAS.default;
+  var t = QR_TEMAS[_qrTema] || QR_TEMAS.default;
   new QRCode(hidden, {
-    text: playerUrl,
-    width: 400, height: 400,
-    colorDark: t.qrDark,
-    colorLight: t.qrLight,
+    text: playerUrl, width: 400, height: 400,
+    colorDark: t.qrDark, colorLight: t.qrLight,
     correctLevel: QRCode.CorrectLevel.H
   });
-
   setTimeout(function() {
     var canvas = hidden.querySelector('canvas');
     var img = hidden.querySelector('img');
-    var qrDataUrl = canvas ? canvas.toDataURL('image/png') : (img ? img.src : '');
-    document.getElementById('qr-card-print').innerHTML = buildQrCard(para, de, tema, qrDataUrl);
+    _qrDataUrl = canvas ? canvas.toDataURL('image/png') : (img ? img.src : '');
+    atualizarQrCard();
   }, 150);
 
   document.getElementById('qr-overlay').style.display = 'flex';
 }
 
+function atualizarQrCard() {
+  if (!_qrDataUrl) return;
+  var para = document.getElementById('qrc-edit-para').value || '-';
+  var de   = document.getElementById('qrc-edit-de').value   || '-';
+  document.getElementById('qr-card-print').innerHTML = buildQrCard(para, de, _qrTema, _qrDataUrl);
+}
+
 function salvarPng() {
   var card = document.getElementById('qr-card-print');
   var btn = event.currentTarget;
-  btn.textContent = '⏳ Gerando imagem...';
+  btn.textContent = ' Gerando imagem...';
   btn.disabled = true;
 
   var b = parseBrief(currentOrder ? currentOrder.brief||'' : '');
-  var para = (b['Para quem'] || 'voce').replace(/[^a-zA-Z0-9]/g,'_');
+  var para = (document.getElementById('qrc-edit-para').value || b['Para quem'] || 'voce').replace(/[^a-zA-Z0-9]/g,'_');
+
+  // Encontra o elemento QR para desenhar manualmente depois
+  var qrImgEl = card.querySelector('img[data-qr]');
+  var cardRect = card.getBoundingClientRect();
+  var qrRect   = qrImgEl ? qrImgEl.getBoundingClientRect() : null;
+  var qrSrc    = qrImgEl ? qrImgEl.src : '';
+
+  var SCALE = 3;
 
   setTimeout(function() {
-  html2canvas(card, {
-    scale: 3,
-    useCORS: false,
-    allowTaint: true,
-    backgroundColor: '#ffffff',
-    logging: false,
-  }).then(function(canvas) {
-    var link = document.createElement('a');
-    link.download = 'musiclove-qrcode-' + para + '.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-    btn.textContent = '🖼️ Salvar como imagem PNG';
-    btn.disabled = false;
-    toast('Imagem salva!');
-  }).catch(function(){
-    btn.textContent = '🖼️ Salvar como imagem PNG';
-    btn.disabled = false;
-    toast('Erro ao gerar imagem', 'err');
-  });
+    html2canvas(card, {
+      scale: SCALE,
+      useCORS: false,
+      allowTaint: true,
+      backgroundColor: null,
+      logging: false,
+      ignoreElements: function(el) { return el.getAttribute && el.getAttribute('data-qr') === '1'; }
+    }).then(function(canvas) {
+      // 2º passo: desenha o QR manualmente no canvas
+      function finish() {
+        var link = document.createElement('a');
+        link.download = 'musiclove-qrcode-' + para + '.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        btn.textContent = '🖼Salvar como imagem PNG';
+        btn.disabled = false;
+        toast('Imagem salva! ✅');
+      }
+
+      if (qrSrc && qrRect) {
+        var ctx = canvas.getContext('2d');
+        var x = (qrRect.left - cardRect.left) * SCALE;
+        var y = (qrRect.top  - cardRect.top)  * SCALE;
+        var w = qrRect.width  * SCALE;
+        var h = qrRect.height * SCALE;
+        var qrImg = new Image();
+        qrImg.onload = function() {
+          // Fundo branco arredondado atrás do QR (padding do container)
+          var pad = 14 * SCALE;
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          ctx.roundRect(x - pad, y - pad, w + pad*2, h + pad*2, 16 * SCALE);
+          ctx.fill();
+          ctx.drawImage(qrImg, x, y, w, h);
+          finish();
+        };
+        qrImg.onerror = finish;
+        qrImg.src = qrSrc;
+      } else {
+        finish();
+      }
+    }).catch(function() {
+      btn.textContent = '🖼Salvar como imagem PNG';
+      btn.disabled = false;
+      toast('Erro ao gerar imagem', 'err');
+    });
   }, 300);
 }
 
@@ -1107,7 +2257,7 @@ function compartilharQrCard() {
   var phone = currentOrder ? (currentOrder.phone||'').replace(/\D/g,'') : '';
   if (phone && !phone.startsWith('55')) phone = '55' + phone;
   var pid = currentOrder ? currentOrder.paymentId : '';
-  var playerUrl = pid ? ('https://musiclovestudio.online/m/' + pid) : document.getElementById('f-link').value.trim();
+  var playerUrl = pid ? ('https://musiclovestudio.online/pronto/?id=' + pid) : document.getElementById('f-link').value.trim();
   var msg = 'Olá ' + nome + '! 🎵 Sua música personalizada está pronta!\n\nAbra o link abaixo para ouvir:\n\n' + playerUrl + '\n\nFoi criada com muito carinho para ' + para + ' 💜\n\n— MusicLove Studio';
   var wa = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(msg);
   window.open(wa, '_blank');
@@ -1115,12 +2265,6 @@ function compartilharQrCard() {
 
 function closeRecover() {
   document.getElementById('recover-overlay').style.display = 'none';
-}
-
-function copyRecoverPix() {
-  var txt = document.getElementById('rc-payload').value;
-  if (!txt) return;
-  navigator.clipboard.writeText(txt).then(function(){ toast('PIX copiado!'); });
 }
 
 function closeModal() {
@@ -1131,11 +2275,14 @@ function closeModal() {
 function saveOrder() {
   if (!currentOrder) return;
   var letra = editingLetra ? document.getElementById('f-letra-edit').value : currentLetra;
+  var musicLink = document.getElementById('f-link').value.trim();
+  var prodStatus = document.getElementById('f-prod-status').value;
+  if (musicLink && currentOrder.paid && prodStatus !== 'pronto') prodStatus = 'pronto';
   var body = {
     notes: document.getElementById('f-notes').value,
     delivered: document.getElementById('f-delivered').checked,
-    prodStatus: document.getElementById('f-prod-status').value,
-    musicLink: document.getElementById('f-link').value,
+    prodStatus: prodStatus,
+    musicLink: musicLink,
     savedLetra: letra
   };
   fetch('/admin-orders?paymentId=' + encodeURIComponent(currentOrder.paymentId), {
@@ -1151,7 +2298,150 @@ function saveOrder() {
   });
 }
 
+function markPaid() {
+  if (!currentOrder) return;
+  var pid = currentOrder.paymentId;
+  if (!confirm('Marcar pedido de ' + (currentOrder.name || pid) + ' como PAGO manualmente?')) return;
+  fetch('/admin-orders?paymentId=' + encodeURIComponent(pid), {
+    method: 'PATCH',
+    headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ paid: true, status: 'CONFIRMED' })
+  }).then(function(r){
+    if (r.ok) {
+      var idx = allOrders.findIndex(function(o){ return o.paymentId === pid; });
+      if (idx >= 0) { allOrders[idx].paid = true; allOrders[idx].status = 'CONFIRMED'; }
+      if (currentOrder) { currentOrder.paid = true; currentOrder.status = 'CONFIRMED'; }
+      populateModal(currentOrder);
+      updateStats(); renderTable(); toast('Pedido marcado como pago!');
+    } else {
+      r.json().then(function(d){ toast('Erro: ' + (d.detail || d.error || r.status), 'err'); }).catch(function(){ toast('Erro ' + r.status, 'err'); });
+    }
+  }).catch(function(){ toast('Erro de rede', 'err'); });
+}
+
+function markRefunded() {
+  if (!currentOrder) return;
+  var pid = currentOrder.paymentId;
+  if (!confirm('Marcar pedido de ' + (currentOrder.name || pid) + ' como REEMBOLSADO?')) return;
+  fetch('/admin-orders?paymentId=' + encodeURIComponent(pid), {
+    method: 'PATCH',
+    headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ refunded: true, status: 'REFUNDED' })
+  }).then(function(r){
+    if (r.ok) {
+      var idx = allOrders.findIndex(function(o){ return o.paymentId === pid; });
+      if (idx >= 0) { allOrders[idx].refunded = true; allOrders[idx].status = 'REFUNDED'; }
+      if (currentOrder) { currentOrder.refunded = true; currentOrder.status = 'REFUNDED'; }
+      populateModal(currentOrder);
+      updateStats(); renderTable(); toast('Pedido marcado como reembolsado!');
+    } else {
+      r.json().then(function(d){ toast('Erro: ' + (d.detail || d.error || r.status), 'err'); }).catch(function(){ toast('Erro ' + r.status, 'err'); });
+    }
+  }).catch(function(){ toast('Erro de rede', 'err'); });
+}
+
+function runRecovery() {
+  var day = currentFilterDay();
+  if (!confirm('Disparar a recuperação no WhatsApp para todos os pedidos pendentes de ' + day.split('-').reverse().join('/') + '?')) return;
+  toast('Enviando recuperações no WhatsApp...');
+  fetch('/recover-pix-batch?date=' + encodeURIComponent(day), { headers: { 'Authorization': auth }, cache: 'no-store' })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (d.ok !== false) {
+        toast('✅ WhatsApp: ' + (d.sent||0) + ' enviado(s). Pulados: ' + (d.skipped||0));
+        loadOrders();
+      } else {
+        toast('WhatsApp: ' + (d.sent||0) + ' enviado(s), ' + (d.failed||0) + ' falha(s)', d.sent ? undefined : 'err');
+        loadOrders();
+      }
+    }).catch(function(){ toast('Erro de rede', 'err'); });
+}
+
+function sendRecoveryEmail() {
+  if (!currentOrder) return;
+  var pid = currentOrder.paymentId;
+  if (!currentOrder.email) { toast('Pedido sem email', 'err'); return; }
+  if (!confirm('Enviar email de recuperao de PIX para ' + currentOrder.email + '?')) return;
+  var pass = auth ? atob(auth.replace('Basic ', '')).split(':')[1] || '' : '';
+  toast('Enviando...');
+  fetch('/pix-recovery?secret=' + encodeURIComponent(pass) + '&paymentId=' + encodeURIComponent(pid) + '&force=true', { cache: 'no-store' })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (d.ok !== false && d.processed > 0) {
+        toast('✅ Email de recuperação enviado!');
+        if (currentOrder) currentOrder.recoveryEmailSent = true;
+      } else {
+        toast('Erro: ' + (d.error || 'não enviado'), 'err');
+      }
+    }).catch(function(){ toast('Erro de rede', 'err'); });
+}
+
+function markProducing() {
+  if (!currentOrder) return;
+  var pid = currentOrder.paymentId;
+  fetch('/admin-orders?paymentId=' + encodeURIComponent(pid), {
+    method: 'PATCH',
+    headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prodStatus: 'gerando_musica' })
+  }).then(function(r){
+    if (r.ok) {
+      var idx = allOrders.findIndex(function(o){ return o.paymentId === pid; });
+      if (idx >= 0) allOrders[idx].prodStatus = 'gerando_musica';
+      if (currentOrder) currentOrder.prodStatus = 'gerando_musica';
+      document.getElementById('f-prod-status').value = 'gerando_musica';
+      populateModal(currentOrder);
+      renderTable(); toast('🎵 Marcado como Em Produção!');
+    } else { toast('Erro ao salvar', 'err'); }
+  }).catch(function(){ toast('Erro de rede', 'err'); });
+}
+
+function quickNote(text) {
+  var el = document.getElementById('f-quick-notes');
+  if (!el) return;
+  el.value = text;
+  el.focus();
+}
+
+function saveQuickNote() {
+  if (!currentOrder) return;
+  var pid = currentOrder.paymentId;
+  var notes = document.getElementById('f-quick-notes').value.trim();
+  fetch('/admin-orders?paymentId=' + encodeURIComponent(pid), {
+    method: 'PATCH',
+    headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ notes: notes })
+  }).then(function(r){
+    if (r.ok) {
+      var idx = allOrders.findIndex(function(o){ return o.paymentId === pid; });
+      if (idx >= 0) allOrders[idx].notes = notes;
+      if (currentOrder) currentOrder.notes = notes;
+      document.getElementById('f-notes').value = notes;
+      renderTable(); toast('Observação salva!');
+    } else { toast('Erro ao salvar', 'err'); }
+  }).catch(function(){ toast('Erro de rede', 'err'); });
+}
+
+function savePhone() {
+  if (!currentOrder) return;
+  var pid = currentOrder.paymentId;
+  var phone = document.getElementById('f-edit-phone').value.replace(/\D/g, '');
+  if (!phone) { toast('Informe o número', 'err'); return; }
+  fetch('/admin-orders?paymentId=' + encodeURIComponent(pid), {
+    method: 'PATCH',
+    headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ phone: phone })
+  }).then(function(r){
+    if (r.ok) {
+      var idx = allOrders.findIndex(function(o){ return o.paymentId === pid; });
+      if (idx >= 0) allOrders[idx].phone = phone;
+      if (currentOrder) currentOrder.phone = phone;
+      toast('WhatsApp atualizado!');
+    } else { toast('Erro ao salvar', 'err'); }
+  }).catch(function(){ toast('Erro de rede', 'err'); });
+}
+
 function markDelivered(pid) {
+  if (!pid) { toast('ID do pedido inválido', 'err'); return; }
   fetch('/admin-orders?paymentId=' + encodeURIComponent(pid), {
     method: 'PATCH',
     headers: { 'Authorization': auth, 'Content-Type': 'application/json' },
@@ -1161,18 +2451,34 @@ function markDelivered(pid) {
       var idx = allOrders.findIndex(function(o){ return o.paymentId === pid; });
       if (idx >= 0) allOrders[idx].delivered = true;
       updateStats(); renderTable(); toast('Marcado como entregue!');
+    } else {
+      r.json().then(function(d){ toast('Erro ao entregar: ' + (d.detail || d.error || r.status), 'err'); }).catch(function(){ toast('Erro ' + r.status, 'err'); });
     }
-  });
+  }).catch(function(){ toast('Erro de rede ao entregar', 'err'); });
 }
 
 document.getElementById('lp').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+
+startManausClock();
+
+// Auto-login se já tiver sessão salva
+if (auth) { loadOrders(); startAdminAutoRefresh(); }
+
+// Auto-refresh removido — use o botão de atualizar manualmente
 
 // ── PWA + PUSH NOTIFICATIONS ────────────────────────────────────────────────
 
 // Registrar service worker
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/admin/sw.js').catch(function(){});
+  if (window.caches && caches.keys) {
+    caches.keys().then(function(keys) {
+      return Promise.all(keys.map(function(key) { return caches.delete(key); }));
+    }).catch(function(){});
   }
+  navigator.serviceWorker.register('/admin/sw.js?v=9').then(function(reg) {
+    if (reg && reg.update) reg.update().catch(function(){});
+  }).catch(function(){});
+}
 
 // VAPID public key (lida do meta ou hardcoded via env — usamos endpoint para pegar)
 var VAPID_PUBLIC_KEY = '';
@@ -1207,7 +2513,7 @@ async function initPushBtn() {
   btn.style.display = '';
   const reg = await navigator.serviceWorker.ready;
   const sub = await reg.pushManager.getSubscription();
-  btn.textContent = sub ? '🔔 On' : '🔕';
+  btn.textContent = sub ? '? On' : '?';
   btn.style.color  = sub ? '#4ade80' : '#aaa';
 }
 
@@ -1265,11 +2571,10 @@ loadOrders = async function() {
 var funnelData = null;
 var funnelOpen = true;
 
+
 var FUNNEL_STEPS = [
-  { key: 'funnel_open',       label: '🖱️ Abriu o funil' },
-  { key: 'lyrics_generated',  label: '✍️ Letra gerada' },
-  { key: 'preview_played',    label: '▶️ Ouviu a prévia' },
-  { key: 'preview_ended',     label: '🔇 Esgotou as prévias' },
+  { key: 'funnel_open',       label: '🖱Abriu o funil' },
+  { key: 'lyrics_generated',  label: 'Letra gerada' },
   { key: 'checkout_reached',  label: '💳 Chegou ao checkout' },
   { key: 'pix_generated',     label: '📲 PIX gerado' },
   { key: 'paid',              label: '✅ Pagou' },
@@ -1278,7 +2583,7 @@ var FUNNEL_STEPS = [
 function toggleFunnel() {
   funnelOpen = !funnelOpen;
   document.getElementById('funnel-body').style.display = funnelOpen ? '' : 'none';
-  document.getElementById('funnel-toggle-icon').textContent = funnelOpen ? '▼' : '▶';
+  document.getElementById('funnel-toggle-icon').textContent = funnelOpen ? '?' : '?';
 }
 
 async function loadFunnel() {
@@ -1313,20 +2618,60 @@ function renderFunnelDay() {
   var selected = sel.value;
   var dayObj = funnelData.find(function(d){ return d.date === selected; }) || funnelData[0];
   var data = dayObj ? dayObj.data : {};
+  var sourceData = dayObj && dayObj.sources ? dayObj.sources : {};
 
-  // "paid" vem dos orders (contar do allOrders para o dia)
+  // PIX gerado e Pagou vêm dos PEDIDOS REAIS (KV), não dos contadores de analytics
+  // (que perdem contagem sob concorrência — corrida de escrita na chave única).
+  // Cada pedido criado = um PIX gerado. Fuso de Brasília (meia-noite BRT), igual ao topo.
   var dayOrders = allOrders.filter(function(o) {
-    return o.created_at && o.created_at.slice(0,10) === selected;
+    return isCreatedOnDay(o, selected);
   });
-  var paidCount = dayOrders.filter(function(o){ return o.paid; }).length;
-  data['paid'] = paidCount;
+  data['pix_generated'] = dayOrders.length;
+  data['paid']          = allOrders.filter(function(o){ return o.paid && isPaidOnDay(o, selected); }).length;
 
-  var top = data['funnel_open'] || 0;
-  var rows = document.getElementById('funnel-rows');
+  var facebookOrders = dayOrders.filter(function(o){ return getTrafficSourceInfo(o).key === 'facebook'; });
+  var kwaiOrders = dayOrders.filter(function(o){ return getTrafficSourceInfo(o).key === 'kwai'; });
+  var facebookPaidOrders = allOrders.filter(function(o){ return o.paid && isPaidOnDay(o, selected) && getTrafficSourceInfo(o).key === 'facebook'; });
+  var kwaiPaidOrders = allOrders.filter(function(o){ return o.paid && isPaidOnDay(o, selected) && getTrafficSourceInfo(o).key === 'kwai'; });
+
+  var facebookFunnel = buildFunnelSourceData(sourceData.facebook || {}, facebookOrders.length, facebookPaidOrders.length);
+  var kwaiFunnel = buildFunnelSourceData(sourceData.kwai || {}, kwaiOrders.length, kwaiPaidOrders.length);
+
+  document.getElementById('funnel-facebook-count').textContent = Number(facebookFunnel.funnel_open || 0);
+  document.getElementById('funnel-kwai-count').textContent = Number(kwaiFunnel.funnel_open || 0);
+
+  renderFunnelSourceRows('funnel-facebook-rows', facebookFunnel);
+  renderFunnelSourceRows('funnel-kwai-rows', kwaiFunnel);
+
+  document.getElementById('funnel-loading').style.display = 'none';
+  document.getElementById('funnel-grid').style.display = 'block';
+}
+
+function buildFunnelSourceData(analyticsData, pixCount, paidCount) {
+  var localData = {};
+  Object.keys(analyticsData || {}).forEach(function(k) { localData[k] = analyticsData[k]; });
+
+  localData['pix_generated'] = Math.max(Number(localData['pix_generated'] || 0), Number(pixCount || 0));
+  localData['paid'] = Math.max(Number(localData['paid'] || 0), Number(paidCount || 0));
+
+  // Fallback: se existe pedido real daquele tráfego no dia, o usuário obrigatoriamente passou
+  // pelas etapas anteriores. Isso evita Facebook/Kwai zerado quando o analytics antigo não salvou source.
+  localData['checkout_reached'] = Math.max(Number(localData['checkout_reached'] || 0), Number(localData['pix_generated'] || 0));
+  localData['lyrics_generated'] = Math.max(Number(localData['lyrics_generated'] || 0), Number(localData['checkout_reached'] || 0));
+  localData['funnel_open'] = Math.max(Number(localData['funnel_open'] || 0), Number(localData['lyrics_generated'] || 0));
+
+  return localData;
+}
+
+function renderFunnelSourceRows(containerId, localData) {
+  var rows = document.getElementById(containerId);
+  if (!rows) return;
   rows.innerHTML = '';
 
+  var top = localData['funnel_open'] || 0;
+
   FUNNEL_STEPS.forEach(function(step) {
-    var count = data[step.key] || 0;
+    var count = localData[step.key] || 0;
     var pct = top > 0 ? Math.round((count / top) * 100) : (count > 0 ? 100 : 0);
     var barColor = pct >= 50 ? '#4ade80' : pct >= 20 ? '#f59e0b' : '#e55';
     var row = document.createElement('div');
@@ -1338,14 +2683,160 @@ function renderFunnelDay() {
       '</div>' +
     '</div>' +
     '<div style="text-align:right;font-size:14px;font-weight:700;color:#e8e8f0;min-width:40px">' + count + '</div>' +
-    '<div style="text-align:right;font-size:12px;color:' + barColor + ';min-width:48px">' + (top > 0 ? pct + '%' : '—') + '</div>';
+    '<div style="text-align:right;font-size:12px;color:' + barColor + ';min-width:48px">' + (top > 0 ? pct + '%' : '') + '</div>';
     rows.appendChild(row);
   });
+}
 
-  document.getElementById('funnel-loading').style.display = 'none';
-  document.getElementById('funnel-grid').style.display = 'block';
+// ─────────────── Campanhas (UTM) ───────────────
+var campOpen = false;
+var campPeriod = 'hoje';
+var campExpanded = {};
+
+function toggleCamp() {
+  campOpen = !campOpen;
+  document.getElementById('camp-body').style.display = campOpen ? '' : 'none';
+  document.getElementById('camp-toggle-icon').textContent = campOpen ? '?' : '?';
+  if (campOpen) renderCampaigns();
+}
+
+function setCampPeriod(p, btn) {
+  campPeriod = p;
+  document.querySelectorAll('#camp-body .rev-tab').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  renderCampaigns();
+}
+
+// Extrai UTMs do pedido (campos diretos > pageUrl), igual ao modal de origem
+function orderUtm(o) {
+  var params = {};
+  try { params = Object.fromEntries(new URL(o.pageUrl || '').searchParams); } catch(e) {}
+  function pick(a, b) { return String(a || params[b] || '').trim(); }
+  var src = pick(o.utmSource, 'utm_source').toLowerCase();
+  var hasFb = !!(o.hasFbclid || o.fbclid || o.fbc || params.fbclid);
+  return {
+    camp:  pick(o.utmCampaign, 'utm_campaign'),
+    ad:    pick(o.utmContent,  'utm_content'),
+    adset: pick(o.utmTerm,     'utm_term'),
+    src:   src,
+    isFb:  hasFb || src === 'fb' || src === 'facebook' || src === 'instagram' || src === 'ig',
+    isGoogle: !!params.gclid || src === 'google'
+  };
+}
+
+function campPeriodOrders() {
+  var now = new Date();
+  var d0 = brDateStr(now);
+  var d1 = brDateStr(new Date(now - 86400000));
+  var parts = d0.split('-').map(Number);
+  function brMidnight(y, m, d) { return new Date(Date.UTC(y, m-1, d, 3, 0, 0)); }
+  var todayMid = brMidnight(parts[0], parts[1], parts[2]);
+  var dow = todayMid.getUTCDay() || 7;
+  var semStart = brMidnight(parts[0], parts[1], parts[2] - (dow-1));
+  var mesStart = brMidnight(parts[0], parts[1], 1);
+
+  return allOrders.filter(function(o) {
+    if (!o.paid) return false;
+    if (campPeriod === 'tudo') return true;
+    var paidAt = paidDateObj(o);
+    if (!paidAt) return false;
+    if (campPeriod === 'hoje')  return isPaidOnDay(o, d0);
+    if (campPeriod === 'ontem') return isPaidOnDay(o, d1);
+    var t = paidAt;
+    if (campPeriod === 'semana') return t >= semStart;
+    if (campPeriod === 'mes')    return t >= mesStart;
+    return false;
+  });
+}
+
+function renderCampaigns() {
+  var rows = document.getElementById('camp-rows');
+  var empty = document.getElementById('camp-empty');
+  rows.innerHTML = '';
+
+  var orders = campPeriodOrders();
+  // Agrupa por campanha; dentro, por criativo (ad) + conjunto (adset)
+  var camps = {};
+  orders.forEach(function(o) {
+    var u = orderUtm(o);
+    var key = u.camp || (u.isFb ? '(Facebook  sem UTM)' : u.isGoogle ? '(Google  sem UTM)' : '(Direto / Orgnico)');
+    if (!camps[key]) camps[key] = { name: key, n: 0, rev: 0, fb: u.isFb, ads: {} };
+    var c = camps[key];
+    c.n++; c.rev += Number(o.value) || 0;
+    var adKey = (u.ad || '(sem criativo)') + ' ||| ' + (u.adset || '');
+    if (!c.ads[adKey]) c.ads[adKey] = { ad: u.ad || '(sem criativo)', adset: u.adset, n: 0, rev: 0 };
+    c.ads[adKey].n++; c.ads[adKey].rev += Number(o.value) || 0;
+  });
+
+  var list = Object.keys(camps).map(function(k){ return camps[k]; })
+    .sort(function(a,b){ return b.rev - a.rev; });
+
+  if (!list.length) { empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+
+  var totN = list.reduce(function(s,c){ return s+c.n; }, 0);
+
+  list.forEach(function(c, i) {
+    var id = 'camp-' + i;
+    var emoji = c.fb ? '?' : c.name.indexOf('Google') >= 0 ? '?' : '?';
+    var ads = Object.keys(c.ads).map(function(k){ return c.ads[k]; }).sort(function(a,b){ return b.rev - a.rev; });
+    var pct = totN > 0 ? Math.round((c.n / totN) * 100) : 0;
+
+    var wrap = document.createElement('div');
+    wrap.style.cssText = 'margin-bottom:8px;border:1px solid #2a2a3a;border-radius:10px;overflow:hidden;background:#0f0f18';
+
+    var head = document.createElement('div');
+    head.style.cssText = 'display:flex;align-items:center;gap:10px;padding:11px 13px;cursor:pointer';
+    head.onclick = function(){
+      campExpanded[id] = !campExpanded[id];
+      var sub = document.getElementById(id + '-sub');
+      var ic  = document.getElementById(id + '-ic');
+      if (sub) sub.style.display = campExpanded[id] ? '' : 'none';
+      if (ic)  ic.textContent = campExpanded[id] ? '?' : '?';
+    };
+    head.innerHTML =
+      '<span id="' + id + '-ic" style="color:#666;font-size:11px;width:10px">▶</span>' +
+      '<span style="font-size:15px">' + emoji + '</span>' +
+      '<div style="flex:1;min-width:0">' +
+        '<div style="font-size:13px;color:#e8e8f0;font-weight:600;word-break:break-all">' + c.name + '</div>' +
+        '<div style="font-size:11px;color:#666">' + pct + '% das vendas do período</div>' +
+      '</div>' +
+      '<div style="text-align:right;flex-shrink:0">' +
+        '<div style="font-size:15px;font-weight:800;color:#1877f2">' + c.n + (c.n===1?' venda':' vendas') + '</div>' +
+        '<div style="font-size:12px;color:#4ade80">' + fmtBRL(c.rev) + '</div>' +
+      '</div>';
+    wrap.appendChild(head);
+
+    var sub = document.createElement('div');
+    sub.id = id + '-sub';
+    sub.style.cssText = 'display:none;border-top:1px solid #1f1f2c;padding:6px 13px 10px 33px';
+    if (ads.length === 1 && ads[0].ad === '(sem criativo)' && !ads[0].adset) {
+      sub.innerHTML = '<div style="font-size:11px;color:#555;padding:6px 0">Sem detalhamento de criativo/conjunto.</div>';
+    } else {
+      ads.forEach(function(a) {
+        var row = document.createElement('div');
+        row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #16161f';
+        row.innerHTML =
+          '<div style="flex:1;min-width:0">' +
+            '<div style="font-size:12px;color:#ccc;word-break:break-all">🎨 ' + a.ad + '</div>' +
+            (a.adset ? '<div style="font-size:11px;color:#777;word-break:break-all">? ' + a.adset + '</div>' : '') +
+          '</div>' +
+          '<div style="text-align:right;flex-shrink:0">' +
+            '<div style="font-size:13px;font-weight:700;color:#e8e8f0">' + a.n + '</div>' +
+            '<div style="font-size:11px;color:#4ade80">' + fmtBRL(a.rev) + '</div>' +
+          '</div>';
+        sub.appendChild(row);
+      });
+    }
+    wrap.appendChild(sub);
+    rows.appendChild(wrap);
+  });
 }
 
 </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"98f4a125395348d6b5841ede932d7c4f","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"98f4a125395348d6b5841ede932d7c4f","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
+
+
